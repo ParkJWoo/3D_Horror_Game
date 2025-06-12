@@ -24,6 +24,10 @@ public class Inputs : MonoBehaviour
         playerInput.Player.Look.performed += controller.OnLookInputPerformed;
         playerInput.Player.Look.canceled += controller.OnLookInputCanceled;
         playerInput.Player.Jump.started += controller.OnJumpInput;
+        playerInput.Player.Run.performed += controller.OnRunInputPerformed;
+        playerInput.Player.Run.canceled += controller.OnRunInputCanceled;
+        playerInput.Player.Inventory.started += controller.OnInventory;
+        playerInput.Player.Interaction.started += controller.OnInteraction;
     }
 
     private void OnDisable()
@@ -34,6 +38,10 @@ public class Inputs : MonoBehaviour
         playerInput.Player.Look.performed -= controller.OnLookInputPerformed;
         playerInput.Player.Look.canceled -= controller.OnLookInputCanceled;
         playerInput.Player.Jump.started -= controller.OnJumpInput;
+        playerInput.Player.Run.performed -= controller.OnRunInputPerformed;
+        playerInput.Player.Run.canceled -= controller.OnRunInputCanceled;
+        playerInput.Player.Inventory.started -= controller.OnInventory;
+        playerInput.Player.Interaction.started -= controller.OnInteraction;
 
     }
 }
