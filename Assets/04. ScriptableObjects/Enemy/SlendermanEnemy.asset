@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SlendermanEnemy
   m_EditorClassIdentifier: 
   <PlayerChasingRange>k__BackingField: 10
-  <AttackRange>k__BackingField: 2.5
+  <AttackRange>k__BackingField: 1.5
   <ForceTransitionTime>k__BackingField: 0
   <Force>k__BackingField: 0
   Damage: 10

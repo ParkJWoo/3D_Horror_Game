@@ -50,7 +50,7 @@ public class EnemyAttackState : IState<Enemy>
 
         if (!alreadyScreamed && normalizedTime >= stateMachine.Context.Data.Scream_End_TransitionTime)
         {
-            stateMachine.Target.TakeDamage(stateMachine.Context.Data.Damage);   //  정신력, 체력 등 감소
+            stateMachine.Target.Kill();
 
             //  공포 연출: 화면 흔들기, 이펙트 등 여기서 추가할 것
             alreadyScreamed = true;
