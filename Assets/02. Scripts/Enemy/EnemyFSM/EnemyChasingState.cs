@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using System.Resources;
 using Unity.VisualScripting;
@@ -35,10 +35,10 @@ public class EnemyChasingState : IState<Enemy>
 
     public void Update()
     {
-        //  ÀÌµ¿ ¸Ş¼­µå È£Ãâ!
+        //  ì´ë™ ë©”ì„œë“œ í˜¸ì¶œ!
         MoveTowardTarget();
 
-        // »óÅÂ ÀüÀÌ Ã¼Å©
+        // ìƒíƒœ ì „ì´ ì²´í¬
         float distSqr = (stateMachine.Target.transform.position - stateMachine.Context.transform.position).sqrMagnitude;
 
         float attackRangeSqr = Mathf.Pow(stateMachine.Context.Data.AttackRange, 2);
@@ -54,7 +54,7 @@ public class EnemyChasingState : IState<Enemy>
         }
     }
 
-    //  ½ÇÁ¦ ÀÌµ¿ Ã³¸®
+    //  ì‹¤ì œ ì´ë™ ì²˜ë¦¬
     private void MoveTowardTarget()
     {
         Vector3 targetPos = stateMachine.Target.transform.position;
@@ -69,7 +69,7 @@ public class EnemyChasingState : IState<Enemy>
 
         stateMachine.Context.Controller.Move(move);
 
-        // ÀÚ¿¬½º·¯¿î È¸ÀüÀ» Ãß°¡ÇÏ¿© ºÎµå·´°Ô ÇÃ·¹ÀÌ¾î¸¦ ÇâÇÏµµ·Ï ±¸¼º
+        // ìì—°ìŠ¤ëŸ¬ìš´ íšŒì „ì„ ì¶”ê°€í•˜ì—¬ ë¶€ë“œëŸ½ê²Œ í”Œë ˆì´ì–´ë¥¼ í–¥í•˜ë„ë¡ êµ¬ì„±
         if (dir != Vector3.zero)
         {
             Quaternion targetRot = Quaternion.LookRotation(dir);

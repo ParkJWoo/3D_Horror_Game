@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,7 +23,7 @@ public abstract class StateMachine<T> : MonoBehaviour where T : MonoBehaviour
 
     public void ChangeState(IState<T> newState)
     {
-        //Debug.Log($"[FSM] »óÅÂ º¯°æ: {CurrentState} -> {newState}");
+        //Debug.Log($"[FSM] ìƒíƒœ ë³€ê²½: {CurrentState} -> {newState}");
         CurrentState?.Exit();
         CurrentState = newState;
         CurrentState?.Enter();

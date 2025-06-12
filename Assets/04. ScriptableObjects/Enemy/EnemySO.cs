@@ -1,21 +1,21 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "SlendermanEnemy", menuName = "Characters/SlendermanEnemy")]
 public class EnemySO : ScriptableObject
 {
-    [field: SerializeField] public float PlayerChasingRange { get; private set; } = 5f;    //  Ãß°İ ½ÃÀÛ °Å¸®
-    [field: SerializeField] public float AttackRange { get; private set; } = 2.5f;          //  ¼Ò¸®°ø°İ »ç°Å¸®
+    [field: SerializeField] public float PlayerChasingRange { get; private set; } = 5f;    //  ì¶”ê²© ì‹œì‘ ê±°ë¦¬
+    [field: SerializeField] public float AttackRange { get; private set; } = 2.5f;          //  ì†Œë¦¬ê³µê²© ì‚¬ê±°ë¦¬
 
-    //[field:SerializeField] public PlayerGroundData GroundData { get; private set; }       //  ÇÃ·¹ÀÌ¾î°¡ ¾î¶»°Ô ±¸ÇöµÆ´Â°¡¿¡ µû¶ó ³ÖÀ»Áö¸»Áö °ËÅäÇÒ °Í
+    //[field:SerializeField] public PlayerGroundData GroundData { get; private set; }       //  í”Œë ˆì´ì–´ê°€ ì–´ë–»ê²Œ êµ¬í˜„ëëŠ”ê°€ì— ë”°ë¼ ë„£ì„ì§€ë§ì§€ ê²€í† í•  ê²ƒ
     [field:SerializeField][field:Range(0f,3f)] public float ForceTransitionTime { get; private set; }
     [field:SerializeField][field:Range(-10f, 10f)] public float Force { get; private set; }
     [field: SerializeField] public int Damage;
     [field: SerializeField][field:Range(0f,1f)] public float Scream_Start_TransitionTime { get; private set; }
     [field:SerializeField][field:Range(0f,1f)] public float Scream_End_TransitionTime { get; private set; }
 
-    //  °øÆ÷ È¿°ú¿ë Ãß°¡ º¯¼öµé
+    //  ê³µí¬ íš¨ê³¼ìš© ì¶”ê°€ ë³€ìˆ˜ë“¤
     [field:SerializeField] public AudioClip ScreamClip { get; private set; }
-    [field:SerializeField] public float FearEffect { get; private set; }    //  ¿¹½Ã) Á¤½Å·Â °¨¼Ò
+    [field:SerializeField] public float FearEffect { get; private set; }    //  ì˜ˆì‹œ) ì •ì‹ ë ¥ ê°ì†Œ
 }

@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,11 +14,11 @@ public class EnemyAttackState : IState<Enemy>
     
     public void Enter()
     {
-        Debug.Log("°ø°İ ½ÃÀÛ!");
+        Debug.Log("ê³µê²© ì‹œì‘!");
         alreadyScreamed = false;
         stateMachine.Context.Animator.SetBool(stateMachine.Context.AnimationData.ScreamParameterHash, true);
 
-        //½ºÅ©¸² »ç¿îµå Àç»ı
+        //ìŠ¤í¬ë¦¼ ì‚¬ìš´ë“œ ì¬ìƒ
         if (stateMachine.Context.AudioSource && stateMachine.Context.Data.ScreamClip)
         {
             stateMachine.Context.AudioSource.PlayOneShot(stateMachine.Context.Data.ScreamClip);
@@ -52,7 +52,7 @@ public class EnemyAttackState : IState<Enemy>
         {
             stateMachine.Target.Kill();
 
-            //  °øÆ÷ ¿¬Ãâ: È­¸é Èçµé±â, ÀÌÆåÆ® µî ¿©±â¼­ Ãß°¡ÇÒ °Í
+            //  ê³µí¬ ì—°ì¶œ: í™”ë©´ í”ë“¤ê¸°, ì´í™íŠ¸ ë“± ì—¬ê¸°ì„œ ì¶”ê°€í•  ê²ƒ
             alreadyScreamed = true;
         }
 

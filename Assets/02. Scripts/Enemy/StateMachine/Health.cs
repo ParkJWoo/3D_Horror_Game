@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,14 +14,14 @@ public class Health : MonoBehaviour
         IsDead = false;
     }
 
-    // Áï»ç ·ÎÁ÷: µ¥¹ÌÁö ¹ŞÀ¸¸é ¹Ù·Î »ç¸Á Ã³¸®!
+    // ì¦‰ì‚¬ ë¡œì§: ë°ë¯¸ì§€ ë°›ìœ¼ë©´ ë°”ë¡œ ì‚¬ë§ ì²˜ë¦¬!
     public void Kill()
     {
         if (!IsDead)
         {
             IsDead = true;
             OnDie?.Invoke();
-            Debug.Log("ÇÃ·¹ÀÌ¾î Áï»ç!");
+            Debug.Log("í”Œë ˆì´ì–´ ì¦‰ì‚¬!");
         }
     }
 }

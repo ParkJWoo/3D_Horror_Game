@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,7 +11,7 @@ public class EnemyAnimationData
     [SerializeField] private string runParameterName = "Run";
     [SerializeField] private string screamParameterName = "Scream";
 
-    //  ¾Ö´Ï¸ŞÀÌÅÍ ÆÄ¶ó¹ÌÅÍ ÇØ½Ã°ª
+    //  ì• ë‹ˆë©”ì´í„° íŒŒë¼ë¯¸í„° í•´ì‹œê°’
     public int IdleParameterHash { get; private set; }
     public int WalkParameterHash { get; private set; }
     public int RunParameterHash { get; private set; }
