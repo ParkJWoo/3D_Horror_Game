@@ -11,6 +11,7 @@ public class Enemy : MonoBehaviour
     public CharacterController Controller { get; private set; }
     public ForceReceiver ForceReceiver { get; private set; }
     public AudioSource AudioSource { get; private set; }
+
     public EnemyStateMachine stateMachine;
 
     private void Awake()

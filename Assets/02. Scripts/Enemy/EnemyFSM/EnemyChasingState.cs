@@ -35,10 +35,10 @@ public class EnemyChasingState : IState<Enemy>
 
     public void Update()
     {
-        // 실제 이동
+        //  이동 메서드 호출!
         MoveTowardTarget();
 
-        // 상태 전이 체크 (이전 로직)
+        // 상태 전이 체크
         float distSqr = (stateMachine.Target.transform.position - stateMachine.Context.transform.position).sqrMagnitude;
 
         float attackRangeSqr = Mathf.Pow(stateMachine.Context.Data.AttackRange, 2);
@@ -69,10 +69,11 @@ public class EnemyChasingState : IState<Enemy>
 
         stateMachine.Context.Controller.Move(move);
 
-        // 자연스러운 회전도 추가하면 부드럽게 플레이어를 향함
+        // 자연스러운 회전을 추가하여 부드럽게 플레이어를 향하도록 구성
         if (dir != Vector3.zero)
         {
             Quaternion targetRot = Quaternion.LookRotation(dir);
+
             stateMachine.Context.transform.rotation = Quaternion.Slerp(stateMachine.Context.transform.rotation, targetRot, 10f * Time.deltaTime);
         }
     }
