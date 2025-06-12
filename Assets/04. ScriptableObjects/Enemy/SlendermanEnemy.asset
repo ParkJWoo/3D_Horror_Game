@@ -12,13 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16bc2b19e6b86b94c82ba5eb32e3acb4, type: 3}
   m_Name: SlendermanEnemy
   m_EditorClassIdentifier: 
-  <PlayerChasingRange>k__BackingField: 10
+  <PlayerChasingRange>k__BackingField: 8
   <AttackRange>k__BackingField: 1.5
-  <ForceTransitionTime>k__BackingField: 0
-  <Force>k__BackingField: 0
-  Damage: 10
+  <WalkSpeed>k__BackingField: 3
+  <Damage>k__BackingField: 100
+  <ForceTransformTime>k__BackingField: 0
   <Scream_Start_TransitionTime>k__BackingField: 0
   <Scream_End_TransitionTime>k__BackingField: 1
-  <ScreamClip>k__BackingField: {fileID: 8300000, guid: 0d3e58bb90924afba39e665277b5f80a,
-    type: 3}
-  <FearEffect>k__BackingField: 3
+  CloseupCamera: {fileID: 0}
+  ScreamClip: {fileID: 8300000, guid: 8ac1364a25264235bc5e47511cce7eac, type: 3}
