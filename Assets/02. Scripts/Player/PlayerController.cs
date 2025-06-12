@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Movement")]
     public float moveSpeed;
+    public float runSpeed;
+    private bool isRunningInput = false;
     private Vector2 curMovementInput;
     public float jumpPower;
     public LayerMask groundLayerMask;
@@ -72,12 +74,12 @@ public class PlayerController : MonoBehaviour
 
     public void OnRunInputPerformed(InputAction.CallbackContext context)
     {
-
+        isRunningInput = true;
     }
 
     public void OnRunInputCanceled(InputAction.CallbackContext context)
     {
-
+        isRunningInput = false;
     }
 
     public void OnJumpInput(InputAction.CallbackContext context)
@@ -88,10 +90,23 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void OnInventory(InputAction.CallbackContext context)
+    {
+        // 인벤토리 실행 함수
+    }
+
+    public void OnInteraction(InputAction.CallbackContext context)
+    {
+       // 상호작용 함수
+    }
+
     private void Move()
     {
+        bool canRun = isRunningInput && IsGrounded() && curMovementInput.magnitude > 0.1f;
+        float speed = canRun ? runSpeed : moveSpeed;
+
         Vector3 dir = transform.forward * curMovementInput.y + transform.right * curMovementInput.x;
-        dir *= moveSpeed;
+        dir *= speed;
         dir.y = rigidbody.velocity.y;
 
         rigidbody.velocity = dir;
@@ -119,7 +134,7 @@ public class PlayerController : MonoBehaviour
 
         for (int i = 0; i < rays.Length; i++)
         {
-            if (Physics.Raycast(rays[i], 1.0f, groundLayerMask))
+            if (Physics.Raycast(rays[i], 0.65f, groundLayerMask))
             {
                 return true;
             }
