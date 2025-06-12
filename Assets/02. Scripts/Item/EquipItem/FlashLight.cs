@@ -11,7 +11,22 @@ public class FlashLight : EquipItemHandler
     private float consumptionPerTick;
 
     private Coroutine batteryConsumption;
-    private Light flashLight;
+    [SerializeField] private Light flashLight;
+
+    private void Awake()
+    {
+        timeToConsumption = new WaitForSeconds(0.5f);
+        flashOnConsumption = -5f;
+        consumptionPerTick = -0.1f;
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F)) 
+        {
+            UseItem();
+        }
+    }
 
     public override void UseItem()
     {
@@ -43,11 +58,14 @@ public class FlashLight : EquipItemHandler
         {
             batteryConsumption = StartCoroutine(BatteryConsumptionHandler());
         }
+        flashLight.enabled = true;
     }
 
     private IEnumerator BatteryConsumptionHandler()
     {
         item.ChangeDurability(flashOnConsumption);
+
+        yield return null;
 
         if (!CheckDurability())
         {
@@ -75,6 +93,7 @@ public class FlashLight : EquipItemHandler
             StopCoroutine(batteryConsumption);
             batteryConsumption = null;
         }
+        flashLight.enabled = false;
     }
 
     private bool CheckDurability()
