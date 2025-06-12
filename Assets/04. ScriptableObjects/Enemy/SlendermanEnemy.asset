@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16bc2b19e6b86b94c82ba5eb32e3acb4, type: 3}
+  m_Name: SlendermanEnemy
+  m_EditorClassIdentifier: 
+  <PlayerChasingRange>k__BackingField: 10
+  <AttackRange>k__BackingField: 1.5
+  <ForceTransitionTime>k__BackingField: 0
+  <Force>k__BackingField: 0
+  Damage: 10
+  <Scream_Start_TransitionTime>k__BackingField: 0
+  <Scream_End_TransitionTime>k__BackingField: 1
+  <ScreamClip>k__BackingField: {fileID: 8300000, guid: 0d3e58bb90924afba39e665277b5f80a,
+    type: 3}
+  <FearEffect>k__BackingField: 3
