@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "SlendermanEnemy", menuName = "Characters/SlendermanEnemy")]
 public class EnemySO : ScriptableObject
 {
-    [field: SerializeField] public float PlayerChasingRange { get; private set; } = 15f;    //  추격 시작 거리
+    [field: SerializeField] public float PlayerChasingRange { get; private set; } = 5f;    //  추격 시작 거리
     [field: SerializeField] public float AttackRange { get; private set; } = 2.5f;          //  소리공격 사거리
 
     //[field:SerializeField] public PlayerGroundData GroundData { get; private set; }

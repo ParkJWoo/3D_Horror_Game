@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16bc2b19e6b86b94c82ba5eb32e3acb4, type: 3}
   m_Name: SlendermanEnemy
   m_EditorClassIdentifier: 
-  <PlayerChasingRange>k__BackingField: 15
+  <PlayerChasingRange>k__BackingField: 10
   <AttackRange>k__BackingField: 2.5
   <ForceTransitionTime>k__BackingField: 0
   <Force>k__BackingField: 0
