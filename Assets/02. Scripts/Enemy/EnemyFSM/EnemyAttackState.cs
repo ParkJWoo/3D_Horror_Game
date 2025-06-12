@@ -5,29 +5,31 @@ using UnityEngine;
 public class EnemyAttackState : IState<Enemy>
 {
     private EnemyStateMachine stateMachine;
-    private bool alreadyScreamed;
+    private bool alreadyAttacked;
 
     public EnemyAttackState(EnemyStateMachine sm)
     {
         stateMachine = sm;
     }
-    
+
     public void Enter()
     {
-        Debug.Log("공격 시작!");
-        alreadyScreamed = false;
-        stateMachine.Context.Animator.SetBool(stateMachine.Context.AnimationData.ScreamParameterHash, true);
+        alreadyAttacked = false;
+        stateMachine.Context.Agent.isStopped = true;
+        stateMachine.Context.Animator.SetTrigger(stateMachine.Context.AnimationData.ScreamParameterHash);
 
-        //스크림 사운드 재생
-        if (stateMachine.Context.AudioSource && stateMachine.Context.Data.ScreamClip)
+        //  사운드
+        if(stateMachine.Context.AudioSource && stateMachine.Context.Data.ScreamClip)
         {
             stateMachine.Context.AudioSource.PlayOneShot(stateMachine.Context.Data.ScreamClip);
         }
+
+        stateMachine.Context.StartCoroutine(AttackSequence());
     }
 
     public void Exit()
     {
-        stateMachine.Context.Animator.SetBool(stateMachine.Context.AnimationData.ScreamParameterHash, false);
+        stateMachine.Context.Agent.isStopped = false;
     }
 
     public void HandleInput()
@@ -40,40 +42,31 @@ public class EnemyAttackState : IState<Enemy>
 
     public void Update()
     {
-        if(stateMachine.Target.IsDead)
+    }
+
+    private IEnumerator AttackSequence()
+    {
+        //  1. 카메라 클로즈업 연출
+        if(stateMachine.Context.Data.CloseupCamera != null)
         {
-            stateMachine.ChangeState(stateMachine.IdleState);
-            return;
+            stateMachine.Context.Data.CloseupCamera.Priority = 20;
         }
 
-        float normalizedTime = stateMachine.Context.Animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+        yield return new WaitForSeconds(stateMachine.Context.Data.Scream_End_TransitionTime);
 
-        if (!alreadyScreamed && normalizedTime >= stateMachine.Context.Data.Scream_End_TransitionTime)
+        if(!alreadyAttacked)
         {
-            stateMachine.Target.Kill();
+            stateMachine.Context.PlayerController.Die();
+            alreadyAttacked = true;
 
-            //  공포 연출: 화면 흔들기, 이펙트 등 여기서 추가할 것
-            alreadyScreamed = true;
-        }
+            yield return new WaitForSeconds(1.0f);
 
-        if(normalizedTime >= 1f)
-        {
-            float distSqr = (stateMachine.Target.transform.position - stateMachine.Context.transform.position).sqrMagnitude;
-
-            if(distSqr <= Mathf.Pow(stateMachine.Context.Data.AttackRange, 2))
+            //  사망 UI 패널 생성은 PlayerController.cs Die 메서드에서!
+            if(stateMachine.Context.Data.CloseupCamera != null)
             {
-                stateMachine.ChangeState(stateMachine.AttackState);
-            }
-
-            else if(distSqr <= Mathf.Pow(stateMachine.Context.Data.PlayerChasingRange, 2))
-            {
-                stateMachine.ChangeState(stateMachine.ChasingState);
-            }
-
-            else
-            {
-                stateMachine.ChangeState(stateMachine.IdleState);
+                stateMachine.Context.Data.CloseupCamera.Priority = 5;
             }
         }
     }
+
 }

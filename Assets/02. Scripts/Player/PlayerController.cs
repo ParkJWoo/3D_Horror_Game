@@ -22,8 +22,11 @@ public class PlayerController : MonoBehaviour
 
     [HideInInspector]
     public bool canLook = true;
+    public bool isDead = false;             //  죽었는지 확인하기 위한 bool값 변수
 
     private Rigidbody rigidbody;
+
+    
 
     private void Awake()
     {
@@ -131,5 +134,20 @@ public class PlayerController : MonoBehaviour
         canLook = !toggle;
     }
 
-    
+    //  즉사 함수
+    public void Die()
+    {
+        if(isDead)
+        {
+            return;
+        }
+
+        //  조작 정지
+        canLook = false;
+        curMovementInput = Vector2.zero;
+        rigidbody.velocity = Vector3.zero;
+        ToggleCursor(true);
+
+        //  사망 연출 호출
+    }
 }
