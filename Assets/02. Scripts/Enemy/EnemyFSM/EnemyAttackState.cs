@@ -14,6 +14,7 @@ public class EnemyAttackState : IState<Enemy>
     
     public void Enter()
     {
+        Debug.Log("공격 시작!");
         alreadyScreamed = false;
         stateMachine.Context.Animator.SetBool(stateMachine.Context.AnimationData.ScreamParameterHash, true);
 

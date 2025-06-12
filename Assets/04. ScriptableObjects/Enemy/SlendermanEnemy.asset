@@ -18,7 +18,7 @@ MonoBehaviour:
   <Force>k__BackingField: 0
   Damage: 10
   <Scream_Start_TransitionTime>k__BackingField: 0
-  <Scream_End_TransitionTime>k__BackingField: 0
+  <Scream_End_TransitionTime>k__BackingField: 1
   <ScreamClip>k__BackingField: {fileID: 8300000, guid: 0d3e58bb90924afba39e665277b5f80a,
     type: 3}
   <FearEffect>k__BackingField: 3

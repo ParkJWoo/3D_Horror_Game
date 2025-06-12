@@ -2656,6 +2656,10 @@ GameObject:
   - component: {fileID: 983158383777796114}
   - component: {fileID: 3982322402817424147}
   - component: {fileID: 7135889002571439119}
+  - component: {fileID: 2407235378555998320}
+  - component: {fileID: 4982302369288773039}
+  - component: {fileID: 7331082270941177452}
+  - component: {fileID: 3662620351628441629}
   m_Layer: 0
   m_Name: Slender
   m_TagString: Untagged
@@ -2671,7 +2675,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8687467044795816402}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.7892046, z: -0, w: 0.6141303}
+  m_LocalRotation: {x: 0, y: 0.789202, z: 0, w: 0.6141337}
   m_LocalPosition: {x: 0, y: 0, z: 9.26}
   m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_ConstrainProportionsScale: 0
@@ -2797,6 +2801,78 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!143 &2407235378555998320
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8687467044795816402}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &4982302369288773039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8687467044795816402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a59b2ec7e39d684ebf416427f350ffd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Data>k__BackingField: {fileID: 11400000, guid: 37f2dab9e77f9e04d90d349e22f3cbec,
+    type: 2}
+  <AnimationData>k__BackingField:
+    idleParameterName: Idle
+    walkParameterName: Walk
+    runParameterName: Run
+    screamParameterName: Scream
+  stateMachine: {fileID: 7331082270941177452}
+--- !u!114 &7331082270941177452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8687467044795816402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9fa7b19f60325843a8eec0dc4eeeac8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3662620351628441629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8687467044795816402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac71005330c551d4c80090f610e94dec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controller: {fileID: 2407235378555998320}
+  drag: 0.3
 --- !u!1 &8829496369631510232
 GameObject:
   m_ObjectHideFlags: 0

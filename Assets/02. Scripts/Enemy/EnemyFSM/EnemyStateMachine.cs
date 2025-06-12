@@ -23,6 +23,8 @@ public class EnemyStateMachine : StateMachine<Enemy>
         ChasingState = new EnemyChasingState(this);
         AttackState = new EnemyAttackState(this);
 
+        MovementSpeed = 1f;
+
         //MovementSpeed = Context.Data.GroundData.BaseSpeed;
         //RotationDamping = Context.Data.GrondData.BaseRotationDamping;
     }
@@ -34,6 +36,8 @@ public class EnemyStateMachine : StateMachine<Enemy>
 
     private void Update()
     {
+        //Debug.Log("[FSM] Update »£√‚");
+
         if (Target.IsDead && !(CurrentState is EnemyIdleState))
         {
             ChangeState(IdleState);

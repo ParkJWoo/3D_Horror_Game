@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Resources;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyChasingState : IState<Enemy>
@@ -14,6 +16,7 @@ public class EnemyChasingState : IState<Enemy>
     public void Enter()
     {
         //stateMachine.MovementSpeedModifier = stateMachine.Context.Data.GroundData.WalkSpeedModifier;
+        stateMachine.MovementSpeedModifier = 3f;
         stateMachine.Context.Animator.SetBool(stateMachine.Context.AnimationData.WalkParameterHash, true);
     }
 
@@ -32,22 +35,45 @@ public class EnemyChasingState : IState<Enemy>
 
     public void Update()
     {
-        if(stateMachine.Target.IsDead)
-        {
-            stateMachine.ChangeState(stateMachine.IdleState);
-            return;
-        }
+        // 실제 이동
+        MoveTowardTarget();
 
+        // 상태 전이 체크 (이전 로직)
         float distSqr = (stateMachine.Target.transform.position - stateMachine.Context.transform.position).sqrMagnitude;
 
-        if(distSqr <= Mathf.Pow(stateMachine.Context.Data.AttackRange, 2))
+        float attackRangeSqr = Mathf.Pow(stateMachine.Context.Data.AttackRange, 2);
+
+        if (distSqr <= attackRangeSqr)
         {
             stateMachine.ChangeState(stateMachine.AttackState);
         }
 
-        else if(distSqr > Mathf.Pow(stateMachine.Context.Data.PlayerChasingRange, 2))
+        else if (distSqr > Mathf.Pow(stateMachine.Context.Data.PlayerChasingRange, 2))
         {
             stateMachine.ChangeState(stateMachine.IdleState);
+        }
+    }
+
+    //  실제 이동 처리
+    private void MoveTowardTarget()
+    {
+        Vector3 targetPos = stateMachine.Target.transform.position;
+        Vector3 myPos = stateMachine.Context.transform.position;
+
+        targetPos.y = myPos.y;
+
+        Vector3 dir = (targetPos - myPos).normalized;
+        float moveSpeed = 3f; 
+
+        Vector3 move = dir * moveSpeed * Time.deltaTime;
+
+        stateMachine.Context.Controller.Move(move);
+
+        // 자연스러운 회전도 추가하면 부드럽게 플레이어를 향함
+        if (dir != Vector3.zero)
+        {
+            Quaternion targetRot = Quaternion.LookRotation(dir);
+            stateMachine.Context.transform.rotation = Quaternion.Slerp(stateMachine.Context.transform.rotation, targetRot, 10f * Time.deltaTime);
         }
     }
 }

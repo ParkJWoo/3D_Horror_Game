@@ -23,6 +23,7 @@ public abstract class StateMachine<T> : MonoBehaviour where T : MonoBehaviour
 
     public void ChangeState(IState<T> newState)
     {
+        //Debug.Log($"[FSM] 상태 변경: {CurrentState} -> {newState}");
         CurrentState?.Exit();
         CurrentState = newState;
         CurrentState?.Enter();
