@@ -22,9 +22,13 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 mouseDelta;
 
+    [Header("Death UI")]
+    [SerializeField] private DeathEffectManager deathEffectManager;           //  사망 연출 관리자 연결
+
     [HideInInspector]
     public bool canLook = true;
-    public bool isDead = false;             //  죽었는지 확인하기 위한 bool값 변수
+    public bool isDead = false;                                               //  죽었는지 확인하기 위한 bool값 변수
+
 
     private Rigidbody rigidbody;
     
@@ -163,5 +167,9 @@ public class PlayerController : MonoBehaviour
         ToggleCursor(true);
 
         //  사망 연출 호출
+        if(deathEffectManager != null)
+        {
+            deathEffectManager.PlayDeathSequence();
+        }
     }
 }
