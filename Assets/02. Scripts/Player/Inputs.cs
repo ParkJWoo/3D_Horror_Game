@@ -26,8 +26,10 @@ public class Inputs : MonoBehaviour
         playerInput.Player.Jump.started += controller.OnJumpInput;
         playerInput.Player.Run.performed += controller.OnRunInputPerformed;
         playerInput.Player.Run.canceled += controller.OnRunInputCanceled;
-        playerInput.Player.Inventory.started += controller.OnInventory;
-        playerInput.Player.Interaction.started += controller.OnInteraction;
+        playerInput.Player.Inventory.started += controller.OnInventoryStarted;
+        playerInput.Player.Interaction.started += controller.OnInteractionStarted;
+        playerInput.Player.Flash.started += controller.OnFlashStarted;
+        playerInput.Player.Menu.started += controller.OnMenu;
     }
 
     private void OnDisable()
@@ -40,8 +42,10 @@ public class Inputs : MonoBehaviour
         playerInput.Player.Jump.started -= controller.OnJumpInput;
         playerInput.Player.Run.performed -= controller.OnRunInputPerformed;
         playerInput.Player.Run.canceled -= controller.OnRunInputCanceled;
-        playerInput.Player.Inventory.started -= controller.OnInventory;
-        playerInput.Player.Interaction.started -= controller.OnInteraction;
+        playerInput.Player.Inventory.started -= controller.OnInventoryStarted;
+        playerInput.Player.Interaction.started -= controller.OnInteractionStarted;
+        playerInput.Player.Flash.started -= controller.OnFlashStarted;
+        playerInput.Player.Menu.started -= controller.OnMenu;
 
     }
 }

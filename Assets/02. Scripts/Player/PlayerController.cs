@@ -8,8 +8,8 @@ public class PlayerController : MonoBehaviour
     [Header("Movement")]
     public float moveSpeed;
     public float runSpeed;
-    private bool isRunningInput = false;
-    private Vector2 curMovementInput;
+    public bool isRunningInput = false;
+    public Vector2 curMovementInput;
     public float jumpPower;
     public LayerMask groundLayerMask;
 
@@ -26,10 +26,17 @@ public class PlayerController : MonoBehaviour
     public bool canLook = true;
 
     private Rigidbody rigidbody;
+    private PlayerCondition condition;
+
+    [HideInInspector]
+    public bool isActuallyRunning = false;
+
+    //private Condition con;
 
     private void Awake()
     {
         rigidbody = GetComponent<Rigidbody>();
+        condition = GetComponent<PlayerCondition>();
     }
 
     void Start()
@@ -71,42 +78,60 @@ public class PlayerController : MonoBehaviour
 
     public void OnRunInputPerformed(InputAction.CallbackContext context)
     {
+        if (CharacterManager.Instance.Player.condition.uiCondition.stamina.curValue < 1f) return;
         isRunningInput = true;
     }
 
     public void OnRunInputCanceled(InputAction.CallbackContext context)
     {
         isRunningInput = false;
+
     }
 
     public void OnJumpInput(InputAction.CallbackContext context)
     {
         if (IsGrounded())
-        {
+        { 
             rigidbody.AddForce(Vector2.up * jumpPower, ForceMode.Impulse);
         }
     }
 
-    public void OnInventory(InputAction.CallbackContext context)
+    public void OnInventoryStarted(InputAction.CallbackContext context)
     {
         // 인벤토리 실행 함수
     }
 
-    public void OnInteraction(InputAction.CallbackContext context)
+    public void OnInteractionStarted(InputAction.CallbackContext context)
     {
        // 상호작용 함수
     }
 
+    public void OnFlashStarted(InputAction.CallbackContext context)
+    {
+        // 후레시 함수
+    }
+
+    public void OnMenu(InputAction.CallbackContext context)
+    {
+
+    }
+
     private void Move()
     {
+        //bool staminaAvailable = CharacterManager.Instance.Player.condition.uiCondition.stamina.curValue > 0.1f;
+
+
         bool canRun = isRunningInput && IsGrounded() && curMovementInput.magnitude > 0.1f;
+            //&& staminaAvailable;
+        isActuallyRunning = canRun;
         float speed = canRun ? runSpeed : moveSpeed;
 
         Vector3 dir = transform.forward * curMovementInput.y + transform.right * curMovementInput.x;
+        dir.Normalize();
         dir *= speed;
-        dir.y = rigidbody.velocity.y;
+        Vector3 movement = dir * speed * Time.fixedDeltaTime;
 
-        rigidbody.velocity = dir;
+        rigidbody.MovePosition(rigidbody.position + movement);
     }
 
     void CameraLook()
@@ -118,7 +143,7 @@ public class PlayerController : MonoBehaviour
         transform.eulerAngles += new Vector3(0, mouseDelta.x * lookSensitivity, 0);
     }
 
-    bool IsGrounded()
+    public bool IsGrounded()
     {
         Ray[] rays = new Ray[4]
         {
