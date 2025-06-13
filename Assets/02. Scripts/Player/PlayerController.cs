@@ -37,8 +37,6 @@ public class PlayerController : MonoBehaviour
     [HideInInspector]
     public bool isActuallyRunning = false;
 
-
-
     private void Awake()
     {
         rigidbody = GetComponent<Rigidbody>();
@@ -48,6 +46,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        camCurXRot = 0;
     }
 
     private void FixedUpdate()
@@ -125,8 +124,6 @@ public class PlayerController : MonoBehaviour
     private void Move()
     {
         //bool staminaAvailable = CharacterManager.Instance.Player.condition.uiCondition.stamina.curValue > 0.1f;
-
-
         bool canRun = isRunningInput && IsGrounded() && curMovementInput.magnitude > 0.1f;
             //&& staminaAvailable;
         isActuallyRunning = canRun;
@@ -142,6 +139,9 @@ public class PlayerController : MonoBehaviour
 
     void CameraLook()
     {
+        // 좌우(Y) 회전은 transform(Y축)에만 직접 적용
+        //transform.Rotate(Vector3.up * mouseDelta.x * lookSensitivity * Time.deltaTime);
+
         camCurXRot += mouseDelta.y * lookSensitivity;
         camCurXRot = Mathf.Clamp(camCurXRot, minXLook, maxXLook);
         cameraContainer.localEulerAngles = new Vector3(-camCurXRot, 0, 0);
