@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Timers;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -21,6 +22,12 @@ public class Inventory
         itemManager = PlaySceneManager.instance.itemManager;
         inventoryMaxSize = 5;
         invenItems = new ItemInstance[inventoryMaxSize];
+    }
+
+    public ItemInstance GetItem(DropItem dropItem)
+    {
+        ItemInstance getItem = new ItemInstance(dropItem.item, dropItem.quantity, dropItem.durability);
+        return AddItem(getItem);
     }
 
     public ItemInstance AddItem(ItemInstance newItem)
@@ -81,10 +88,11 @@ public class Inventory
                 selectItem.ChangeQuantity(-1);
                 foreach (ItemEffect itemEffect in consumableItem.itemEffect)
                 {
-                    //player.stat.ApplayItemEffect(itemEffect);
+                    //player.condition.ApplayItemEffect(itemEffect);
                 }
                 break;
             case ItemType.useable:
+                //player.Equipment.()
                 break;
         }
 

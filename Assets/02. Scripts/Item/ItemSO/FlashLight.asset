@@ -15,6 +15,7 @@ MonoBehaviour:
   itemCode: 0
   itemName: "\uC190\uC804\uB4F1"
   itemDescription: "\uC5B4\uB460\uC744 \uBC1D\uD790 \uC218 \uC788\uC744\uAC70 \uAC19\uB2E4.."
+  itemDetailDescription: 
   itemImage: {fileID: 0}
   canStack: 0
   maxQuantity: 1
@@ -24,4 +25,5 @@ MonoBehaviour:
   health: 0
   stamina: 0
   moveSpeed: 0
+  maxDurability: 100
   equipModelPrefab: {fileID: 0}

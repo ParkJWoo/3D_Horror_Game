@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 9085381299941405005}
   - component: {fileID: 2900167880833746634}
   - component: {fileID: 3910026991155993289}
-  m_Layer: 0
+  - component: {fileID: 1663672760654826996}
+  m_Layer: 9
   m_Name: FlashLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.068, z: 0.915}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3093811006328747953}
@@ -100,10 +101,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49a10a9de93d32542b967175616f2717, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item:
-    itemData: {fileID: 11400000, guid: f94696e123d365d42a7ae76db416a4fb, type: 2}
-    quantity: 1
-    durability: 100
+  itemData: {fileID: 11400000, guid: f94696e123d365d42a7ae76db416a4fb, type: 2}
+  quantity: 1
+--- !u!64 &1663672760654826996
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5323142598560072563}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 2584093662464022575, guid: 45ef1708f3745d3448f8b0f74f4c0763, type: 3}
 --- !u!1 &6763484964037395802
 GameObject:
   m_ObjectHideFlags: 0

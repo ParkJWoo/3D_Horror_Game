@@ -4,44 +4,33 @@ using UnityEngine;
 
 public class DropItem : MonoBehaviour, IInteractable
 {
-    private Player player => CharacterManager.Instance.Player;
-    public ItemInstance item;
+    public ItemData item;
+    public int quantity;
+    public float durability;
 
     public event Action<IInteractable> OnInteracted;
 
     public void Init(ItemInstance item)
     {
-        this.item = item;
+        this.item = item.itemData;
+        this.quantity = item.quantity;
+        this.durability = item.durability;
     }
 
     public void OnInteraction()
     {
-        switch (item.itemData.itemType)
-        {
-            case ItemType.equip:
-                EquipItemInteraction();
-                break;
-            
-            default:
-                OtherItemInteraction();
-                break;
-        }
-        
-        OnInteracted?.Invoke(this);
-    }
+        ItemInstance returnItem = CharacterManager.Instance.Player.Inventory.GetItem(this);
 
-    private void EquipItemInteraction()
-    {
-        player.Equipment.OnEquip(item, transform);
-    }
-
-    private void OtherItemInteraction()
-    {
-        item = player.Inventory.AddItem(item);
-        if (item == null)
+        if(returnItem == null)
         {
             Destroy(gameObject);
         }
+        else
+        {
+            quantity = returnItem.quantity;
+        }
+
+        OnInteracted?.Invoke(this);
     }
 
     public void SetInterface(bool active)

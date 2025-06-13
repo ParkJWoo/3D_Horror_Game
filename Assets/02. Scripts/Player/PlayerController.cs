@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -37,17 +37,23 @@ public class PlayerController : MonoBehaviour
     [HideInInspector]
     public bool isActuallyRunning = false;
 
-
+    [Header("Interaction Data")]
+    public LayerMask interactionMask;
+    private Interaction interaction;
+    [SerializeField] private float maxInteractionDistance = 5;
 
     private void Awake()
     {
         rigidbody = GetComponent<Rigidbody>();
         condition = GetComponent<PlayerCondition>();
+
+        interaction = new Interaction(maxInteractionDistance, interactionMask);
     }
 
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        InvokeRepeating(nameof(GetInteraction), 0, 0.2f);
     }
 
     private void FixedUpdate()
@@ -109,7 +115,12 @@ public class PlayerController : MonoBehaviour
 
     public void OnInteractionStarted(InputAction.CallbackContext context)
     {
-       // 상호작용 함수
+        interaction.OnInteraction();
+    }
+
+    public void GetInteraction()
+    {
+        interaction.GetInteraction();
     }
 
     public void OnFlashStarted(InputAction.CallbackContext context)
