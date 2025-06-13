@@ -7,6 +7,7 @@ public abstract class ItemData : ScriptableObject
     public int itemCode;
     public string itemName;
     public string itemDescription;
+    public string itemDetailDescription;
 
     public Sprite itemImage;
 
@@ -22,5 +23,5 @@ public enum ItemType
 {
     equip,
     consumable,
-    material
+    useable
 }

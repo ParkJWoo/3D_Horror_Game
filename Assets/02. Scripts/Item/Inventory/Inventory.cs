@@ -18,15 +18,13 @@ public class Inventory
     public Inventory(Player player)
     {
         this.player = player;
-        //itemManager = GameManager.Instance.itemManager;
-        inventoryMaxSize = 16;
+        itemManager = PlaySceneManager.instance.itemManager;
+        inventoryMaxSize = 5;
         invenItems = new ItemInstance[inventoryMaxSize];
     }
 
-    public bool AddItem(ItemInstance newItem, out int usedQuantity)
+    public ItemInstance AddItem(ItemInstance newItem)
     {
-        usedQuantity = 0;
-
         if (newItem.itemData.canStack)
         {
             var sameItems = invenItems.Where(i => i != null && i.itemData == newItem.itemData);
@@ -44,16 +42,15 @@ public class Inventory
 
                     if (newItem.quantity > stackAbleQuntity)
                     {
-                        invenItem.ChangeQauntity(stackAbleQuntity);
-                        newItem.ChangeQauntity(-stackAbleQuntity);
-                        usedQuantity += stackAbleQuntity;
+                        invenItem.ChangeQuantity(stackAbleQuntity);
+                        newItem.ChangeQuantity(-stackAbleQuntity);
                         OnInventoryUpdate?.Invoke(slotNum, invenItem);
                     }
                     else
                     {
-                        invenItem.ChangeQauntity(newItem.quantity);
+                        invenItem.ChangeQuantity(newItem.quantity);
                         OnInventoryUpdate?.Invoke(slotNum, invenItem);
-                        return true;
+                        return null;
                     }
                 }
             }
@@ -66,27 +63,11 @@ public class Inventory
                 invenItems[i] = newItem;
                 Debug.Log(newItem.itemData.itemName);
                 OnInventoryUpdate?.Invoke(i, newItem);
-                return true;
+                return null;
             }
         }
 
-        return false;
-    }
-
-    public bool AddItem(ItemInstance newItem)
-    {
-        for (int i = 0; i < invenItems.Length; i++)
-        {
-            if (invenItems[i] == null)
-            {
-                invenItems[i] = newItem;
-                Debug.Log(newItem.itemData.itemName);
-                OnInventoryUpdate?.Invoke(i, newItem);
-                return true;
-            }
-        }
-
-        return false;
+        return newItem;
     }
 
     public void UseItem()
@@ -95,26 +76,19 @@ public class Inventory
 
         switch (selectItem.itemData.itemType)
         {
-            case ItemType.equip:
-
-                //if (player.equipment.OnEquip(selectItem))
-                //{
-                //    RemoveItem(selectSlotNum);
-                //}
-                break;
             case ItemType.consumable:
                 ConsumItemData consumableItem = selectItem.itemData as ConsumItemData;
-                selectItem.ChangeQauntity(-1);
+                selectItem.ChangeQuantity(-1);
                 foreach (ItemEffect itemEffect in consumableItem.itemEffect)
                 {
                     //player.stat.ApplayItemEffect(itemEffect);
                 }
                 break;
-            case ItemType.material:
+            case ItemType.useable:
                 break;
         }
 
-        if (selectItem.itemData.itemType != ItemType.equip && selectItem.quantity == 0)
+        if (selectItem.quantity == 0)
         {
             RemoveItem(selectSlotNum);
         }
@@ -128,26 +102,20 @@ public class Inventory
 
         switch (invenItems[slotNum].itemData.itemType)
         {
-            case ItemType.equip:
-
-                //if (player.equipment.OnEquip(invenItems[slotNum]))
-                //{
-                //    RemoveItem(slotNum);
-                //}
-                break;
             case ItemType.consumable:
                 ConsumItemData consumableItem = invenItems[slotNum].itemData as ConsumItemData;
-                invenItems[slotNum].ChangeQauntity(-1);
+                invenItems[slotNum].ChangeQuantity(-1);
                 foreach (ItemEffect itemEffect in consumableItem.itemEffect)
                 {
                     //player.stat.ApplayItemEffect(itemEffect);
                 }
                 break;
-            case ItemType.material:
+            case ItemType.useable:
+
                 break;
         }
 
-        if (invenItems[slotNum] == null || invenItems[slotNum].quantity == 0)
+        if (invenItems[slotNum].quantity == 0)
         {
             RemoveItem(slotNum);
         }

@@ -12,12 +12,22 @@ public class Player : MonoBehaviour
     public Equipment Equipment => equipment;
     private Equipment equipment;
 
+    public Inputs PlayerInput => playerInput;
+    private Inputs playerInput;
+
+    public Transform equipPos;
+
     void Awake()
     {
         CharacterManager.Instance.Player = this;
+        playerInput = GetComponent<Inputs>();
         controller = GetComponent<PlayerController>();
+    }
 
+    public void Init()
+    {
         inventory = new Inventory(this);
         equipment = GetComponent<Equipment>();
+        equipment.Init(this);
     }
 }

@@ -24,7 +24,6 @@ public class InvenSlot : MonoBehaviour, IPointerClickHandler
 
     public Sprite emptySprite;
 
-    public UnityAction<int, int> OnSwapHandler;
     public UnityAction<InvenSlot> OnDropHandler;
 
 

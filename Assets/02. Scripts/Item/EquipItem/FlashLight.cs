@@ -20,14 +20,6 @@ public class FlashLight : EquipItemHandler
         consumptionPerTick = -0.1f;
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.F)) 
-        {
-            UseItem();
-        }
-    }
-
     public override void UseItem()
     {
         Toggle();

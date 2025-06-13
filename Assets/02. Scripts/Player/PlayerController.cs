@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -89,7 +89,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnInventory(InputAction.CallbackContext context)
     {
-        // 인벤토리 실행 함수
+       
     }
 
     public void OnInteraction(InputAction.CallbackContext context)
