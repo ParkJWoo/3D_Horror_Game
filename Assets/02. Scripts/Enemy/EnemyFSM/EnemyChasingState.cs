@@ -36,20 +36,24 @@ public class EnemyChasingState : IState<Enemy>
 
     public void Update()
     {
+        //  플레이어가 죽었으면 Idle 상태로 전환
         if(stateMachine.Context.PlayerController.isDead)
         {
             stateMachine.ChangeState(stateMachine.IdleState);
             return;
         }
 
+        //  거리 계산
         float distance = Vector3.Distance(stateMachine.Context.PlayerTransform.position, stateMachine.Context.transform.position);
 
+        //  공격 범위 진입 → 공격 상태 전이
         if (distance <= stateMachine.Context.Data.AttackRange)
         {
             stateMachine.ChangeState(stateMachine.AttackState);
             return;
         }
 
+        //  도망 거리를 넘으면 추적 중단
         if(distance > stateMachine.Context.Data.PlayerChasingRange)
         {
             stateMachine.ChangeState(stateMachine.IdleState);
