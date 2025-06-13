@@ -27,7 +27,6 @@ public class PlayerController : MonoBehaviour
     public bool isDead = false;             //  죽었는지 확인하기 위한 bool값 변수
 
     private Rigidbody rigidbody;
-
     
 
     private void Awake()

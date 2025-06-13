@@ -15,6 +15,5 @@ public class EnemySO : ScriptableObject
     [field: SerializeField][field:Range(0f,1f)] public float Scream_Start_TransitionTime { get; private set; }
     [field: SerializeField][field: Range(0f, 1f)] public float Scream_End_TransitionTime { get; private set; }
 
-    public CinemachineVirtualCamera CloseupCamera;      //  공격 시 카메라 클로즈업용
     [field: SerializeField] public AudioClip ScreamClip; //  공격 효과음
 }
