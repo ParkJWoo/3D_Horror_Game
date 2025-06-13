@@ -14,7 +14,12 @@ public class ItemInstance
         this.durability = durablility;
     }
 
-    public void ChangeQauntity(int quantity)
+    public virtual void UseItem() 
+    { 
+    
+    }
+
+    public void ChangeQuantity(int quantity)
     {
         this.quantity += quantity;
     }
