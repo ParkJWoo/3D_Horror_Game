@@ -15,36 +15,56 @@ public class DeathEffectManager : MonoBehaviour
 
     private void Awake()
     {
+        //  패널은 항상 Active 상태로
+        //  시작 시, 완전히 투명, 이미지는 표시할 것
         deathPanelGroup.alpha = 0;
-        deadImage.enabled = false;
+
+        if(deadImage != null)
+        {
+            deadImage.enabled = true;
+        }
     }
 
     public void PlayDeathSequence()
     {
-        StartCoroutine(DeathRoutine());
+        //  활성화 상태일 때만 코루틴 실행할 것!
+        if (gameObject.activeInHierarchy)
+        {
+            StartCoroutine(DeathRoutine());
+        }
     }
 
     private IEnumerator DeathRoutine()
     {
-        //  검은 화면 페이드 인
-        float timer = 0f;
-        deathPanelGroup.gameObject.SetActive(true);
-        deadImage.enabled = true;
+        deathPanelGroup.alpha = 0f;
 
-        while (timer < 1f)
+        float timer = 0f;
+
+        while (timer < 2f)
         {
-            timer += Time.unscaledDeltaTime;
-            deathPanelGroup.alpha = Mathf.Lerp(0, 1, timer / 1f);
+            timer += Time.unscaledDeltaTime * fadeSpeed;
+            float time = Mathf.Clamp01(timer / 1f);
+
+            //  더 부드러운 곡선형태로 띄움 (SineInOut)
+            float eased = 0.5f - 0.5f * Mathf.Cos(Mathf.PI * time);
+            deathPanelGroup.alpha = eased;
+
+            //  옵션 (안 넣어도 됨) 붉은 빛 강조
+            if(deadImage != null)
+            {
+                deadImage.color = Color.Lerp(Color.clear, new Color(0.8f, 0, 0, 1), eased);
+            }
+
             yield return null;
         }
 
-        ////  사망 효과음 재생
-        //if(audioSource && deathSFX)
-        //{
-        //    audioSource.PlayOneShot(deathSFX);
-        //}
+        deathPanelGroup.alpha = 1f;
 
-        //  게임 정지
+        if(deadImage != null)
+        {
+            deadImage.color = new Color(0.8f, 0, 0, 1);
+        }
+
         Time.timeScale = 0f;
     }
 }

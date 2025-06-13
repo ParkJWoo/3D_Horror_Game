@@ -16,5 +16,6 @@ public class EquipItemData : ItemData
 
 public enum EquipType
 {
-    flashLight
+    visibleEquip,
+    totalData
 }

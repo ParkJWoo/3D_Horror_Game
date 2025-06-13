@@ -5,7 +5,6 @@ using UnityEngine;
 public class EnemyIdleState : IState<Enemy>
 {
     private EnemyStateMachine stateMachine;
-
     public EnemyIdleState(EnemyStateMachine sm)
     {
         stateMachine = sm;
@@ -13,7 +12,7 @@ public class EnemyIdleState : IState<Enemy>
 
     public void Enter()
     {
-        stateMachine.MovementSpeedModifier = 0f;
+        stateMachine.Context.Agent.isStopped = true;
         stateMachine.Context.Animator.SetBool(stateMachine.Context.AnimationData.IdleParameterHash, true);
     }
 
@@ -24,15 +23,17 @@ public class EnemyIdleState : IState<Enemy>
 
     public void HandleInput()
     {
+        throw new System.NotImplementedException();
     }
 
     public void PhysicsUpdate()
     {
+        throw new System.NotImplementedException();
     }
 
     public void Update()
     {
-        if(!stateMachine.Target.IsDead && IsInChasingRange())
+        if(!stateMachine.Context.PlayerController.isDead && IsInChasingRange())
         {
             stateMachine.ChangeState(stateMachine.ChasingState);
         }
@@ -40,7 +41,10 @@ public class EnemyIdleState : IState<Enemy>
 
     private bool IsInChasingRange()
     {
-        float distSqr = (stateMachine.Target.transform.position - stateMachine.Context.transform.position).sqrMagnitude;
-        return distSqr <= stateMachine.Context.Data.PlayerChasingRange * stateMachine.Context.Data.PlayerChasingRange;
+        float distSqr = (stateMachine.Context.PlayerTransform.position - stateMachine.Context.transform.position).sqrMagnitude;
+
+        float chaseRange = stateMachine.Context.Data.PlayerChasingRange;
+
+        return distSqr <= chaseRange * chaseRange;
     }
 }

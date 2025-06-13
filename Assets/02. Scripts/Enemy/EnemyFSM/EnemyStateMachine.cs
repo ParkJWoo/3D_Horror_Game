@@ -1,54 +1,32 @@
-using System.Collections;
+Ôªøusing System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyStateMachine : StateMachine<Enemy>
 {
-    public EnemyIdleState IdleState { get; private set; }
-    public EnemyChasingState ChasingState { get; private set; }
-    public EnemyAttackState AttackState { get; private set; }
+    public Enemy Context { get; }
+    public EnemyIdleState IdleState { get; }
+    public EnemyChasingState ChasingState { get; }
+    public EnemyAttackState AttackState { get; }
+    private IState<Enemy> currentState;
 
-    public float MovementSpeed { get; private set; }
-    public float RotationDamping { get; private set; }
-    public float MovementSpeedModifier { get; set; } = 1f;
-
-    public Health Target { get; private set; }
-
-    protected override void Awake()
+    public EnemyStateMachine(Enemy context)
     {
-        base.Awake();
-
-        Target = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>();
+        Context = context;
         IdleState = new EnemyIdleState(this);
         ChasingState = new EnemyChasingState(this);
         AttackState = new EnemyAttackState(this);
-
-        MovementSpeed = 1f;
-
-        //MovementSpeed = Context.Data.GroundData.BaseSpeed;
-        //RotationDamping = Context.Data.GrondData.BaseRotationDamping;
     }
 
-    private void Start()
+    public void ChangeState(IState<Enemy> newState)
     {
-        ChangeState(IdleState);
+        currentState?.Exit();
+        currentState = newState;
+        currentState.Enter();
     }
 
-    private void Update()
+    public void UpdateState()
     {
-        //Debug.Log("[FSM] Update »£√‚");
-
-        if (Target.IsDead && !(CurrentState is EnemyIdleState))
-        {
-            ChangeState(IdleState);
-            return;
-        }
-
-        UpdateState();
-    }
-
-    private void FixedUpdate()
-    {
-        PhysicsUpdateState();
+        currentState?.Update();
     }
 }
