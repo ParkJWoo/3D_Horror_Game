@@ -153,6 +153,8 @@ GameObject:
   - component: {fileID: 6283114858337577392}
   - component: {fileID: 1174066053836978019}
   - component: {fileID: -2807403058829962312}
+  - component: {fileID: 7006864662569190889}
+  - component: {fileID: 1033513462184259737}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -270,6 +272,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 0}
+  condition: {fileID: 0}
+  equipPos: {fileID: 0}
 --- !u!114 &6283114858337577392
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -282,7 +286,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a72015a256fe5034f8078e8a377ee8e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
+  moveSpeed: 1.8
+  runSpeed: 2.1
+  isRunningInput: 0
+  curMovementInput: {x: 0, y: 0}
   jumpPower: 3
   groundLayerMask:
     serializedVersion: 2
@@ -291,7 +298,10 @@ MonoBehaviour:
   minXLook: -90
   maxXLook: 90
   lookSensitivity: 0.1
+  deathEffectManager: {fileID: 0}
   canLook: 1
+  isDead: 0
+  isActuallyRunning: 0
 --- !u!114 &1174066053836978019
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -311,7 +321,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4796091302060529372}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0375bc82b7aa4bda99bfd5749f7670a0, type: 3}
   m_Name: 
@@ -323,6 +333,34 @@ MonoBehaviour:
   - {fileID: 0}
   footStepThreshold: 0
   footStepRate: 0
+--- !u!114 &7006864662569190889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4796091302060529372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 015dfb173af3a994992c9f1e68328f57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiCondition: {fileID: 0}
+--- !u!114 &1033513462184259737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4796091302060529372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce443a6318a26e84c9707fc56b0568be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  equipItems: []
+  equipWeaponObj: {fileID: 0}
 --- !u!1 &5072358907872215000
 GameObject:
   m_ObjectHideFlags: 0
@@ -348,7 +386,7 @@ Transform:
   m_GameObject: {fileID: 5072358907872215000}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.6, z: 0}
+  m_LocalPosition: {x: 0, y: 0.6, z: -0.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

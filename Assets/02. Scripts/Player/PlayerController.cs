@@ -189,6 +189,7 @@ public class PlayerController : MonoBehaviour
         canLook = false;
         curMovementInput = Vector2.zero;
         rigidbody.velocity = Vector3.zero;
+        //rigidbody.MovePosition(Vector3.zero);
         ToggleCursor(true);
 
         //  사망 연출 호출
