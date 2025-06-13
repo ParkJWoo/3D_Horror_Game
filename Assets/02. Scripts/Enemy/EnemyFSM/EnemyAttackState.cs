@@ -16,6 +16,9 @@ public class EnemyAttackState : IState<Enemy>
     {
         alreadyAttacked = false;
 
+        //  공격 직전 슬랜더맨을 플레이어 쪽으로 강제 회전
+        SetCloseupCameraPoint();
+
         //  슬랜더맨 이동 멈춤
         stateMachine.Context.Agent.isStopped = true;
 
@@ -31,7 +34,6 @@ public class EnemyAttackState : IState<Enemy>
         //  클로즈업 카메라 전환
         SetCloseupCameraPriority(30);
 
-        //  공격 연출 코루틴 시작
         stateMachine.Context.StartCoroutine(AttackSequence());
     }
 
@@ -83,4 +85,30 @@ public class EnemyAttackState : IState<Enemy>
         }
     }
 
+    private void SetCloseupCameraPoint()
+    {
+        var head = stateMachine.Context.HeadTransform;              //  제발 정면을 향해 바라봐주세요 ㅠㅠ
+        var camPoint = stateMachine.Context.CloseupCamPoint;        //  공격 연출 카메라 포인트
+
+        float camOffset = 0.8f;
+
+        //  Head 정면 camOffset 만큼 앞에 카메라 포인트 위치
+        Vector3 camPos = head.position + head.forward * camOffset;
+
+        //  벽 Raycast 체크
+        RaycastHit hit;
+        Vector3 dir = head.forward;
+        Vector3 desiredPos = camPos;
+
+        if(Physics.Raycast(head.position, dir, out hit, camOffset, LayerMask.GetMask("Default")))
+        {
+            //  벽이 있으면 살짝 앞에 세움
+            desiredPos = hit.point - dir * 0.05f;
+        }
+
+        camPoint.position = desiredPos;
+
+        //  카메라가 Head를 바라보게 해주세요 ㅠㅠ
+        camPoint.LookAt(head.position);
+    }
 }

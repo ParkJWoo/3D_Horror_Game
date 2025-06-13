@@ -14,6 +14,9 @@ public class Enemy : MonoBehaviour
     public AudioSource AudioSource { get; private set; }
     public EnemyStateMachine StateMachine { get; private set; }
 
+    public Transform HeadTransform;
+    public Transform CloseupCamPoint;
+
     public Cinemachine.CinemachineVirtualCamera CloseupCamera; //  공격 시 카메라 클로즈업용
 
     public Transform PlayerTransform { get; private set; }
@@ -30,7 +33,6 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
-
         PlayerController = CharacterManager.Instance.Player.controller;
         PlayerTransform = PlayerController.transform;
 

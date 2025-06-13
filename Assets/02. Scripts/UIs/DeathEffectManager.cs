@@ -40,7 +40,7 @@ public class DeathEffectManager : MonoBehaviour
 
         float timer = 0f;
 
-        while (timer < 1f)
+        while (timer < 2f)
         {
             timer += Time.unscaledDeltaTime * fadeSpeed;
             float time = Mathf.Clamp01(timer / 1f);
