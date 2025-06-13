@@ -24,13 +24,14 @@ public class Enemy : MonoBehaviour
         Agent = GetComponent<NavMeshAgent>();
         AudioSource = GetComponent<AudioSource>();
         StateMachine = new EnemyStateMachine(this);
-
-        PlayerController = CharacterManager.Instance.Player.controller;
-        PlayerTransform = PlayerController.transform;
     }
 
     private void Start()
     {
+
+        PlayerController = CharacterManager.Instance.Player.controller;
+        PlayerTransform = PlayerController.transform;
+
         StateMachine.ChangeState(StateMachine.IdleState);
     }
 
