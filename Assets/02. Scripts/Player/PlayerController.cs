@@ -22,16 +22,22 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 mouseDelta;
 
+    [Header("Death UI")]
+    [SerializeField] private DeathEffectManager deathEffectManager;           //  사망 연출 관리자 연결
+
     [HideInInspector]
     public bool canLook = true;
+    public bool isDead = false;                                               //  죽었는지 확인하기 위한 bool값 변수
+
 
     private Rigidbody rigidbody;
+
     private PlayerCondition condition;
 
     [HideInInspector]
     public bool isActuallyRunning = false;
 
-    //private Condition con;
+
 
     private void Awake()
     {
@@ -98,7 +104,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnInventoryStarted(InputAction.CallbackContext context)
     {
-        // 인벤토리 실행 함수
+       
     }
 
     public void OnInteractionStarted(InputAction.CallbackContext context)
@@ -171,5 +177,24 @@ public class PlayerController : MonoBehaviour
         canLook = !toggle;
     }
 
-    
+    //  즉사 함수
+    public void Die()
+    {
+        if(isDead)
+        {
+            return;
+        }
+
+        //  조작 정지
+        canLook = false;
+        curMovementInput = Vector2.zero;
+        rigidbody.velocity = Vector3.zero;
+        ToggleCursor(true);
+
+        //  사망 연출 호출
+        if(deathEffectManager != null)
+        {
+            deathEffectManager.PlayDeathSequence();
+        }
+    }
 }

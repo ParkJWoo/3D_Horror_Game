@@ -4,19 +4,21 @@ using UnityEngine;
 public class ItemManager : MonoBehaviour
 {
     public List<ItemData> allItems;
-    public Dictionary<int, ItemData> allItemDictionary = new Dictionary<int, ItemData>();
+    public Dictionary<int, ItemData> itemDataBase;
 
     public List<DropItem> filedItem = new List<DropItem>();
 
     public void Init()
     {
-        foreach (var item in allItems)
+        if (itemDataBase == null)
         {
-            allItemDictionary[item.itemCode] = item;
+            itemDataBase = new Dictionary<int, ItemData>();
+            foreach (var item in allItems)
+            {
+                itemDataBase[item.itemCode] = item;
+            }
         }
     }
-
-
 
     public void DropItem(ItemInstance item, Vector3 position)
     {
