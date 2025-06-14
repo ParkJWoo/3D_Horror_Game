@@ -8,10 +8,12 @@ public class PlayerController : MonoBehaviour
     [Header("Movement")]
     public float moveSpeed;
     public float runSpeed;
+    public float exhaustionSpeed = 1f;
     public bool isRunningInput = false;
     public Vector2 curMovementInput;
     public float jumpPower;
     public LayerMask groundLayerMask;
+    public bool isMoving=false;
 
     [Header("Look")]
     public Transform cameraContainer;
@@ -48,6 +50,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        //camCurXRot = 0;
     }
 
     private void FixedUpdate()
@@ -75,11 +78,14 @@ public class PlayerController : MonoBehaviour
     public void OnMoveInputPerformed(InputAction.CallbackContext context)
     {
         curMovementInput = context.ReadValue<Vector2>();
+        isMoving = true;
+
     }
 
     public void OnMoveInputCanceled(InputAction.CallbackContext context)
     {
         curMovementInput = Vector2.zero;
+        isMoving = false;
     }
 
     public void OnRunInputPerformed(InputAction.CallbackContext context)
@@ -122,15 +128,21 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    private void Move()
+    public void Move()
     {
-        //bool staminaAvailable = CharacterManager.Instance.Player.condition.uiCondition.stamina.curValue > 0.1f;
-
-
         bool canRun = isRunningInput && IsGrounded() && curMovementInput.magnitude > 0.1f;
-            //&& staminaAvailable;
         isActuallyRunning = canRun;
-        float speed = canRun ? runSpeed : moveSpeed;
+
+        float speed;
+
+        if (condition.isExhausted)
+        {
+            speed = exhaustionSpeed;  // 탈진 이동속도
+        }
+        else
+        {
+            speed = canRun ? runSpeed : moveSpeed;
+        }
 
         Vector3 dir = transform.forward * curMovementInput.y + transform.right * curMovementInput.x;
         dir.Normalize();

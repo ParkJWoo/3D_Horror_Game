@@ -11,6 +11,8 @@ public class Condition : MonoBehaviour
     public float passiveValue;
     private float useValue = 3f;
     public Image uiBar;
+    public Image icon;
+
 
     private void Start()
     {
