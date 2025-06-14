@@ -11,8 +11,6 @@ public class EquipItemData : ItemData
     public int stamina;
     public int moveSpeed;
 
-    public int maxDurability;
-
     public GameObject equipModelPrefab;
 }
 

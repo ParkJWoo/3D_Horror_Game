@@ -4,9 +4,11 @@ using UnityEngine.InputSystem;
 
 public class InventoryUI : MonoBehaviour
 {
-    private Inventory inventory;
     private Player player;
 
+    private Inventory inventory;
+    private InventoryDetailView inventoryDetailView;
+   
     public Transform invenSlotPosition;
     public InvenSlot invenSlotPrefab;
 
@@ -22,6 +24,7 @@ public class InventoryUI : MonoBehaviour
         inventory = player.Inventory;
         player.PlayerInput.playerInput.Player.Inventory.started += Toggle;
         inventory.OnInventoryUpdate += OnUpdateSlot;
+        inventoryDetailView = PlaySceneManager.instance.uiManager.inventoryDetailView;
 
         for (int i = 0; i < inventory.inventoryMaxSize; i++)
         {
@@ -29,6 +32,7 @@ public class InventoryUI : MonoBehaviour
             invenSlots[i].Init(i);
             invenSlots[i].UpdateSlot(inventory.invenItems[i]);
             invenSlots[i].OnSelectSlotHandler += OnSelectSlot;
+            invenSlots[i].OnDeselectSlotHandler += inventoryDetailView.SetDetailInfo;
             invenSlots[i].OnDeselectSlotHandler += OnDeselectSlot;
             invenSlots[i].OnUseSlotHandler += OnUseSlot;
             invenSlots[i].OnDropHandler += OnDropItem;
@@ -87,6 +91,7 @@ public class InventoryUI : MonoBehaviour
         this.selectSlot?.DeselectSlot();
         this.selectSlot = selectSlot;
         inventory.SelectItem(selectSlot);
+        
     }
 
     public void OnDeselectSlot(InvenSlot deselectSlot)
@@ -103,5 +108,10 @@ public class InventoryUI : MonoBehaviour
     private void OnDropItem(InvenSlot dropSlot)
     {
         inventory.OnDrop(dropSlot.slotNum);
+    }
+
+    private void OnDestroy()
+    {
+        player.PlayerInput.playerInput.Player.Inventory.started -= Toggle;
     }
 }

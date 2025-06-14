@@ -34,7 +34,6 @@ public class InventoryDetailView : MonoBehaviour
     public void OpenUI()
     {
         gameObject.SetActive(true);
-        inventoryUI.HideUI();
     }
 
     public void CloseUI()
@@ -42,7 +41,6 @@ public class InventoryDetailView : MonoBehaviour
         gameObject.SetActive(false);
         detailItemImage.sprite = emptyImage;
         detailDescription.text = "";
-        //inventoryUI.OpenUI();
     }
 
     public void SetDetailInfo(InvenSlot invenSlot)
@@ -55,7 +53,7 @@ public class InventoryDetailView : MonoBehaviour
             detailItemImage.sprite = itemData.itemImage;
             detailDescription.text = itemData.itemDetailDescription;
 
-            useButton.gameObject.SetActive(itemData.itemType == ItemType.consumable);
+            useButton.gameObject.SetActive(ActiveUseButton(itemData));
         }
         else
         {
@@ -92,5 +90,12 @@ public class InventoryDetailView : MonoBehaviour
         {
             CloseUI();
         }
+    }
+
+    public bool ActiveUseButton(ItemData itemData)
+    {
+        if (itemData.itemType == ItemType.consumable) return true;
+        if (itemData.itemType == ItemType.battery) return true;
+        return false;
     }
 }

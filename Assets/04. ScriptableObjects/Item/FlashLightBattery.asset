@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cbf30d5cc9053a479234f1a400a1726, type: 3}
+  m_Name: FlashLightBattery
+  m_EditorClassIdentifier: 
+  itemCode: 1
+  itemName: "\uC190\uC804\uB4F1 \uBCA0\uD130\uB9AC"
+  itemDescription: "\uC190\uC804\uB4F1 \uC794\uB7C9\uC744 \uCC44\uC6CC\uC90D\uB2C8\uB2E4."
+  itemDetailDescription: 
+  itemImage: {fileID: 0}
+  canStack: 1
+  maxQuantity: 3
+  maxDurability: 0
+  dropItemPrefab: {fileID: 0}
+  burabilityData:
+    burabiliyType: 0
+    amount: 30

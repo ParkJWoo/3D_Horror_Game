@@ -27,7 +27,16 @@ public class Inventory
     public ItemInstance GetItem(DropItem dropItem)
     {
         ItemInstance getItem = new ItemInstance(dropItem.item, dropItem.quantity, dropItem.durability);
-        return AddItem(getItem);
+
+        if (dropItem.item.itemType == ItemType.equip)
+        {
+            player.Equipment.OnEquip(getItem, dropItem.transform);
+            return null;
+        }
+        else
+        {
+            return AddItem(getItem);
+        }
     }
 
     public ItemInstance AddItem(ItemInstance newItem)
@@ -88,11 +97,10 @@ public class Inventory
                 selectItem.ChangeQuantity(-1);
                 foreach (ItemEffect itemEffect in consumableItem.itemEffect)
                 {
-                    //player.condition.ApplayItemEffect(itemEffect);
+                    player.ApplyUseItem(itemEffect);
                 }
                 break;
-            case ItemType.useable:
-                //player.Equipment.()
+            case ItemType.battery:
                 break;
         }
 
@@ -119,7 +127,13 @@ public class Inventory
                 }
                 break;
             case ItemType.useable:
-
+                break;
+            case ItemType.battery:
+                BatteryItemData batteryItemData = invenItems[slotNum].itemData as BatteryItemData;
+                if (player.Equipment.equipItemHandler.RecoverDurability(batteryItemData.burabilityData))
+                {
+                    invenItems[slotNum].ChangeQuantity(-1);
+                }
                 break;
         }
 

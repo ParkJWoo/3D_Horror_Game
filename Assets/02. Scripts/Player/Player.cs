@@ -19,6 +19,8 @@ public class Player : MonoBehaviour
 
     public Transform equipPos;
 
+    private Dictionary<ItemEffectType, ApplyItemEffect> applyItemeffectDictionary = new Dictionary<ItemEffectType, ApplyItemEffect>();
+
     void Awake()
     {
         CharacterManager.Instance.Player = this;
@@ -32,5 +34,20 @@ public class Player : MonoBehaviour
         inventory = new Inventory(this);
         equipment = GetComponent<Equipment>();
         equipment.Init(this);
+        RegistedApplyItemEffect();
+    }
+
+    public void ApplyUseItem(ItemEffect itemEffect)
+    {
+        if (applyItemeffectDictionary.TryGetValue(itemEffect.itemEffectType, out ApplyItemEffect applyItemEffect)) 
+        {
+            applyItemEffect.ApplyItem(itemEffect);
+        }
+    }
+
+    private void RegistedApplyItemEffect()
+    {
+       applyItemeffectDictionary[ItemEffectType.moveSpeed] = new ApplyMoveSpeedEffect(this);
+       applyItemeffectDictionary[ItemEffectType.stamina] = new ApplyStaminaEffect(this);
     }
 }

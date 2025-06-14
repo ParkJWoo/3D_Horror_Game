@@ -19,8 +19,8 @@ public class ItemEffect
 
 public enum ItemEffectType
 {
-    health,
     stamina,
-    moveSpeed
+    moveSpeed,
+    staminaRegen
 }
 

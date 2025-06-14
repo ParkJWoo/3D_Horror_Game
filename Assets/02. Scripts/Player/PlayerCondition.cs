@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,7 +10,7 @@ public class PlayerCondition : MonoBehaviour
     private float staminaRecoveryDelay = 1.5f;
     private float lastRunTime = 0f;
 
-    Condition stamina { get { return uiCondition.stamina; } }
+    private Condition stamina { get { return uiCondition.stamina; } }
 
     private void Awake()
     {
@@ -35,10 +35,8 @@ public class PlayerCondition : MonoBehaviour
         }
         else
         {
-            stamina.Add(stamina.passiveValue * Time.deltaTime);
+            stamina.Add((stamina.passiveValue + stamina.addPassiveValue) * Time.deltaTime);
         }
-
-
     }
 
     public void Die()
@@ -55,5 +53,10 @@ public class PlayerCondition : MonoBehaviour
 
         stamina.Subtract(amount);
         return true;
+    }
+
+    public void RecoverStamina(float amount , float duration)
+    {
+        stamina.RecoverItemValue(amount, duration);
     }
 }

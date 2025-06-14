@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
     public Vector2 curMovementInput;
     public float jumpPower;
     public LayerMask groundLayerMask;
+    private float addMoveSpeed;
+    private Coroutine applyItemEffect;
 
     [Header("Look")]
     public Transform cameraContainer;
@@ -126,7 +128,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnFlashStarted(InputAction.CallbackContext context)
     {
-        // 후레시 함수
+        
     }
 
     public void OnMenu(InputAction.CallbackContext context)
@@ -210,5 +212,24 @@ public class PlayerController : MonoBehaviour
         {
             deathEffectManager.PlayDeathSequence();
         }
+    }
+
+    public void GetAddItemValue(float amount, float duration)
+    {
+        if (applyItemEffect != null)
+        {
+            StopCoroutine(applyItemEffect);
+        }
+
+        applyItemEffect = StartCoroutine(ApplyItemValue(amount, duration));
+    }
+
+    private IEnumerator ApplyItemValue(float amount, float duration)
+    {
+        addMoveSpeed = amount;
+
+        yield return new WaitForSeconds(duration);
+
+        addMoveSpeed = 0;
     }
 }

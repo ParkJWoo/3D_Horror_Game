@@ -21,7 +21,7 @@ public class DropItem : MonoBehaviour, IInteractable
     {
         ItemInstance returnItem = CharacterManager.Instance.Player.Inventory.GetItem(this);
 
-        if(returnItem == null)
+        if (returnItem == null)
         {
             Destroy(gameObject);
         }
@@ -29,7 +29,6 @@ public class DropItem : MonoBehaviour, IInteractable
         {
             quantity = returnItem.quantity;
         }
-
         OnInteracted?.Invoke(this);
     }
 

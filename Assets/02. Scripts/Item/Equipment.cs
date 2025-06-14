@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
 public class Equipment : MonoBehaviour
 {
@@ -13,7 +14,7 @@ public class Equipment : MonoBehaviour
     public Action OnEquipHandler;
     public Action<ItemInstance> OnUnequipHandler;
 
-    public GameObject equipWeaponObj;
+    public EquipItemHandler equipItemHandler;
 
     private int selectSlotNum;
     private ItemInstance selectItem;
@@ -24,7 +25,18 @@ public class Equipment : MonoBehaviour
     {
         this.player = player;
         equipItems = new ItemInstance[(int)EquipType.totalData];
+        player.PlayerInput.playerInput.Player.Flash.started += UseItem;
+    }
 
+    private void UseItem(InputAction.CallbackContext context)
+    {
+        if(equipItemHandler == null)
+        {
+            Debug.Log("장착한 아이템이 없습니다.");
+            return;
+        }
+
+        equipItemHandler.UseItem();
     }
 
     public bool OnEquip(ItemInstance itemData,Transform itemPos)
@@ -38,10 +50,11 @@ public class Equipment : MonoBehaviour
         switch (equipItemData.equipType)
         {
             case EquipType.visibleEquip:
-                equipWeaponObj = Instantiate(equipItemData.equipModelPrefab, player.equipPos);
-                if (equipWeaponObj.TryGetComponent<EquipItemHandler>(out EquipItemHandler equipItem))
+                GameObject equipModel = Instantiate(equipItemData.equipModelPrefab, player.equipPos);
+                if (equipModel.TryGetComponent<EquipItemHandler>(out EquipItemHandler equipItem))
                 {
-                    equipItem.Init(player, itemData);
+                    equipItemHandler = equipItem;
+                    equipItemHandler.Init(player, itemData);
                 }
                 break;
         }
@@ -56,6 +69,16 @@ public class Equipment : MonoBehaviour
     public void UnEquip(int slotNum, Transform dropPos)
     {
         if (equipItems[slotNum] == null) return;
+
+        EquipItemData equipItemData = equipItems[slotNum].itemData as EquipItemData;
+
+        switch (equipItemData.equipType)
+        {
+            case EquipType.visibleEquip:
+                equipItemHandler = null;
+                Destroy(player.equipPos.GetChild(0));
+                break;
+        }
 
         OnUnequipHandler?.Invoke(equipItems[slotNum]);
         Instantiate(equipItems[slotNum].itemData.dropItemPrefab, dropPos.position,dropPos.rotation);
@@ -74,5 +97,10 @@ public class Equipment : MonoBehaviour
     {
         selectSlotNum = -1;
         selectItem = null;
+    }
+
+    private void OnDestroy()
+    {
+        player.PlayerInput.playerInput.Player.Flash.started -= UseItem;
     }
 }
