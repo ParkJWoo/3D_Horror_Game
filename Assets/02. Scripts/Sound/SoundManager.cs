@@ -7,6 +7,7 @@ public class SoundManager : Singleton<SoundManager>
 {
     [SerializeField] private AudioSource bgmSource;
     [SerializeField] private AudioSource sfxSource;
+    [SerializeField] private AudioSource loopSfxSource;
 
     [SerializeField] private List<SoundSO> sound;
     private Dictionary<string, AudioClip> soundDictionary;
@@ -26,7 +27,7 @@ public class SoundManager : Singleton<SoundManager>
         sfxSource.PlayOneShot(clip);
     }
     
-    public void PlayLoop(string soundName)
+    public void PlayBgmLoop(string soundName)
     {
         AudioClip clip = GetSound(soundName);
             bgmSource.clip = clip;
@@ -35,10 +36,18 @@ public class SoundManager : Singleton<SoundManager>
         
     }
 
-    public void StopLoop()
+    public void StopBgmLoop()
     {
         bgmSource.loop = false;
         bgmSource.Stop();
+    }
+
+    // 씬 전환시 호출할 메서드
+    public void UnloadAllSounds()
+    {
+        bgmSource.Stop();
+        sfxSource.Stop();
+        loopSfxSource.Stop();
     }
     
     // Enemy에서 호출할 메서드
@@ -51,6 +60,19 @@ public class SoundManager : Singleton<SoundManager>
         sfxSource.PlayOneShot(clip, volume);
     }
 
+    public void PlayLoopSfx(string soundName)
+    {
+        AudioClip clip = GetSound(soundName);
+        loopSfxSource.loop = true;
+        loopSfxSource.clip = clip;
+        loopSfxSource.Play();
+    }
+
+    public void StopLoopSfx()
+    {
+        loopSfxSource.loop = false;
+    }
+
     public void Play3DSound(string soundName, Vector3 soundPosition)
     {
         AudioClip clip = GetSound(soundName);
@@ -60,7 +82,7 @@ public class SoundManager : Singleton<SoundManager>
     // BGM을 바꿔주는 메서드
     public void SwitchBgm(string soundName)
     {
-        float fadeTime = 1f;
+        float fadeTime = 0.3f;
         StartCoroutine(FadeOutBgm(soundName, fadeTime));
     }
     
@@ -75,16 +97,16 @@ public class SoundManager : Singleton<SoundManager>
 
         while (bgmSource.volume > 0)
         {
-            bgmSource.volume -= startVolume * fadeTime / Time.deltaTime;
+            bgmSource.volume -= startVolume * Time.deltaTime / fadeTime;
             yield return null;
         }
 
-        StopLoop();
-        PlayLoop(soundName);
+        StopBgmLoop();
+        PlayBgmLoop(soundName);
 
         while (bgmSource.volume < startVolume)
         {
-            bgmSource.volume += startVolume * fadeTime / Time.deltaTime;
+            bgmSource.volume += startVolume * Time.deltaTime / fadeTime;
             yield return null;
         }
         
