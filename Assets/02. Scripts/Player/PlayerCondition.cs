@@ -31,6 +31,7 @@ public class PlayerCondition : MonoBehaviour
 
     void Update()
     {
+        stamina.uiBar.color = Color.Lerp(whiteColor, redColor, 1-stamina.GetPercentage());
         if (controller.isRunningInput && controller.isMoving)
         {
             if (!UseStamina(Time.deltaTime * 25f))
