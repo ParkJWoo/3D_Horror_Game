@@ -102,8 +102,17 @@ public class PlayerController : MonoBehaviour
 
     public void OnJumpInput(InputAction.CallbackContext context)
     {
-        if (IsGrounded())
-        { 
+        if (!IsGrounded()) return;
+
+        //condition.UseStamina(5);
+        //if (IsGrounded())
+        //{ 
+        //    rigidbody.AddForce(Vector2.up * jumpPower, ForceMode.Impulse);
+        //}
+
+        if (condition.UseStamina(5))
+        {
+            condition.NotifyStaminaUsed(); //  회복 딜레이 초기화
             rigidbody.AddForce(Vector2.up * jumpPower, ForceMode.Impulse);
         }
     }

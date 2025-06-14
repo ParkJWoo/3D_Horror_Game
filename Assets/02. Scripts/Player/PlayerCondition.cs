@@ -10,11 +10,14 @@ public class PlayerCondition : MonoBehaviour
 
     public bool isExhausted = false;
     private bool isNormalState = true;
+    private float staminaRecoveryDelay = 1.5f;
+    private float lastRunInputTime = 0f;
 
     private Color whiteColor = new Color(180 / 255f, 180 / 255f, 180 / 255f, 255 / 255f);
     private Color redColor = new Color(180 / 255f, 50 / 255f, 50 / 255f, 255 / 255f);
     private Color redColorBlink = new Color(180 / 255f, 50 / 255f, 50 / 255f, 20 / 255f);
     private float lerpT = 0f;
+
 
 
     Condition stamina { get { return uiCondition.stamina; } }
@@ -34,14 +37,17 @@ public class PlayerCondition : MonoBehaviour
         stamina.uiBar.color = Color.Lerp(whiteColor, redColor, 1-stamina.GetPercentage());
         if (controller.isRunningInput && controller.isMoving)
         {
-            if (!UseStamina(Time.deltaTime * 25f))
+            NotifyStaminaUsed();
+
+            if (!UseStamina(Time.deltaTime * 15f))
             {
                 controller.isRunningInput = false;
             }
         }
         else
         {
-            if (!isExhausted) stamina.Add(stamina.passiveValue * Time.deltaTime);
+            if (!isExhausted && Time.time - lastRunInputTime > staminaRecoveryDelay)
+                stamina.Add(stamina.passiveValue * Time.deltaTime);
         }
 
         if (!isExhausted && stamina.curValue < 0.2f && !isNormalState)
@@ -95,5 +101,10 @@ public class PlayerCondition : MonoBehaviour
             lerpT = Mathf.Clamp01(lerpT);
             stamina.icon.color = Color.Lerp(redColor, whiteColor, 1-lerpT);
         }
+    }
+
+    public void NotifyStaminaUsed()
+    {
+        lastRunInputTime = Time.time;
     }
 }
