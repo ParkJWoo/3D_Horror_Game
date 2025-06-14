@@ -18,6 +18,10 @@ public class EnemyChasingState : IState<Enemy>
         stateMachine.Context.Agent.isStopped = false;
         stateMachine.Context.Agent.speed = stateMachine.Context.Data.WalkSpeed;
         stateMachine.Context.Animator.SetBool(stateMachine.Context.AnimationData.WalkParameterHash, true);
+
+        //  슬랜더맨 추격 시작 사운드
+        Vector3 pos = stateMachine.Context.transform.position;
+        SoundManager.Instance.SwitchBgm("ChaseBGM");
     }
 
     public void Exit()

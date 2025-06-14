@@ -4,33 +4,12 @@ using UnityEngine;
 
 public class WhisperTrigger : MonoBehaviour
 {
-    public AudioClip[] whisperClips;
+    public string soundName = "Whisper";
     public float whisperInterval = 6f;
 
-    private AudioSource audioSource;
     private float timer;
     private bool isPlayerInside = false;
-
-    private int loopCount = 0;              //  루프 반복 수
-
-    private void Start()
-    {
-        //  AudioSource 동적 생성
-        audioSource = gameObject.AddComponent<AudioSource>();
-        audioSource.spatialBlend = 0f;
-        audioSource.volume = 1f;
-        audioSource.playOnAwake = false;
-
-        if (whisperClips.Length > 0)
-        {
-            PlayWhisperLoop();        //  초기 한 번 재생
-        }
-
-        else
-        {
-            Debug.LogWarning("No whisper clips assigned!");
-        }
-    }
+    private int loopCount = 0;
 
     private void Update()
     {
@@ -38,33 +17,26 @@ public class WhisperTrigger : MonoBehaviour
         {
             timer += Time.deltaTime;
 
-            if(timer >= whisperInterval && !audioSource.isPlaying)
+            if(timer >= whisperInterval)
             {
                 loopCount++;
-                PlayWhisperLoop();
-                timer = 0f;
+                PlayWhisper();
+                timer = 0;
             }
         }
     }
 
-    private void PlayWhisperLoop()
+    private void PlayWhisper()
     {
-        if (whisperClips.Length == 0)
+        if(string.IsNullOrEmpty(soundName))
         {
+            Debug.LogWarning("여기서 에러납니다!");
             return;
         }
 
-        //  루프 횟수에 따라 점점 더 무서운 클립 선택
-        int clipIndex = Mathf.Clamp(loopCount, 0, whisperClips.Length - 1);
-        AudioClip clip = whisperClips[clipIndex];
-        audioSource.clip = clip;
-
-        //  루프 횟수에 따라 점점 더 빠른 재생 속도
-        audioSource.pitch = 1f + (loopCount * 0.05f);
-
-        audioSource.Play();
-
-        Debug.Log($"[Whisper] Clip: {clip.name}, Pitch: {audioSource.pitch}, Loop Count: {loopCount}");
+        //  pitch 조절 없이 재생만
+        SoundManager.Instance.PlaySound(soundName);
+        Debug.Log($"[Whisper] Played: {soundName}, Loop Count: {loopCount}");
     }
 
     private void OnTriggerEnter(Collider other)
@@ -74,7 +46,7 @@ public class WhisperTrigger : MonoBehaviour
             Debug.Log("Player entered whisper zone.");
             isPlayerInside = true;
             loopCount++;
-            PlayWhisperLoop();
+            PlayWhisper();
         }
     }
 
@@ -83,7 +55,6 @@ public class WhisperTrigger : MonoBehaviour
         if(other.CompareTag("Player"))
         {
             isPlayerInside = false;
-            audioSource.Stop();
         }
     }
 }
