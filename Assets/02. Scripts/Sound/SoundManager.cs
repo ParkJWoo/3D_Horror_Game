@@ -15,8 +15,8 @@ public class SoundManager : Singleton<SoundManager>
 
     public void Awake()
     {
-        soundDictionary = sound.ToDictionary(sound => sound.soundName, sound => sound.clip);
-        soundsDictionary = sound.ToDictionary(sound => sound.soundName, sound => sound.clips);
+        soundDictionary = sound.ToDictionary(sound => sound.SoundName, sound => sound.Clip);
+        soundsDictionary = sound.ToDictionary(sound => sound.SoundName, sound => sound.Clips);
     }
 
     // 사운드 효과 호출 메서드

@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c609702d33d44beeb3eae1fcf4dfc152, type: 3}
+  m_Name: Sound_Steps
+  m_EditorClassIdentifier: 
+  <SoundName>k__BackingField: Steps
+  <Clip>k__BackingField: {fileID: 0}
+  <Clips>k__BackingField:
+  - {fileID: 8300000, guid: b17d7e607b5add143b8a34e8b5083cc7, type: 3}
+  - {fileID: 8300000, guid: 53d4b09f4ad280e4fb925332c145ccfc, type: 3}
+  - {fileID: 8300000, guid: 4321676df7b78424abff49946cfb967d, type: 3}
+  - {fileID: 8300000, guid: 61419cecde3b56245b93f76726804e53, type: 3}
+  - {fileID: 8300000, guid: 191726a9891a44d43945be3d5526e8a8, type: 3}

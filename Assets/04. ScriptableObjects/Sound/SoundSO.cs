@@ -1,10 +1,9 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Sound/SoundData")]
+[CreateAssetMenu(fileName = "Sound", menuName = "Sound/SoundData")]
 public class SoundSO : ScriptableObject
 {
-    public string soundName;
-    public AudioClip clip;
-
-    public AudioClip[] clips;
+    [field: SerializeField]public string SoundName { get; private set; }
+    [field: SerializeField]public AudioClip Clip { get; private set; }
+    [field: SerializeField]public AudioClip[] Clips { get; private set; }
 }
