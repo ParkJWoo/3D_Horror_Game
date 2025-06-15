@@ -8842,7 +8842,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundName: Whisper
-  whisperInterval: 6
+  virtualCam: {fileID: 0}
+  fovTarget: 40
+  fovTransitionTime: 1
+  postProcessingVolume: {fileID: 881102390}
+  vignetteTargetIntensity: 0.5
+  vignetteTransitionTime: 1
 --- !u!65 &198257296
 BoxCollider:
   m_ObjectHideFlags: 0
