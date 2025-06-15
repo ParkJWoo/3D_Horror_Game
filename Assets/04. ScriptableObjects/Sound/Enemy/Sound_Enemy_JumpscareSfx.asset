@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c609702d33d44beeb3eae1fcf4dfc152, type: 3}
-  m_Name: Sound_HeartBeat
+  m_Name: Sound_Enemy_JumpscareSfx
   m_EditorClassIdentifier: 
-  <SoundName>k__BackingField: HeartBeat
-  <Clip>k__BackingField: {fileID: 8300000, guid: b800fd8bc73666b4aa8364b78bef4d49,
+  <SoundName>k__BackingField: Jumpscare
+  <Clip>k__BackingField: {fileID: 8300000, guid: f47c8dd95a4d61b45b4a82d3d589b839,
     type: 3}
   <Clips>k__BackingField: []

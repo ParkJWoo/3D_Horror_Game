@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c609702d33d44beeb3eae1fcf4dfc152, type: 3}
-  m_Name: Sound_Whisper
+  m_Name: Sound_BGM_Default
   m_EditorClassIdentifier: 
-  <SoundName>k__BackingField: Whisper
-  <Clip>k__BackingField: {fileID: 8300000, guid: a52c60140efa3f94f878ea632ddf3ca5,
+  <SoundName>k__BackingField: DefaultBGM
+  <Clip>k__BackingField: {fileID: 8300000, guid: 4a366f89d2899f347861bf8afa2ae431,
     type: 3}
   <Clips>k__BackingField: []
