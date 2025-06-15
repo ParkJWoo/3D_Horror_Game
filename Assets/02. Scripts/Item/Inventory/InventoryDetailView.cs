@@ -106,7 +106,7 @@ public class InventoryDetailView : MonoBehaviour
 
     public void UseButton()
     {
-        inventory.UseItem();
+        inventory.UseItem(currentSlot.slotNum);
         if (currentSlot == null || currentSlot.slotItem == null)
         {
             CloseUI();
