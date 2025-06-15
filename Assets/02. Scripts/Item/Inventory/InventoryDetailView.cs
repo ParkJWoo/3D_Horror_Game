@@ -20,6 +20,8 @@ public class InventoryDetailView : MonoBehaviour
 
     private bool isOpen;
 
+    public string text;
+
     public void Init()
     {
         inventory = CharacterManager.Instance.Player.Inventory;
@@ -27,6 +29,7 @@ public class InventoryDetailView : MonoBehaviour
         detailItemImage.sprite = emptyImage;
         leftArrow.onClick.AddListener(LeftArrow);
         rightArrow.onClick.AddListener(RightArrow);
+        text = detailDescription.text;
         detailDescription.text = "";
         useButton.onClick.AddListener(UseButton);
         useButton.gameObject.SetActive(false);
@@ -106,10 +109,13 @@ public class InventoryDetailView : MonoBehaviour
 
     public void UseButton()
     {
+        Debug.Log(currentSlot.slotItem.itemData.itemName);
+        Debug.Log(inventory);
         inventory.UseItem(currentSlot.slotNum);
         if (currentSlot == null || currentSlot.slotItem == null)
         {
             CloseUI();
+            Cursor.lockState = CursorLockMode.Locked;
         }
     }
 

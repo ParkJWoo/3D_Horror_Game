@@ -11,8 +11,8 @@ public class Equipment : MonoBehaviour
 
     public ItemInstance[] equipItems;
 
-    public Action OnEquipHandler;
-    public Action<ItemInstance> OnUnequipHandler;
+    public Action<EquipItemData> OnEquipHandler;
+    public Action<EquipItemData> OnUnequipHandler;
 
     public EquipItemHandler equipItemHandler;
 
@@ -24,7 +24,7 @@ public class Equipment : MonoBehaviour
     public void Init(Player player)
     {
         this.player = player;
-        equipItems = new ItemInstance[(int)EquipType.totalData];
+        equipItems = new ItemInstance[(int)EquipType.totalData];       
         player.PlayerInput.playerInput.Player.Flash.started += UseItem;
     }
 
@@ -61,7 +61,7 @@ public class Equipment : MonoBehaviour
 
         equipItems[slotNum] = itemData;
         Debug.Log(itemData.itemData.itemName);
-        OnEquipHandler?.Invoke();
+        OnEquipHandler?.Invoke(equipItemData);
         OnEquipUpdate?.Invoke(slotNum, itemData);
         return true;
     }
@@ -80,11 +80,10 @@ public class Equipment : MonoBehaviour
                 break;
         }
 
-        OnUnequipHandler?.Invoke(equipItems[slotNum]);
+        OnUnequipHandler?.Invoke(equipItemData);
         Instantiate(equipItems[slotNum].itemData.dropItemPrefab, dropPos.position,dropPos.rotation);
         equipItems[slotNum] = null;
         OnEquipUpdate?.Invoke(slotNum, null);
-
     }
 
     public void SelectItem(EquipSlot slotData)

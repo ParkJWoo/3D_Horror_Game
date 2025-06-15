@@ -115,8 +115,8 @@ public class Inventory
         switch (invenItems[slotNum].itemData.itemType)
         {
             case ItemType.consumable:
-                ConsumItemData consumableItem = selectItem.itemData as ConsumItemData;
-                selectItem.ChangeQuantity(-1);
+                ConsumItemData consumableItem = invenItems[slotNum].itemData as ConsumItemData;
+                invenItems[slotNum].ChangeQuantity(-1);
                 foreach (ItemEffect itemEffect in consumableItem.itemEffect)
                 {
                     player.ApplyUseItem(itemEffect);

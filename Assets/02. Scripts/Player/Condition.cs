@@ -14,6 +14,8 @@ public class Condition : MonoBehaviour
     public Image uiBar;
     public Image icon;
 
+    private float equipValue;
+    private float equipPassiveValue;
 
     private Coroutine applyPassiveValue;
     private Coroutine applyItemValue;
@@ -30,19 +32,18 @@ public class Condition : MonoBehaviour
 
     public float GetPercentage()
     {
-        return curValue / maxValue;
+        return curValue / GetMaxValue();
     }
 
     public void Add(float value)
     {
-        curValue = Mathf.Min(curValue + value, maxValue);
+        curValue = Mathf.Min(curValue + value, GetMaxValue());
     }
 
     public void Subtract(float value)
     {
         curValue = Mathf.Max(curValue - value, 0);
     }
-
 
     public void RecoverItemValue(float amount, float duration)
     {
@@ -86,5 +87,26 @@ public class Condition : MonoBehaviour
         yield return new WaitForSeconds(duration);
 
         addPassiveValue = 0;
+    }
+
+    public float GetMaxValue()
+    {
+        return maxValue + equipValue;
+    }
+    public float GetTotalPassiveValue()
+    {
+        return passiveValue + addPassiveValue + equipPassiveValue;
+    }
+
+    public void ApplyEquipItem(EquipItemData equipItem)
+    {
+        equipValue += equipItem.stamina;
+        equipPassiveValue += equipItem.staminaRegen;
+    }
+
+    public void RemoveEquipItem(EquipItemData equipItem)
+    {
+        equipValue -= equipItem.stamina;
+        equipPassiveValue -= equipItem.staminaRegen;
     }
 }

@@ -35,6 +35,9 @@ public class Player : MonoBehaviour
         equipment = GetComponent<Equipment>();
         equipment.Init(this);
         RegistedApplyItemEffect();
+
+        equipment.OnEquipHandler += condition.uiCondition.stamina.ApplyEquipItem;
+        equipment.OnUnequipHandler += condition.uiCondition.stamina.RemoveEquipItem;
     }
 
     public void ApplyUseItem(ItemEffect itemEffect)
@@ -49,5 +52,12 @@ public class Player : MonoBehaviour
     {
        applyItemeffectDictionary[ItemEffectType.moveSpeed] = new ApplyMoveSpeedEffect(this);
        applyItemeffectDictionary[ItemEffectType.stamina] = new ApplyStaminaEffect(this);
+        applyItemeffectDictionary[ItemEffectType.staminaRegen] = new ApplyStaminaRegenEffect(this);
+    }
+
+    private void OnDestroy()
+    {
+        equipment.OnEquipHandler -= condition.uiCondition.stamina.ApplyEquipItem;
+        equipment.OnUnequipHandler -= condition.uiCondition.stamina.RemoveEquipItem;
     }
 }

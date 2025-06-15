@@ -41,7 +41,7 @@ public class PlayerCondition : MonoBehaviour
         }
         else
         {
-            if (!isExhausted) stamina.Add((stamina.passiveValue + stamina.addPassiveValue) * Time.deltaTime);
+            if (!isExhausted) stamina.Add((stamina.GetTotalPassiveValue()) * Time.deltaTime);
         }
 
         if (!isExhausted && stamina.curValue < 0.2f && !isNormalState)
