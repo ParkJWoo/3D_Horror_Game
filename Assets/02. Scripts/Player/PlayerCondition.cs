@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -41,7 +41,7 @@ public class PlayerCondition : MonoBehaviour
         }
         else
         {
-            if (!isExhausted) stamina.Add(stamina.passiveValue * Time.deltaTime);
+            if (!isExhausted) stamina.Add((stamina.passiveValue + stamina.addPassiveValue) * Time.deltaTime);
         }
 
         if (!isExhausted && stamina.curValue < 0.2f && !isNormalState)
@@ -95,5 +95,10 @@ public class PlayerCondition : MonoBehaviour
             lerpT = Mathf.Clamp01(lerpT);
             stamina.icon.color = Color.Lerp(redColor, whiteColor, 1-lerpT);
         }
+    }
+
+    public void RecoverStamina(float amount, float duration)
+    {
+        stamina.RecoverItemValue(amount, duration);
     }
 }

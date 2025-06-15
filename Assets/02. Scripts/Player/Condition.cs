@@ -46,9 +46,9 @@ public class Condition : MonoBehaviour
 
     public void RecoverItemValue(float amount, float duration)
     {
-        if (applyPassiveValue != null)
+        if (applyItemValue != null)
         {
-            StopCoroutine(applyPassiveValue);
+            StopCoroutine(applyItemValue);
         }
 
         applyItemValue = StartCoroutine(ApplyItemValue(amount, duration));
