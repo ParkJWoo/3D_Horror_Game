@@ -98600,6 +98600,7 @@ MonoBehaviour:
   maxValue: 100
   passiveValue: 5
   uiBar: {fileID: 1203715559}
+  icon: {fileID: 901390962}
 --- !u!222 &2028030018
 CanvasRenderer:
   m_ObjectHideFlags: 0
