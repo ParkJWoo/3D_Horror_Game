@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Sound_Item_LightOn
   m_EditorClassIdentifier: 
   <SoundName>k__BackingField: LightOn
-  <Clip>k__BackingField: {fileID: 8300000, guid: 9e5f6609fb7f54c41b271fc4361f28f2,
+  <Clip>k__BackingField: {fileID: 8300000, guid: e33ec99f7769e4c47ab548f157c4b01b,
     type: 3}
   <Clips>k__BackingField: []
