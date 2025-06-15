@@ -7,13 +7,13 @@ using UnityEngine;
 public class BatteryItemData : ItemData
 {
     public override ItemType itemType => ItemType.battery;
-    public DurabilityData burabilityData;
+    public DurabilityData durabilityData;
 }
 
 [Serializable]
 public class DurabilityData
 {
-    public DurabilityType burabiliyType;
+    public DurabilityType durabiliyType;
     public int amount;
 }
 

@@ -15,12 +15,14 @@ MonoBehaviour:
   itemCode: 1
   itemName: "\uC190\uC804\uB4F1 \uBCA0\uD130\uB9AC"
   itemDescription: "\uC190\uC804\uB4F1 \uC794\uB7C9\uC744 \uCC44\uC6CC\uC90D\uB2C8\uB2E4."
-  itemDetailDescription: 
-  itemImage: {fileID: 0}
+  itemDetailDescription: "$\"\uC190\uC804\uB4F1 \uBC30\uD130\uB9AC\uB97C {durabilityData.amount}\uB9CC\uD07C
+    \uCC44\uC6CC\uC90D\uB2C8\uB2E4.\";"
+  itemImage: {fileID: 21300000, guid: 258b2879d3bdc1b428009397e2dda85f, type: 3}
   canStack: 1
   maxQuantity: 3
   maxDurability: 0
-  dropItemPrefab: {fileID: 0}
-  burabilityData:
-    burabiliyType: 0
+  dropItemPrefab: {fileID: 8547332490823261222, guid: 3c2d04f665764634785893b5794f9f08,
+    type: 3}
+  durabilityData:
+    durabiliyType: 0
     amount: 30

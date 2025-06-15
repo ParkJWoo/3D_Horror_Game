@@ -32,7 +32,7 @@ public class InventoryUI : MonoBehaviour
             invenSlots[i].Init(i);
             invenSlots[i].UpdateSlot(inventory.invenItems[i]);
             invenSlots[i].OnSelectSlotHandler += OnSelectSlot;
-            invenSlots[i].OnDeselectSlotHandler += inventoryDetailView.SetDetailInfo;
+            invenSlots[i].OnSelectSlotHandler += inventoryDetailView.SetDetailInfo;
             invenSlots[i].OnDeselectSlotHandler += OnDeselectSlot;
             invenSlots[i].OnUseSlotHandler += OnUseSlot;
             invenSlots[i].OnDropHandler += OnDropItem;
@@ -70,6 +70,11 @@ public class InventoryUI : MonoBehaviour
         selectSlot = null;
     }
 
+    public void Show()
+    {
+        gameObject.SetActive(true);
+    }
+
     public void HideUI()
     {
         gameObject.SetActive(false);
@@ -91,7 +96,6 @@ public class InventoryUI : MonoBehaviour
         this.selectSlot?.DeselectSlot();
         this.selectSlot = selectSlot;
         inventory.SelectItem(selectSlot);
-        
     }
 
     public void OnDeselectSlot(InvenSlot deselectSlot)
@@ -113,5 +117,45 @@ public class InventoryUI : MonoBehaviour
     private void OnDestroy()
     {
         player.PlayerInput.playerInput.Player.Inventory.started -= Toggle;
+    }
+
+    public InvenSlot FindPreviousSlot()
+    {
+        int findSlotNum = selectSlot.slotNum;
+        do
+        {
+            findSlotNum--;
+            if (findSlotNum == -1)
+            {
+                findSlotNum = invenSlots.Count - 1;
+            }
+        }
+        while (invenSlots[findSlotNum].slotItem == null);
+
+        selectSlot.DeselectSlot();
+        invenSlots[findSlotNum].SelectSlot();
+
+        return selectSlot;
+    }
+
+    public InvenSlot FindNextSlot()
+    {
+        int findSlotNum = selectSlot.slotNum;
+        do
+        {
+            findSlotNum++;
+
+            if (findSlotNum == invenSlots.Count)
+            {
+                findSlotNum = 0;
+            }
+        }
+        while (invenSlots[findSlotNum].slotItem == null);
+
+
+        selectSlot.DeselectSlot();
+        invenSlots[findSlotNum].SelectSlot();
+
+        return selectSlot;
     }
 }

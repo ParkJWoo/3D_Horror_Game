@@ -28,7 +28,7 @@ public class FlashLight : EquipItemHandler
 
     public override bool RecoverDurability(DurabilityData durabilityData)
     {
-        if(durabilityType == durabilityData.burabiliyType) 
+        if(durabilityType == durabilityData.durabiliyType) 
         {
             item.ChangeDurability(durabilityData.amount);
             return true;

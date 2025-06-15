@@ -130,7 +130,7 @@ public class Inventory
                 break;
             case ItemType.battery:
                 BatteryItemData batteryItemData = invenItems[slotNum].itemData as BatteryItemData;
-                if (player.Equipment.equipItemHandler.RecoverDurability(batteryItemData.burabilityData))
+                if (player.Equipment.equipItemHandler.RecoverDurability(batteryItemData.durabilityData))
                 {
                     invenItems[slotNum].ChangeQuantity(-1);
                 }
