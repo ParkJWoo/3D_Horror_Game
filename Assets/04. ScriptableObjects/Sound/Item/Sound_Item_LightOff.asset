@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c609702d33d44beeb3eae1fcf4dfc152, type: 3}
+  m_Name: Sound_Item_LightOff
+  m_EditorClassIdentifier: 
+  <SoundName>k__BackingField: LightOff
+  <Clip>k__BackingField: {fileID: 8300000, guid: f2fcd68b589569b439018bdc427c21b8,
+    type: 3}
+  <Clips>k__BackingField: []

@@ -7,7 +7,6 @@ public class SoundManager : Singleton<SoundManager>
 {
     [SerializeField] private AudioSource bgmSource;
     [SerializeField] private AudioSource sfxSource;
-    [SerializeField] private AudioSource loopSfxSource;
 
     [SerializeField] private List<SoundSO> sound;
     private Dictionary<string, AudioClip> soundDictionary;
@@ -47,7 +46,6 @@ public class SoundManager : Singleton<SoundManager>
     {
         bgmSource.Stop();
         sfxSource.Stop();
-        loopSfxSource.Stop();
     }
     
     // Enemy에서 호출할 메서드
@@ -59,24 +57,24 @@ public class SoundManager : Singleton<SoundManager>
         float volume = Mathf.Clamp01(1 - (distance/maxDistance));
         sfxSource.PlayOneShot(clip, volume);
     }
-
-    public void PlayLoopSfx(string soundName)
-    {
-        AudioClip clip = GetSound(soundName);
-        loopSfxSource.loop = true;
-        loopSfxSource.clip = clip;
-        loopSfxSource.Play();
-    }
-
-    public void StopLoopSfx()
-    {
-        loopSfxSource.loop = false;
-    }
-
+    
     public void Play3DSound(string soundName, Vector3 soundPosition)
     {
         AudioClip clip = GetSound(soundName);
         AudioSource.PlayClipAtPoint(clip, soundPosition);
+    }
+
+    public void PlayLoopSfx(string soundName)
+    {
+        AudioClip clip = GetSound(soundName);
+        sfxSource.loop = true;
+        sfxSource.clip = clip;
+        sfxSource.Play();
+    }
+
+    public void StopLoopSfx()
+    {
+        sfxSource.loop = false;
     }
     
     // BGM을 바꿔주는 메서드
