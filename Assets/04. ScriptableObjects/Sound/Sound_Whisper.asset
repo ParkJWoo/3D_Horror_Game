@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Sound_Whisper
   m_EditorClassIdentifier: 
   <SoundName>k__BackingField: Whisper
-  <Clip>k__BackingField: {fileID: 8300000, guid: b8f646d24f4b87e4d9c855ce6846ef6b,
+  <Clip>k__BackingField: {fileID: 8300000, guid: a52c60140efa3f94f878ea632ddf3ca5,
     type: 3}
   <Clips>k__BackingField: []

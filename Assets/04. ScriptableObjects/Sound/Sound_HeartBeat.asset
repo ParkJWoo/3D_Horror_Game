@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Sound_HeartBeat
   m_EditorClassIdentifier: 
   <SoundName>k__BackingField: HeartBeat
-  <Clip>k__BackingField: {fileID: 8300000, guid: 2062560f3c53246f9b3557db5188ce64,
+  <Clip>k__BackingField: {fileID: 8300000, guid: b800fd8bc73666b4aa8364b78bef4d49,
     type: 3}
   <Clips>k__BackingField: []

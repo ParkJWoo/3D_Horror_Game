@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Sound_Enemy_Execute
   m_EditorClassIdentifier: 
   <SoundName>k__BackingField: Excute
-  <Clip>k__BackingField: {fileID: 8300000, guid: f6cfe7451040448269f1ddcde0deddce,
+  <Clip>k__BackingField: {fileID: 8300000, guid: e83f082eef3d0be42bbac202c0ccc3c8,
     type: 3}
   <Clips>k__BackingField: []

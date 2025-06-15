@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Sound_Enemy_Growling
   m_EditorClassIdentifier: 
   <SoundName>k__BackingField: Growling
-  <Clip>k__BackingField: {fileID: 8300000, guid: af6edb08e1f686041a968120f681aff9,
+  <Clip>k__BackingField: {fileID: 8300000, guid: ba4c7ae7a166c4040b24f05aa5e6e893,
     type: 3}
   <Clips>k__BackingField: []
