@@ -18,6 +18,7 @@ public class LiveMapPlacer : EditorWindow
     private float rotationStep = 90f;
 
     private GameObject previewInstance;
+    private Vector2 prefabListScroll;
 
     [MenuItem("Tools/Live Map Placer")]
     public static void ShowWindow()
@@ -58,7 +59,21 @@ public class LiveMapPlacer : EditorWindow
             return;
         }
 
-        selectedPrefabIndex = EditorGUILayout.Popup("Prefab 선택", selectedPrefabIndex, prefabNames);
+        GUILayout.Label("프리팹 목록", EditorStyles.boldLabel);
+        prefabListScroll = EditorGUILayout.BeginScrollView(prefabListScroll, GUILayout.Height(200));
+
+        for (int i = 0; i < prefabList.Length; i++)
+        {
+            GUIStyle style = (i == selectedPrefabIndex) ? EditorStyles.helpBox : EditorStyles.label;
+
+            if (GUILayout.Button(prefabNames[i], style))
+            {
+                selectedPrefabIndex = i;
+                UpdatePreview();
+            }
+        }
+
+        EditorGUILayout.EndScrollView();
         gridSnap = EditorGUILayout.FloatField("그리드 스냅", gridSnap);
         yMoveStep = EditorGUILayout.FloatField("Y 이동 단위", yMoveStep);
         rotationStep = EditorGUILayout.FloatField("회전 단위", rotationStep);
@@ -124,8 +139,19 @@ public class LiveMapPlacer : EditorWindow
         previewInstance = Instantiate(prefab);
         previewInstance.name = "PreviewInstance";
 
-        ApplyTransparentMaterial(previewInstance);
+        int previewLayer = LayerMask.NameToLayer("Preview");
+        SetLayerRecursively(previewInstance, previewLayer);
+
         UpdatePreviewTransform();
+    }
+
+    private void SetLayerRecursively(GameObject obj, int layer)
+    {
+        obj.layer = layer;
+        foreach (Transform child in obj.transform)
+        {
+            SetLayerRecursively(child.gameObject, layer);
+        }
     }
 
     private void UpdatePreviewTransform()
@@ -147,7 +173,10 @@ public class LiveMapPlacer : EditorWindow
         mousePos.y = sceneView.position.height - mousePos.y;
 
         Ray ray = sceneView.camera.ScreenPointToRay(mousePos);
-        if (Physics.Raycast(ray, out RaycastHit hit, 1000f))
+
+        int previewLayer = LayerMask.NameToLayer("Preview");
+        int layerMask = ~(1 << previewLayer);
+        if (Physics.Raycast(ray, out RaycastHit hit, 1000f, layerMask))
         {
             return Snap(hit.point);
         }
@@ -171,29 +200,6 @@ public class LiveMapPlacer : EditorWindow
         );
     }
 
-    private void ApplyTransparentMaterial(GameObject instance)
-    {
-        foreach (var renderer in instance.GetComponentsInChildren<Renderer>())
-        {
-            foreach (var mat in renderer.sharedMaterials)
-            {
-                if (mat != null)
-                {
-                    mat.SetFloat("_Mode", 2);
-                    Color color = mat.color;
-                    color.a = 0.3f;
-                    mat.color = color;
-                    mat.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
-                    mat.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
-                    mat.SetInt("_ZWrite", 0);
-                    mat.DisableKeyword("_ALPHATEST_ON");
-                    mat.EnableKeyword("_ALPHABLEND_ON");
-                    mat.DisableKeyword("_ALPHAPREMULTIPLY_ON");
-                    mat.renderQueue = 3000;
-                }
-            }
-        }
-    }
 
     private void PlacePrefab(Vector3 position, float rotationY)
     {
