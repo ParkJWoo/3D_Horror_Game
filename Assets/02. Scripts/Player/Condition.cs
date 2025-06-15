@@ -11,6 +11,8 @@ public class Condition : MonoBehaviour
     public float passiveValue;
     private float useValue = 3f;
     public Image uiBar;
+    public Image icon;
+
 
     private void Start()
     {
@@ -22,7 +24,7 @@ public class Condition : MonoBehaviour
         uiBar.fillAmount = GetPercentage();
     }
 
-    private float GetPercentage()
+    public float GetPercentage()
     {
         return curValue / maxValue;
     }
@@ -36,4 +38,5 @@ public class Condition : MonoBehaviour
     {
         curValue = Mathf.Max(curValue - value, 0);
     }
+
 }
