@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -26,6 +24,7 @@ public class Equipment : MonoBehaviour
         this.player = player;
         equipItems = new ItemInstance[(int)EquipType.totalData];       
         player.PlayerInput.playerInput.Player.Flash.started += UseItem;
+        Debug.Log(equipItems[1]);
     }
 
     private void UseItem(InputAction.CallbackContext context)
@@ -60,7 +59,7 @@ public class Equipment : MonoBehaviour
         }
 
         equipItems[slotNum] = itemData;
-        Debug.Log(itemData.itemData.itemName);
+        //Debug.Log(itemData.itemData.itemName);
         OnEquipHandler?.Invoke(equipItemData);
         OnEquipUpdate?.Invoke(slotNum, itemData);
         return true;
@@ -68,6 +67,7 @@ public class Equipment : MonoBehaviour
 
     public void UnEquip(int slotNum, Transform dropPos)
     {
+        Debug.Log($"{equipItems[slotNum]} + {slotNum}");
         if (equipItems[slotNum] == null) return;
 
         EquipItemData equipItemData = equipItems[slotNum].itemData as EquipItemData;

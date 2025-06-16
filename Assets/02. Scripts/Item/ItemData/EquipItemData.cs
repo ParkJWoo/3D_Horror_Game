@@ -6,9 +6,9 @@ public class EquipItemData : ItemData
     public override ItemType itemType => ItemType.equip;
     public EquipType equipType;
     
-    public int stamina;
-    public int staminaRegen;
-    public int moveSpeed;
+    public float stamina;
+    public float staminaRegen;
+    public float moveSpeed;
 
     public GameObject equipModelPrefab;
 }

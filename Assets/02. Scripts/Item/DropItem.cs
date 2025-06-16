@@ -9,6 +9,7 @@ public class DropItem : MonoBehaviour, IInteractable
     public float durability;
 
     public event Action<IInteractable> OnInteracted;
+    public event Action<DropItem> OnDestoryItem;
 
     public void Init(ItemInstance item)
     {
@@ -24,6 +25,7 @@ public class DropItem : MonoBehaviour, IInteractable
         if (returnItem == null)
         {
             Destroy(gameObject);
+            OnDestoryItem?.Invoke(this);
         }
         else
         {

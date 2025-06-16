@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     private float addMoveSpeed;
     private Coroutine applyItemEffect;
     public bool isMoving = false;
+    private float equipMoveSpeed;
 
     [Header("Look")]
     public Transform cameraContainer;
@@ -169,11 +170,11 @@ public class PlayerController : MonoBehaviour
 
     private float GetMoveTotalSpeed()
     {
-        return moveSpeed + addMoveSpeed;
+        return moveSpeed + addMoveSpeed/2 + equipMoveSpeed/2;
     }
     private float GetRunTotalSpeed()
     {
-        return runSpeed + addMoveSpeed;
+        return runSpeed + addMoveSpeed + equipMoveSpeed;
     }
 
 
@@ -256,5 +257,15 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(duration);
 
         addMoveSpeed = 0;
+    }
+
+    public void ApplyEquipItem(EquipItemData equipItem)
+    {
+        equipMoveSpeed += equipItem.moveSpeed;
+    }
+
+    public void RemoveEquipItem(EquipItemData equipItem)
+    {
+        equipMoveSpeed -= equipItem.moveSpeed;
     }
 }
