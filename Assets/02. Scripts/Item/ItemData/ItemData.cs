@@ -16,6 +16,8 @@ public abstract class ItemData : ScriptableObject
     public bool canStack;
     public int maxQuantity = 1;
 
+    public float maxDurability;
+
     public GameObject dropItemPrefab;
 }
 
@@ -23,5 +25,6 @@ public enum ItemType
 {
     equip,
     consumable,
-    useable
+    useable,
+    battery
 }

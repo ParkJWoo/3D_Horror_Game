@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cbf30d5cc9053a479234f1a400a1726, type: 3}
+  m_Name: FlashLightBattery
+  m_EditorClassIdentifier: 
+  itemCode: 1
+  itemName: "\uC18C\uD615 \uC190\uC804\uB4F1 \uBCA0\uD130\uB9AC"
+  itemDescription: "\uC190\uC804\uB4F1 \uBCA0\uD130\uB9AC\uB97C \uCC44\uC6B8\uC218
+    \uC788\uB2E4."
+  itemDetailDescription: "\uC18C\uD615 \uC190\uC804\uB4F1 \uBCA0\uD130\uB9AC\uB2E4.\n\uC190\uC804\uB4F1\uC758
+    \uC804\uB825\uC744 \uCC44\uC6B8\uC218 \uC788\uC744\uAC70 \uAC19\uB2E4.\n\uC190\uC804\uB4F1\uC774
+    \uC788\uC5B4\uC57C \uC0AC\uC6A9\uD560 \uC218 \uC788\uC744\uAC83 \uAC19\uB2E4."
+  itemImage: {fileID: 21300000, guid: 258b2879d3bdc1b428009397e2dda85f, type: 3}
+  canStack: 1
+  maxQuantity: 3
+  maxDurability: 0
+  dropItemPrefab: {fileID: 8547332490823261222, guid: 3c2d04f665764634785893b5794f9f08,
+    type: 3}
+  durabilityData:
+    durabiliyType: 0
+    amount: 30

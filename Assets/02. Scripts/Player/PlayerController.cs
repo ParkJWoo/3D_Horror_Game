@@ -13,7 +13,9 @@ public class PlayerController : MonoBehaviour
     public Vector2 curMovementInput;
     public float jumpPower;
     public LayerMask groundLayerMask;
-    public bool isMoving=false;
+    private float addMoveSpeed;
+    private Coroutine applyItemEffect;
+    public bool isMoving = false;
 
     [Header("Look")]
     public Transform cameraContainer;
@@ -39,18 +41,24 @@ public class PlayerController : MonoBehaviour
     [HideInInspector]
     public bool isActuallyRunning = false;
 
+    [Header("Interaction Data")]
+    public LayerMask interactionMask;
+    private Interaction interaction;
+    [SerializeField] private float maxInteractionDistance = 5;
+
     private void Awake()
     {
         rigidbody = GetComponent<Rigidbody>();
         condition = GetComponent<PlayerCondition>();
+
+        interaction = new Interaction(maxInteractionDistance, interactionMask);
     }
 
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
-
+        InvokeRepeating(nameof(GetInteraction), 0, 0.2f);
         camCurXRot = 0;
-
     }
 
     private void FixedUpdate()
@@ -102,30 +110,44 @@ public class PlayerController : MonoBehaviour
 
     public void OnJumpInput(InputAction.CallbackContext context)
     {
-        if (IsGrounded())
-        { 
+        if (!IsGrounded()) return;
+
+        //condition.UseStamina(5);
+        //if (IsGrounded())
+        //{ 
+        //    rigidbody.AddForce(Vector2.up * jumpPower, ForceMode.Impulse);
+        //}
+
+        if (condition.UseStamina(5))
+        {
+            condition.NotifyStaminaUsed(); //  회복 딜레이 초기화
             rigidbody.AddForce(Vector2.up * jumpPower, ForceMode.Impulse);
         }
     }
 
     public void OnInventoryStarted(InputAction.CallbackContext context)
     {
-       
+
     }
 
     public void OnInteractionStarted(InputAction.CallbackContext context)
     {
-       // 상호작용 함수
+        interaction.OnInteraction();
+    }
+
+    public void GetInteraction()
+    {
+        interaction.GetInteraction();
     }
 
     public void OnFlashStarted(InputAction.CallbackContext context)
     {
-        // 후레시 함수
+
     }
 
     public void OnMenu(InputAction.CallbackContext context)
     {
-
+        // ESC 눌렀을때
     }
 
     public void Move()
@@ -142,7 +164,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            speed = canRun ? runSpeed : moveSpeed;
+            speed = canRun ? GetRunTotalSpeed() : GetMoveTotalSpeed();
         }
 
         Vector3 dir = transform.forward * curMovementInput.y + transform.right * curMovementInput.x;
@@ -152,6 +174,16 @@ public class PlayerController : MonoBehaviour
 
         rigidbody.MovePosition(rigidbody.position + movement);
     }
+
+    private float GetMoveTotalSpeed()
+    {
+        return moveSpeed + addMoveSpeed;
+    }
+    private float GetRunTotalSpeed()
+    {
+        return runSpeed + addMoveSpeed;
+    }
+
 
     void CameraLook()
     {
@@ -196,7 +228,7 @@ public class PlayerController : MonoBehaviour
     //  즉사 함수
     public void Die()
     {
-        if(isDead)
+        if (isDead)
         {
             return;
         }
@@ -209,9 +241,28 @@ public class PlayerController : MonoBehaviour
         ToggleCursor(true);
 
         //  사망 연출 호출
-        if(deathEffectManager != null)
+        if (deathEffectManager != null)
         {
             deathEffectManager.PlayDeathSequence();
         }
+    }
+
+    public void GetAddItemValue(float amount, float duration)
+    {
+        if (applyItemEffect != null)
+        {
+            StopCoroutine(applyItemEffect);
+        }
+
+        applyItemEffect = StartCoroutine(ApplyItemValue(amount, duration));
+    }
+
+    private IEnumerator ApplyItemValue(float amount, float duration)
+    {
+        addMoveSpeed = amount;
+
+        yield return new WaitForSeconds(duration);
+
+        addMoveSpeed = 0;
     }
 }
