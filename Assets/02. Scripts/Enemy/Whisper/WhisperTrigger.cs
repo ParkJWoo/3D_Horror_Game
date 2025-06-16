@@ -13,7 +13,7 @@ public class WhisperTrigger : MonoBehaviour
 
     [Header("Camera Effects")]
     public CinemachineVirtualCamera virtualCam;
-    public float fovTarget = 40f;               //  시야각
+    public float fovTarget = 40f;
     public float fovTransitionTime = 1f;
 
     [Header("Vignette Settings")]
@@ -26,12 +26,12 @@ public class WhisperTrigger : MonoBehaviour
     private Coroutine vignetteCoroutine;
 
     private Vignette vignette;
-
-    private bool hasPlayerSound = false;
+    private bool isPlayerInside = false;
+    private bool whisperSuppressed = false;
+    private bool isWhisperPlaying = false;
 
     private void Start()
     {
-        //  Volume에서 Vignette 가져오기
         if (postProcessingVolume != null && postProcessingVolume.profile.TryGet(out Vignette v))
         {
             vignette = v;
@@ -43,22 +43,60 @@ public class WhisperTrigger : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (isPlayerInside && !whisperSuppressed && !isWhisperPlaying)
+        {
+            SoundManager.Instance.PlayLoopSfx(soundName);
+            isWhisperPlaying = true;
+        }
+    }
+
+    public void SuppressWhisperSound()
+    {
+        whisperSuppressed = true;
+        isWhisperPlaying = false;
+        SoundManager.Instance.StopLoopSfx();
+
+        if (virtualCam != null)
+        {
+            if (fovCoroutine != null)
+            {
+                StopCoroutine(fovCoroutine);
+            }
+
+            fovCoroutine = StartCoroutine(ChangeFovCoroutine(virtualCam, originalFov));
+        }
+
+        if (vignette != null)
+        {
+            if (vignetteCoroutine != null)
+            {
+                StopCoroutine(vignetteCoroutine);
+            }
+
+            vignetteCoroutine = StartCoroutine(ChangeVignetteCoroutine(vignette.intensity.value, 0f));
+        } 
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
             Debug.Log("WhisperTrigger 진입 → 사운드 + 시야 축소 + 비네트");
 
-            hasPlayerSound = true;
+            isPlayerInside = true;
+            whisperSuppressed = false;
+            isWhisperPlaying = false;
 
             SoundManager.Instance.PlayLoopSfx(soundName);
+            isWhisperPlaying = true;
 
-            //  Fov 축소
             if (virtualCam != null)
             {
                 originalFov = virtualCam.m_Lens.FieldOfView;
 
-                if(fovCoroutine != null)
+                if (fovCoroutine != null)
                 {
                     StopCoroutine(fovCoroutine);
                 }
@@ -66,41 +104,6 @@ public class WhisperTrigger : MonoBehaviour
                 fovCoroutine = StartCoroutine(ChangeFovCoroutine(virtualCam, fovTarget));
             }
 
-            //  Vignette 강화
-            if (vignette != null)
-            {
-                if(vignetteCoroutine != null)
-                {
-                    StopCoroutine(vignetteCoroutine);
-                }
-
-                vignetteCoroutine = StartCoroutine(ChangeVignetteCoroutine(vignette.intensity.value, vignetteTargetIntensity));
-            }
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            Debug.Log("WhisperTrigger 이탈 → 사운드 중단 + 시야 복구 + 비네트 해제");
-
-            hasPlayerSound = false;
-
-            SoundManager.Instance.StopLoopSfx();
-
-            //  Fov 복구
-            if (virtualCam != null)
-            {
-                if (fovCoroutine != null)
-                {
-                    StopCoroutine(fovCoroutine);
-                }
-
-                fovCoroutine = StartCoroutine(ChangeFovCoroutine(virtualCam, originalFov));
-            }
-
-            //  Vignette 복구
             if (vignette != null)
             {
                 if (vignetteCoroutine != null)
@@ -108,7 +111,7 @@ public class WhisperTrigger : MonoBehaviour
                     StopCoroutine(vignetteCoroutine);
                 }
 
-                vignetteCoroutine = StartCoroutine(ChangeVignetteCoroutine(vignette.intensity.value, 0f));
+                vignetteCoroutine = StartCoroutine(ChangeVignetteCoroutine(vignette.intensity.value, vignetteTargetIntensity));
             }
         }
     }
@@ -121,9 +124,7 @@ public class WhisperTrigger : MonoBehaviour
         while (elapsed < fovTransitionTime)
         {
             cam.m_Lens.FieldOfView = Mathf.Lerp(startFov, targetFov, elapsed / fovTransitionTime);
-
             elapsed += Time.deltaTime;
-
             yield return null;
         }
 
