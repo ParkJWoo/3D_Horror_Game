@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2560155368257626710}
   - component: {fileID: 1018390530101793115}
   - component: {fileID: 374985970151811490}
-  - component: {fileID: 6088137034940725181}
+  - component: {fileID: 7716651695874161405}
   m_Layer: 0
   m_Name: WhisperTrigger
   m_TagString: Untagged
@@ -106,7 +106,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6088137034940725181
+--- !u!114 &7716651695874161405
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -125,3 +125,12 @@ MonoBehaviour:
   postProcessingVolume: {fileID: 0}
   vignetteTargetIntensity: 0.5
   vignetteTransitionTime: 1
+  vignetteIntensifyOnFail: 0.7
+  slenderman: {fileID: 0}
+  whisperTimeBeforeSpawn: 10
+  spawnDistance: 5
+  minAngle: 60
+  maxAngle: 120
+  despawnDistance: 20
+  despawnDelay: 5
+  whisperRestartDelay: 10
