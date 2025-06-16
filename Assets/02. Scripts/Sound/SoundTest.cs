@@ -26,7 +26,7 @@ public class SoundTest : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.T))
         {
-            SoundManager.Instance.Play3DSound("Growling", enemy.position);
+            //SoundManager.Instance.Play3DSound("Growling", enemy.position);
         }
 
         if (Input.GetKeyDown(KeyCode.Y))
@@ -51,7 +51,7 @@ public class SoundTest : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.P))
         {
-            SoundManager.Instance.Play3DSound("Growling",enemy.position, player, 15);
+            //SoundManager.Instance.Play3DSound("Growling",enemy.position, player, 15);
         }
     }
 }
