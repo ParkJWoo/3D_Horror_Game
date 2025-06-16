@@ -134,7 +134,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnMenu(InputAction.CallbackContext context)
     {
-
+        // ESC 눌렀을때
     }
 
     public void Move()
@@ -161,6 +161,7 @@ public class PlayerController : MonoBehaviour
 
         rigidbody.MovePosition(rigidbody.position + movement);
     }
+
 
     void CameraLook()
     {

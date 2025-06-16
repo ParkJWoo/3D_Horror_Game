@@ -29,33 +29,41 @@ public class PlayerCondition : MonoBehaviour
 
     private void Start()
     {
-        //stamina.icon.color = whiteColor; // 시작 시 스태미너 아이콘 하얀색
+        stamina.uiBar.transform.parent.gameObject.SetActive(true);
     }
 
     void Update()
     {
-        stamina.uiBar.color = Color.Lerp(whiteColor, redColor, 1-stamina.GetPercentage());
-        if (controller.isRunningInput && controller.isMoving)
+        if (!controller.isDead)
         {
-            NotifyStaminaUsed();
-
-            if (!UseStamina(Time.deltaTime * 15f))
+            stamina.uiBar.color = Color.Lerp(whiteColor, redColor, 1 - stamina.GetPercentage());
+            if (controller.isRunningInput && controller.isMoving)
             {
-                controller.isRunningInput = false;
+                NotifyStaminaUsed();
+
+                if (!UseStamina(Time.deltaTime * 15f))
+                {
+                    controller.isRunningInput = false;
+                }
             }
+            else
+            {
+                if (!isExhausted && Time.time - lastRunInputTime > staminaRecoveryDelay)
+                    stamina.Add(stamina.passiveValue * Time.deltaTime);
+            }
+
+            if (!isExhausted && stamina.curValue < 0.2f && !isNormalState)
+            {
+                StartCoroutine(Exhaustion());
+            }
+
+            ExhaustionIcon();
         }
         else
         {
-            if (!isExhausted && Time.time - lastRunInputTime > staminaRecoveryDelay)
-                stamina.Add(stamina.passiveValue * Time.deltaTime);
+            stamina.uiBar.transform.parent.gameObject.SetActive(false);
         }
-
-        if (!isExhausted && stamina.curValue < 0.2f && !isNormalState)
-        {
-            StartCoroutine(Exhaustion());
-        }
-
-        ExhaustionIcon();
+        
 
     }
 
