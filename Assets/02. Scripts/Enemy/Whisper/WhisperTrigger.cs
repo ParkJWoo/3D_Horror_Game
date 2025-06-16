@@ -26,10 +26,13 @@ public class WhisperTrigger : MonoBehaviour
     public float minAngle = 60f;
     public float maxAngle = 120f;
 
+    public float whisperRestartDelay = 10f; // 재시작까지 대기 시간
+
     private float originalFov;
     private Coroutine fovCoroutine;
     private Coroutine vignetteCoroutine;
     private Coroutine whisperTimerCoroutine;
+    private Coroutine whisperRestartCoroutine;
 
     private Vignette vignette;
     private bool isPlayerInside = false;
@@ -81,6 +84,26 @@ public class WhisperTrigger : MonoBehaviour
         {
             StopCoroutine(whisperTimerCoroutine);
         }
+
+        if (whisperRestartCoroutine != null)
+        {
+            StopCoroutine(whisperRestartCoroutine);
+        }
+        whisperRestartCoroutine = StartCoroutine(RestartWhisperAfterDelay());
+    }
+
+    private IEnumerator RestartWhisperAfterDelay()
+    {
+        yield return new WaitForSeconds(whisperRestartDelay);
+        whisperSuppressed = false;
+        isWhisperPlaying = false;
+
+        if (whisperTimerCoroutine != null)
+        {
+            StopCoroutine(whisperTimerCoroutine);
+        }
+
+        whisperTimerCoroutine = StartCoroutine(WhisperTimer());
     }
 
     private void OnTriggerEnter(Collider other)
@@ -101,17 +124,29 @@ public class WhisperTrigger : MonoBehaviour
             if (virtualCam != null)
             {
                 originalFov = virtualCam.m_Lens.FieldOfView;
-                if (fovCoroutine != null) StopCoroutine(fovCoroutine);
+                if (fovCoroutine != null)
+                {
+                    StopCoroutine(fovCoroutine);
+                }
+
                 fovCoroutine = StartCoroutine(ChangeFovCoroutine(virtualCam, fovTarget));
             }
 
             if (vignette != null)
             {
-                if (vignetteCoroutine != null) StopCoroutine(vignetteCoroutine);
+                if (vignetteCoroutine != null)
+                {
+                    StopCoroutine(vignetteCoroutine);
+                }
+                
                 vignetteCoroutine = StartCoroutine(ChangeVignetteCoroutine(vignette.intensity.value, vignetteTargetIntensity));
             }
 
-            if (whisperTimerCoroutine != null) StopCoroutine(whisperTimerCoroutine);
+            if (whisperTimerCoroutine != null)
+            {
+                StopCoroutine(whisperTimerCoroutine);
+            }
+
             whisperTimerCoroutine = StartCoroutine(WhisperTimer());
         }
     }
@@ -126,7 +161,11 @@ public class WhisperTrigger : MonoBehaviour
 
             if (vignette != null)
             {
-                if (vignetteCoroutine != null) StopCoroutine(vignetteCoroutine);
+                if (vignetteCoroutine != null)
+                {
+                    StopCoroutine(vignetteCoroutine);
+                }
+
                 vignetteCoroutine = StartCoroutine(ChangeVignetteCoroutine(vignette.intensity.value, vignetteIntensifyOnFail));
             }
 
