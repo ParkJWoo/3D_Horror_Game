@@ -25,4 +25,6 @@ public class SaveData
     public Checkpoint lastCheckpoint;
     public float currentBgmVolume;
     public float currentSfxVolume;
+    public bool currentBgmMute;
+    public bool currentSfxMute;
 }

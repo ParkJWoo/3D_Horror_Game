@@ -7415,6 +7415,7 @@ GameObject:
   - component: {fileID: 159201554}
   - component: {fileID: 159201553}
   - component: {fileID: 159201552}
+  - component: {fileID: 159201556}
   m_Layer: 0
   m_Name: SaveTrigger
   m_TagString: Untagged
@@ -7508,6 +7509,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &159201556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 159201551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc519efc4de7af34d959953ec791c44b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &163295593
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17590,6 +17603,8 @@ MonoBehaviour:
   soundUI: {fileID: 2241689144056093623}
   bgmSlider: {fileID: 5521265086745036294}
   sfxSlider: {fileID: 2257523671115125}
+  bgmToggle: {fileID: 3801878310711120963}
+  sfxToggle: {fileID: 5968446738062683384}
 --- !u!1001 &358196792
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -68911,6 +68926,8 @@ MonoBehaviour:
     lastCheckpoint: 0
     currentBgmVolume: 0
     currentSfxVolume: 0
+    currentBgmMute: 0
+    currentSfxMute: 0
 --- !u!4 &1401493331
 Transform:
   m_ObjectHideFlags: 0
@@ -103133,7 +103150,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 357043739}
         m_TargetAssemblyTypeName: SoundUI, Assembly-CSharp
         m_MethodName: SetSfxVolume
         m_Mode: 1
@@ -105196,7 +105213,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 357043739}
         m_TargetAssemblyTypeName: SoundUI, Assembly-CSharp
         m_MethodName: ToggleBgm
         m_Mode: 1
@@ -106051,7 +106068,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 357043739}
         m_TargetAssemblyTypeName: SoundUI, Assembly-CSharp
         m_MethodName: SetBgmVolume
         m_Mode: 1
@@ -106359,7 +106376,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 357043739}
         m_TargetAssemblyTypeName: SoundUI, Assembly-CSharp
         m_MethodName: ToggleSfx
         m_Mode: 1
