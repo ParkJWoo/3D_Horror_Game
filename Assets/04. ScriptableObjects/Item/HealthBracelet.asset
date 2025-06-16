@@ -16,11 +16,11 @@ MonoBehaviour:
   itemName: "\uAC74\uAC15 \uD314\uCC0C"
   itemDescription: "\uD65C\uB825\uC774 \uB298\uC5B4\uB098\uB294 \uD314\uCC0C"
   itemDetailDescription: 
-  itemImage: {fileID: 0}
+  itemImage: {fileID: 21300000, guid: 45665a11644411a488a8757c6f3cc74d, type: 3}
   canStack: 0
   maxQuantity: 1
   maxDurability: 0
-  dropItemPrefab: {fileID: 6096377069804562486, guid: 23fe238490f05b64bba3a13ac17f4262,
+  dropItemPrefab: {fileID: 2484126202473896292, guid: 23fe238490f05b64bba3a13ac17f4262,
     type: 3}
   equipType: 1
   stamina: 50

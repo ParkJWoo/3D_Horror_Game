@@ -23,6 +23,14 @@ public class ItemManager : MonoBehaviour
     public void DropItem(ItemInstance item, Vector3 position)
     {
         GameObject drop = Instantiate(item.itemData.dropItemPrefab, position, Quaternion.identity);
-        drop.GetComponent<DropItem>().Init(item);
+        DropItem dropItem = drop.GetComponent<DropItem>();
+        dropItem.Init(item);
+        dropItem.OnDestoryItem += RemoveDropItem;
+        filedItem.Add(dropItem);
+    }
+
+    public void RemoveDropItem(DropItem removeItem)
+    {
+        filedItem.Remove(removeItem);
     }
 }

@@ -5,23 +5,26 @@ using UnityEngine;
 public class MapController : MonoBehaviour
 {
     [SerializeField] MapSO[] MapDatas = new MapSO[5];
-    MapSO CurrentMapData;
+    MapSO currentMapData;
+    int currentdataindex;
     [SerializeField] private GameObject MapLightContianor;
     List<Light> Lights = new List<Light>();
     List<float> Targetintenses = new List<float>();
-    float LerpSpeed = 5f;
+    List<float> LerpSpeeds = new List<float>();
+    float minLerpSpeed = 2f;
+    float maxLerpSpeed = 7f;
+    bool ismonsterspawn = false;
     void Start()
     {
         Init();
         GetAllLights();
-        StartCoroutine(Lightcorutine());
     }
 
     private void Update()
     {
         for (int i = 0; i < Lights.Count; i++)
         {
-            Lights[i].intensity = Mathf.Lerp(Lights[i].intensity, Targetintenses[i], Time.deltaTime * LerpSpeed);
+            Lights[i].intensity = Mathf.Lerp(Lights[i].intensity, Targetintenses[i], Time.deltaTime * LerpSpeeds[i]);
         }
     }
 
@@ -29,28 +32,59 @@ public class MapController : MonoBehaviour
     {
         if(true) // 만약 저장된 정보가 없다면... 수정해야함 나중에
         {
-            CurrentMapData = MapDatas[0];
+            currentMapData = MapDatas[0];
+            currentdataindex = 0;
+            ismonsterspawn = currentMapData.Monsterinfo.Ismonster;
+            return;
         }
     }
 
     private void GetAllLights() // 모든 광원 정보를 리스트에 저장
     {
         MapLightContianor.GetComponentsInChildren(Lights);
-        foreach(Light light in Lights)
+        for(int i = 0; i < Lights.Count; i++)
         {
-            Targetintenses.Add(light.intensity);
+            Lights[i].color = currentMapData.Lightinfo.Lightcolor;
+            Targetintenses.Add(Lights[i].intensity);
+            LerpSpeeds.Add(Random.Range(minLerpSpeed, maxLerpSpeed));
+            StartCoroutine(Lightcorutine(i));
         }
     }
 
-    IEnumerator Lightcorutine()
+    public void GoNextStage()
+    {
+        currentdataindex++;
+        if (currentdataindex >= MapDatas.Length)
+        {
+            // 엔딩
+            return;
+        }
+        currentMapData = MapDatas[currentdataindex];
+        if (!ismonsterspawn && currentMapData.Monsterinfo.Ismonster)
+        {
+            ismonsterspawn = true;
+            // 몬스터 소환
+        }
+
+        StopAllCoroutines();
+        ResetLight();
+        GetAllLights();
+    }
+
+    private void ResetLight()
+    {
+        Lights = new List<Light>();
+        Targetintenses = new List<float>();
+        LerpSpeeds = new List<float>();
+    }
+
+    IEnumerator Lightcorutine(int index) // 각 광원의 랜덤성을 설정
     {
         while(true)
         {
-            for (int i = 0; i < Targetintenses.Count; i++)
-            {
-                Targetintenses[i] = Random.Range(CurrentMapData.Lightinfo.MinIntense, CurrentMapData.Lightinfo.MaxIntense);
-            }
-            float waittime = Random.Range(CurrentMapData.Lightinfo.MinInterval, CurrentMapData.Lightinfo.MaxInterval);
+            Targetintenses[index] = Random.Range(currentMapData.Lightinfo.MinIntense, currentMapData.Lightinfo.MaxIntense);
+            LerpSpeeds[index] = Random.Range(minLerpSpeed, maxLerpSpeed);
+            float waittime = Random.Range(currentMapData.Lightinfo.MinInterval, currentMapData.Lightinfo.MaxInterval);
             yield return new WaitForSeconds(waittime);
         }
     }

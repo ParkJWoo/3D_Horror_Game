@@ -15,7 +15,8 @@ public class PlayerController : MonoBehaviour
     public LayerMask groundLayerMask;
     private float addMoveSpeed;
     private Coroutine applyItemEffect;
-    public bool isMoving=false;
+    public bool isMoving = false;
+    private float equipMoveSpeed;
 
     [Header("Look")]
     public Transform cameraContainer;
@@ -87,7 +88,6 @@ public class PlayerController : MonoBehaviour
     {
         curMovementInput = context.ReadValue<Vector2>();
         isMoving = true;
-
     }
 
     public void OnMoveInputCanceled(InputAction.CallbackContext context)
@@ -105,18 +105,11 @@ public class PlayerController : MonoBehaviour
     public void OnRunInputCanceled(InputAction.CallbackContext context)
     {
         isRunningInput = false;
-
     }
 
     public void OnJumpInput(InputAction.CallbackContext context)
     {
         if (!IsGrounded()) return;
-
-        //condition.UseStamina(5);
-        //if (IsGrounded())
-        //{ 
-        //    rigidbody.AddForce(Vector2.up * jumpPower, ForceMode.Impulse);
-        //}
 
         if (condition.UseStamina(5))
         {
@@ -127,7 +120,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnInventoryStarted(InputAction.CallbackContext context)
     {
-       
+
     }
 
     public void OnInteractionStarted(InputAction.CallbackContext context)
@@ -142,7 +135,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnFlashStarted(InputAction.CallbackContext context)
     {
-        
+
     }
 
     public void OnMenu(InputAction.CallbackContext context)
@@ -164,7 +157,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            speed = canRun ? runSpeed : moveSpeed;
+            speed = canRun ? GetRunTotalSpeed() : GetMoveTotalSpeed();
         }
 
         Vector3 dir = transform.forward * curMovementInput.y + transform.right * curMovementInput.x;
@@ -174,6 +167,16 @@ public class PlayerController : MonoBehaviour
 
         rigidbody.MovePosition(rigidbody.position + movement);
     }
+
+    private float GetMoveTotalSpeed()
+    {
+        return moveSpeed + addMoveSpeed/2 + equipMoveSpeed/2;
+    }
+    private float GetRunTotalSpeed()
+    {
+        return runSpeed + addMoveSpeed + equipMoveSpeed;
+    }
+
 
     void CameraLook()
     {
@@ -218,7 +221,7 @@ public class PlayerController : MonoBehaviour
     //  즉사 함수
     public void Die()
     {
-        if(isDead)
+        if (isDead)
         {
             return;
         }
@@ -231,7 +234,7 @@ public class PlayerController : MonoBehaviour
         ToggleCursor(true);
 
         //  사망 연출 호출
-        if(deathEffectManager != null)
+        if (deathEffectManager != null)
         {
             deathEffectManager.PlayDeathSequence();
         }
@@ -254,5 +257,15 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(duration);
 
         addMoveSpeed = 0;
+    }
+
+    public void ApplyEquipItem(EquipItemData equipItem)
+    {
+        equipMoveSpeed += equipItem.moveSpeed;
+    }
+
+    public void RemoveEquipItem(EquipItemData equipItem)
+    {
+        equipMoveSpeed -= equipItem.moveSpeed;
     }
 }

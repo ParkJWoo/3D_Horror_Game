@@ -36,6 +36,9 @@ public class Player : MonoBehaviour
         equipment.Init(this);
         RegistedApplyItemEffect();
 
+        equipment.OnEquipHandler += controller.ApplyEquipItem;
+        equipment.OnUnequipHandler += controller.RemoveEquipItem;
+
         equipment.OnEquipHandler += condition.uiCondition.stamina.ApplyEquipItem;
         equipment.OnUnequipHandler += condition.uiCondition.stamina.RemoveEquipItem;
     }
@@ -57,6 +60,9 @@ public class Player : MonoBehaviour
 
     private void OnDestroy()
     {
+        equipment.OnEquipHandler -= controller.ApplyEquipItem;
+        equipment.OnUnequipHandler -= controller.RemoveEquipItem;
+
         equipment.OnEquipHandler -= condition.uiCondition.stamina.ApplyEquipItem;
         equipment.OnUnequipHandler -= condition.uiCondition.stamina.RemoveEquipItem;
     }

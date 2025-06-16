@@ -10,8 +10,13 @@ public class LightInfo
     [field: SerializeField] public float MaxInterval { get; private set;}
     [field: SerializeField] public float MinIntense { get; private set; }
     [field: SerializeField] public float MaxIntense { get; private set; }
-    [field: SerializeField] public float MinChangeTime { get; private set; }
-    [field: SerializeField] public float MaxChangeTime { get; private set; }
+    [field: SerializeField] public Color Lightcolor { get; private set; }
+}
+
+[Serializable]
+public class MonsterInfo
+{
+    [field: SerializeField] public bool Ismonster { get; private set; }
 }
 
 
@@ -21,4 +26,7 @@ public class MapSO : ScriptableObject
 {
     [field :Header("맵 전등 설정")]
     [field :SerializeField] public LightInfo Lightinfo { get; private set; }
+
+    [field: Header("괴물 설정")]
+    [field: SerializeField] public MonsterInfo Monsterinfo { get; private set; }
 }

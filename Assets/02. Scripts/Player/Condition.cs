@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -101,12 +102,14 @@ public class Condition : MonoBehaviour
     public void ApplyEquipItem(EquipItemData equipItem)
     {
         equipValue += equipItem.stamina;
+        Add(equipItem.stamina);
         equipPassiveValue += equipItem.staminaRegen;
     }
 
     public void RemoveEquipItem(EquipItemData equipItem)
     {
         equipValue -= equipItem.stamina;
+        Subtract(equipItem.stamina);
         equipPassiveValue -= equipItem.staminaRegen;
     }
 }
