@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     public LayerMask groundLayerMask;
     private float addMoveSpeed;
     private Coroutine applyItemEffect;
-    public bool isMoving=false;
+    public bool isMoving = false;
 
     [Header("Look")]
     public Transform cameraContainer;
@@ -127,7 +127,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnInventoryStarted(InputAction.CallbackContext context)
     {
-       
+
     }
 
     public void OnInteractionStarted(InputAction.CallbackContext context)
@@ -142,7 +142,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnFlashStarted(InputAction.CallbackContext context)
     {
-        
+
     }
 
     public void OnMenu(InputAction.CallbackContext context)
@@ -164,7 +164,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            speed = canRun ? runSpeed : moveSpeed;
+            speed = canRun ? GetRunTotalSpeed() : GetMoveTotalSpeed();
         }
 
         Vector3 dir = transform.forward * curMovementInput.y + transform.right * curMovementInput.x;
@@ -174,6 +174,16 @@ public class PlayerController : MonoBehaviour
 
         rigidbody.MovePosition(rigidbody.position + movement);
     }
+
+    private float GetMoveTotalSpeed()
+    {
+        return moveSpeed + addMoveSpeed;
+    }
+    private float GetRunTotalSpeed()
+    {
+        return runSpeed + addMoveSpeed;
+    }
+
 
     void CameraLook()
     {
@@ -218,7 +228,7 @@ public class PlayerController : MonoBehaviour
     //  즉사 함수
     public void Die()
     {
-        if(isDead)
+        if (isDead)
         {
             return;
         }
@@ -231,7 +241,7 @@ public class PlayerController : MonoBehaviour
         ToggleCursor(true);
 
         //  사망 연출 호출
-        if(deathEffectManager != null)
+        if (deathEffectManager != null)
         {
             deathEffectManager.PlayDeathSequence();
         }
