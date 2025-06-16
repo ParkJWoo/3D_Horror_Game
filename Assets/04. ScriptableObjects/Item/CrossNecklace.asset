@@ -10,20 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 502fa1d49fa9f2540861c209ddad9fd8, type: 3}
-  m_Name: HealthBracelet
+  m_Name: CrossNecklace
   m_EditorClassIdentifier: 
-  itemCode: 6
-  itemName: "\uAC74\uAC15 \uD314\uCC0C"
-  itemDescription: "\uD65C\uB825\uC774 \uB298\uC5B4\uB098\uB294 \uD314\uCC0C"
+  itemCode: 7
+  itemName: "\uC2ED\uC790\uAC00 \uBAA9\uAC78\uC774"
+  itemDescription: "\uD65C\uB825 \uD68C\uBCF5\uC5D0 \uB3C4\uC6C0\uC774 \uB418\uB294
+    \uBAA9\uAC78\uC774"
   itemDetailDescription: 
   itemImage: {fileID: 0}
   canStack: 0
   maxQuantity: 1
   maxDurability: 0
-  dropItemPrefab: {fileID: 2484126202473896292, guid: 23fe238490f05b64bba3a13ac17f4262,
+  dropItemPrefab: {fileID: 55434112384552087, guid: 2db36394a78ae014f9ca292ee265b1c1,
     type: 3}
   equipType: 1
-  stamina: 50
-  staminaRegen: 0
+  stamina: 0
+  staminaRegen: 5
   moveSpeed: 0
   equipModelPrefab: {fileID: 0}
