@@ -87,7 +87,6 @@ public class PlayerController : MonoBehaviour
     {
         curMovementInput = context.ReadValue<Vector2>();
         isMoving = true;
-
     }
 
     public void OnMoveInputCanceled(InputAction.CallbackContext context)
@@ -105,18 +104,11 @@ public class PlayerController : MonoBehaviour
     public void OnRunInputCanceled(InputAction.CallbackContext context)
     {
         isRunningInput = false;
-
     }
 
     public void OnJumpInput(InputAction.CallbackContext context)
     {
         if (!IsGrounded()) return;
-
-        //condition.UseStamina(5);
-        //if (IsGrounded())
-        //{ 
-        //    rigidbody.AddForce(Vector2.up * jumpPower, ForceMode.Impulse);
-        //}
 
         if (condition.UseStamina(5))
         {
