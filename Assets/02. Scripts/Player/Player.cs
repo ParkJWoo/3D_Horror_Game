@@ -53,8 +53,8 @@ public class Player : MonoBehaviour
 
     private void RegistedApplyItemEffect()
     {
-       applyItemeffectDictionary[ItemEffectType.moveSpeed] = new ApplyMoveSpeedEffect(this);
-       applyItemeffectDictionary[ItemEffectType.stamina] = new ApplyStaminaEffect(this);
+        applyItemeffectDictionary[ItemEffectType.moveSpeed] = new ApplyMoveSpeedEffect(this);
+        applyItemeffectDictionary[ItemEffectType.stamina] = new ApplyStaminaEffect(this);
         applyItemeffectDictionary[ItemEffectType.staminaRegen] = new ApplyStaminaRegenEffect(this);
     }
 

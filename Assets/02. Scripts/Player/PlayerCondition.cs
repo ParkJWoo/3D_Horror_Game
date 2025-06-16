@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -18,8 +18,6 @@ public class PlayerCondition : MonoBehaviour
     private Color redColor = new Color(180 / 255f, 50 / 255f, 50 / 255f, 255 / 255f);
     private Color redColorBlink = new Color(180 / 255f, 50 / 255f, 50 / 255f, 20 / 255f);
     private float lerpT = 0f;
-
-
 
     Condition stamina { get { return uiCondition.stamina; } }
 
