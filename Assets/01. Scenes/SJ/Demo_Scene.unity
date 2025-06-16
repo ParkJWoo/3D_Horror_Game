@@ -15291,6 +15291,7 @@ MonoBehaviour:
   startValue: 100
   maxValue: 100
   passiveValue: 5
+  addPassiveValue: 0
   uiBar: {fileID: 1956106770}
   icon: {fileID: 1378597930}
 --- !u!1001 &1849530968
@@ -18353,6 +18354,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -2807403058829962312, guid: 82f3cb4c335f4a34bb5d8a14b1a267f7,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4796091302060529372, guid: 82f3cb4c335f4a34bb5d8a14b1a267f7,
         type: 3}
       propertyPath: m_Name

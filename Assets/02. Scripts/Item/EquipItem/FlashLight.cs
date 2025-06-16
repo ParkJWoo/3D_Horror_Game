@@ -5,19 +5,36 @@ using UnityEngine;
 public class FlashLight : EquipItemHandler
 {
     private bool isOnFlash; 
+
     private WaitForSeconds timeToConsumption;
                   
     private float flashOnConsumption;
     private float consumptionPerTick;
 
+    private DurabilityType durabilityType;
+
     private Coroutine batteryConsumption;
     [SerializeField] private Light flashLight;
 
-    private void Awake()
+    public override void Init(Player player, ItemInstance item)
     {
+        base.Init(player, item);
         timeToConsumption = new WaitForSeconds(0.5f);
         flashOnConsumption = -5f;
         consumptionPerTick = -0.1f;
+        durabilityType = DurabilityType.flashlight;
+        FlashOff();
+    }
+
+    public override bool RecoverDurability(DurabilityData durabilityData)
+    {
+        if(durabilityType == durabilityData.durabiliyType) 
+        {
+            item.ChangeDurability(durabilityData.amount);
+            return true;
+        }
+
+        return false;
     }
 
     public override void UseItem()

@@ -8,28 +8,62 @@ public class SoundUI : MonoBehaviour
     [SerializeField] private GameObject soundUI;
     [SerializeField] private Slider bgmSlider;
     [SerializeField] private Slider sfxSlider;
+    [SerializeField] private Toggle bgmToggle;
+    [SerializeField] private Toggle sfxToggle;
     private bool isUIOpen = false;
 
    
     private void Start()
     {
         SetUI(false);
+        StartCoroutine(DelayedLoad());
+    }
+
+    private IEnumerator DelayedLoad()
+    {
+        yield return null;
+        LoadSoundSetting();
     }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             SetUI(!isUIOpen);
-        } }
+        }
+    }
 
     private void SetUI(bool isOpen)
     {
         isUIOpen = isOpen;
         
+        if (!isUIOpen)
+        {
+            SaveSoundSetting();
+        }
         soundUI.SetActive(isUIOpen);
 
         Time.timeScale = isUIOpen ? 0 : 1;
         Cursor.lockState = isUIOpen ? CursorLockMode.Confined :  CursorLockMode.Locked;
+
+    }
+
+    private void SaveSoundSetting()
+    {
+        SaveManager.Instance.UpdateSoundSetting(bgmSlider.value, 
+            SoundManager.Instance.IsBgmMute(), 
+            sfxSlider.value, 
+            SoundManager.Instance.IsSfxMute());
+    }
+
+    private void LoadSoundSetting()
+    {
+        var data = SaveManager.Instance.GetCurrentSaveData();
+        
+        bgmSlider.value = data.currentBgmVolume;
+        sfxSlider.value = data.currentSfxVolume;
+        bgmToggle.isOn = data.currentBgmMute;
+        sfxToggle.isOn = data.currentSfxMute;
+        
     }
 
 

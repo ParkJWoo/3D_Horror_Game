@@ -4,9 +4,11 @@ using UnityEngine.InputSystem;
 
 public class InventoryUI : MonoBehaviour
 {
-    private Inventory inventory;
     private Player player;
 
+    private Inventory inventory;
+    private InventoryDetailView inventoryDetailView;
+   
     public Transform invenSlotPosition;
     public InvenSlot invenSlotPrefab;
 
@@ -22,6 +24,7 @@ public class InventoryUI : MonoBehaviour
         inventory = player.Inventory;
         player.PlayerInput.playerInput.Player.Inventory.started += Toggle;
         inventory.OnInventoryUpdate += OnUpdateSlot;
+        inventoryDetailView = PlaySceneManager.instance.uiManager.inventoryDetailView;
 
         for (int i = 0; i < inventory.inventoryMaxSize; i++)
         {
@@ -29,6 +32,7 @@ public class InventoryUI : MonoBehaviour
             invenSlots[i].Init(i);
             invenSlots[i].UpdateSlot(inventory.invenItems[i]);
             invenSlots[i].OnSelectSlotHandler += OnSelectSlot;
+            invenSlots[i].OnSelectSlotHandler += inventoryDetailView.SetDetailInfo;
             invenSlots[i].OnDeselectSlotHandler += OnDeselectSlot;
             invenSlots[i].OnUseSlotHandler += OnUseSlot;
             invenSlots[i].OnDropHandler += OnDropItem;
@@ -64,6 +68,11 @@ public class InventoryUI : MonoBehaviour
 
         selectSlot?.DeselectSlot();
         selectSlot = null;
+    }
+
+    public void Show()
+    {
+        gameObject.SetActive(true);
     }
 
     public void HideUI()
@@ -103,5 +112,50 @@ public class InventoryUI : MonoBehaviour
     private void OnDropItem(InvenSlot dropSlot)
     {
         inventory.OnDrop(dropSlot.slotNum);
+    }
+
+    private void OnDestroy()
+    {
+        player.PlayerInput.playerInput.Player.Inventory.started -= Toggle;
+    }
+
+    public InvenSlot FindPreviousSlot()
+    {
+        int findSlotNum = selectSlot.slotNum;
+        do
+        {
+            findSlotNum--;
+            if (findSlotNum == -1)
+            {
+                findSlotNum = invenSlots.Count - 1;
+            }
+        }
+        while (invenSlots[findSlotNum].slotItem == null);
+
+        selectSlot.DeselectSlot();
+        invenSlots[findSlotNum].SelectSlot();
+
+        return selectSlot;
+    }
+
+    public InvenSlot FindNextSlot()
+    {
+        int findSlotNum = selectSlot.slotNum;
+        do
+        {
+            findSlotNum++;
+
+            if (findSlotNum == invenSlots.Count)
+            {
+                findSlotNum = 0;
+            }
+        }
+        while (invenSlots[findSlotNum].slotItem == null);
+
+
+        selectSlot.DeselectSlot();
+        invenSlots[findSlotNum].SelectSlot();
+
+        return selectSlot;
     }
 }

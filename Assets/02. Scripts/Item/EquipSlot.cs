@@ -30,7 +30,7 @@ public class EquipSlot : MonoBehaviour
         if (item != null && item.itemData != null)
         {
             slotItem = item;
-            Debug.Log(item.itemData);
+            //Debug.Log(item.itemData);
             itemImage.sprite = item.itemData.itemImage;
         }
         else
