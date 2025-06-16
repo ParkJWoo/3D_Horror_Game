@@ -166,6 +166,11 @@ public class PlayerController : MonoBehaviour
         rigidbody.MovePosition(rigidbody.position + movement);
     }
 
+    //public float GetTotalMoveSpeed()
+    //{
+    //    return moveSpeed + addMoveSpeed;
+    //}
+
     void CameraLook()
     {
         // 좌우(Y) 회전은 transform(Y축)에만 직접 적용
