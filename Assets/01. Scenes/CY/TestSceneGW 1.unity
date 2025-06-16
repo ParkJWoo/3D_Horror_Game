@@ -53206,6 +53206,11 @@ PrefabInstance:
       propertyPath: m_PlayOnAwake
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3567151541273762143, guid: d3e34a08d50154240bb08ea317730975,
+        type: 3}
+      propertyPath: enemyAudioSource
+      value: 
+      objectReference: {fileID: 705040924668542657}
     - target: {fileID: 4034070154413246445, guid: d3e34a08d50154240bb08ea317730975,
         type: 3}
       propertyPath: m_Name
@@ -103291,7 +103296,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 0d3e58bb90924afba39e665277b5f80a, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 0
   m_Pitch: 1

@@ -22,10 +22,12 @@ public class EnemyChasingState : IState<Enemy>
         //  슬랜더맨 추격 시작 사운드
         Vector3 pos = stateMachine.Context.transform.position;
         SoundManager.Instance.SwitchBgm("ChaseBGM");
+        SoundManager.Instance.PlayLoopEnemySound("Growling");
     }
 
     public void Exit()
     {
+        SoundManager.Instance.StopLoopEnemySound();
         stateMachine.Context.Agent.isStopped = true;
         stateMachine.Context.Animator.SetBool(stateMachine.Context.AnimationData.WalkParameterHash, false);
     }

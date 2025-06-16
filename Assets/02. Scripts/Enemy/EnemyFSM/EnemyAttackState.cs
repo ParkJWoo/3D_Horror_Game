@@ -23,7 +23,7 @@ public class EnemyAttackState : IState<Enemy>
         stateMachine.Context.Animator.SetTrigger(stateMachine.Context.AnimationData.ScreamParameterHash);
 
         //  사운드
-        SoundManager.Instance.PlaySound("Excute");
+        SoundManager.Instance.PlayEnemySound("Growling");
 
         //  클로즈업 카메라 전환
         SetCloseupCameraPriority(30);
@@ -55,7 +55,7 @@ public class EnemyAttackState : IState<Enemy>
         yield return new WaitForSeconds(stateMachine.Context.Data.Scream_End_TransitionTime);
 
         //  두 번째 사운드 재생
-        SoundManager.Instance.PlaySound("Growling");
+        SoundManager.Instance.PlayEnemySound("Excute");
 
         //  실제 사망 처리
         if(!alreadyAttacked)
