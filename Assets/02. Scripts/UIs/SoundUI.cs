@@ -15,15 +15,11 @@ public class SoundUI : MonoBehaviour
    
     private void Start()
     {
-        SetUI(false);
-        StartCoroutine(DelayedLoad());
-    }
-
-    private IEnumerator DelayedLoad()
-    {
-        yield return null;
         LoadSoundSetting();
+        SetUI(false);
+        SoundManager.Instance.PlayBgmLoop("DefaultBGM");
     }
+    
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -58,12 +54,11 @@ public class SoundUI : MonoBehaviour
     private void LoadSoundSetting()
     {
         var data = SaveManager.Instance.GetCurrentSaveData();
-        
         bgmSlider.value = data.currentBgmVolume;
         sfxSlider.value = data.currentSfxVolume;
         bgmToggle.isOn = data.currentBgmMute;
         sfxToggle.isOn = data.currentSfxMute;
-        
+        Debug.Log($"데이터 {data} 현재 볼륨{data.currentBgmVolume}");
     }
 
 

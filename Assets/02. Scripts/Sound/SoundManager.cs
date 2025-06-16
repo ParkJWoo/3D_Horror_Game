@@ -7,6 +7,7 @@ public class SoundManager : Singleton<SoundManager>
 {
     [SerializeField] private AudioSource bgmSource;
     [SerializeField] private AudioSource sfxSource;
+    [SerializeField] private AudioSource enemyAudioSource;
 
     [SerializeField] private List<SoundSO> sound;
     private Dictionary<string, AudioClip> soundDictionary;
@@ -46,23 +47,34 @@ public class SoundManager : Singleton<SoundManager>
     {
         bgmSource.Stop();
         sfxSource.Stop();
+        enemyAudioSource.Stop();
     }
     
     // Enemy에서 호출할 메서드
-    public void Play3DSound(string soundName, Vector3 soundPosition, Transform listener, float maxDistance)
-    {
-        AudioClip clip =  GetSound(soundName);
-        float distance = Vector3.Distance(soundPosition, listener.position);
 
-        float volume = Mathf.Clamp01(1 - (distance/maxDistance));
-        sfxSource.PlayOneShot(clip, volume);
+    public void PlayEnemySound(string soundName)
+    {
+        if (!enemyAudioSource.gameObject.activeInHierarchy) return;
+        AudioClip clip = GetSound(soundName);
+        enemyAudioSource.PlayOneShot(clip);
+    }
+
+    public void PlayLoopEnemySound(string soundName)
+    {
+        if (!enemyAudioSource.gameObject.activeInHierarchy) return;
+        AudioClip clip = GetSound(soundName);
+        enemyAudioSource.clip = clip;
+        enemyAudioSource.loop = true;
+        enemyAudioSource.Play();
+    }
+
+    public void StopLoopEnemySound()
+    {
+        if (!enemyAudioSource.gameObject.activeInHierarchy) return;
+        enemyAudioSource.loop = false;
+        StartCoroutine(FadeOut(enemyAudioSource, 0.1f));
     }
     
-    public void Play3DSound(string soundName, Vector3 soundPosition)
-    {
-        AudioClip clip = GetSound(soundName);
-        AudioSource.PlayClipAtPoint(clip, soundPosition);
-    }
 
     public void PlayLoopSfx(string soundName)
     {
@@ -76,56 +88,55 @@ public class SoundManager : Singleton<SoundManager>
     {
         sfxSource.loop = false;
 
-        StartCoroutine(FadeOutSfx());
+        StartCoroutine(FadeOut(sfxSource, 0.7f));
     }
 
-    private IEnumerator FadeOutSfx()
+    private IEnumerator FadeOut(AudioSource audioSource, float fadeTime)
     {
-        float startVolume = sfxSource.volume;
-        float fadeTime = 0.7f;
+        float startVolume = audioSource.volume;
 
-        while (sfxSource.volume > 0)
+        while (audioSource.volume > 0)
         {
-            sfxSource.volume -= startVolume * Time.deltaTime / fadeTime;
+            audioSource.volume -= startVolume * Time.deltaTime / fadeTime;
             yield return null;
         }
         
-        sfxSource.Stop();
-        sfxSource.volume = startVolume;
+        audioSource.Stop();
+        audioSource.volume = startVolume;
     }
     
     // BGM을 바꿔주는 메서드
     public void SwitchBgm(string soundName)
     {
         float fadeTime = 0.3f;
-        StartCoroutine(FadeOutBgm(soundName, fadeTime));
+        StartCoroutine(SmoothChangeAudio(bgmSource, soundName, fadeTime));
     }
     
     public void SwitchBgm(string soundName, float fadeTime)
     {
-        StartCoroutine(FadeOutBgm(soundName, fadeTime));
+        StartCoroutine(SmoothChangeAudio(bgmSource, soundName, fadeTime));
     }
 
-    private IEnumerator FadeOutBgm(string soundName, float fadeTime)
+    private IEnumerator SmoothChangeAudio(AudioSource audioSource, string soundName, float fadeTime)
     {
-        float startVolume = bgmSource.volume;
+        float startVolume = audioSource.volume;
 
-        while (bgmSource.volume > 0)
+        while (audioSource.volume > 0)
         {
-            bgmSource.volume -= startVolume * Time.deltaTime / fadeTime;
+            audioSource.volume -= startVolume * Time.deltaTime / fadeTime;
             yield return null;
         }
 
         StopBgmLoop();
         PlayBgmLoop(soundName);
 
-        while (bgmSource.volume < startVolume)
+        while (audioSource.volume < startVolume)
         {
-            bgmSource.volume += startVolume * Time.deltaTime / fadeTime;
+            audioSource.volume += startVolume * Time.deltaTime / fadeTime;
             yield return null;
         }
         
-        bgmSource.volume = startVolume;
+        audioSource.volume = startVolume;
 
     }
 
@@ -156,6 +167,7 @@ public class SoundManager : Singleton<SoundManager>
     public void ToggleSfxMute()
     {
         sfxSource.mute = !sfxSource.mute;
+        enemyAudioSource.mute = !enemyAudioSource.mute;
     }
 
     public void SetBgmVolume(float volume)
@@ -167,6 +179,7 @@ public class SoundManager : Singleton<SoundManager>
     public void SetSfxVolume(float volume)
     {
         sfxSource.volume = volume;
+        enemyAudioSource.volume = volume;
         Debug.Log($"효과음볼륨인풋값{volume}");
     }
 
@@ -177,6 +190,6 @@ public class SoundManager : Singleton<SoundManager>
 
     public bool IsSfxMute()
     {
-        return sfxSource.mute;
+        return sfxSource.mute && enemyAudioSource.mute;
     }
 }

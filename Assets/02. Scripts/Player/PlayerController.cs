@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -69,19 +69,24 @@ public class PlayerController : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (canLook)
+        //if (canLook)
+        //{
+        //    CameraLook();
+        //}
+
+        if (!isDead)
         {
-            CameraLook();
+            SyncPlayerRotationWihtCamera();
         }
     }
 
     public void OnLookInputPerformed(InputAction.CallbackContext context)
     {
-        mouseDelta = context.ReadValue<Vector2>();
+        //mouseDelta = context.ReadValue<Vector2>();
     }
     public void OnLookInputCanceled(InputAction.CallbackContext context)
     {
-        mouseDelta = Vector2.zero;
+        //mouseDelta = Vector2.zero;
     }
 
     public void OnMoveInputPerformed(InputAction.CallbackContext context)
@@ -145,7 +150,6 @@ public class PlayerController : MonoBehaviour
 
     public void Move()
     {
-
         bool canRun = isRunningInput && IsGrounded() && curMovementInput.magnitude > 0.1f;
         isActuallyRunning = canRun;
 
@@ -160,7 +164,15 @@ public class PlayerController : MonoBehaviour
             speed = canRun ? GetRunTotalSpeed() : GetMoveTotalSpeed();
         }
 
-        Vector3 dir = transform.forward * curMovementInput.y + transform.right * curMovementInput.x;
+        //  카메라 방향 기준 이동
+        Transform cam = Camera.main.transform;
+        Vector3 forward = cam.forward;
+        Vector3 right = cam.right;
+
+        forward.Normalize();
+        right.Normalize();
+
+        Vector3 dir = forward * curMovementInput.y + right * curMovementInput.x;
         dir.Normalize();
         dir *= speed;
         Vector3 movement = dir * speed * Time.fixedDeltaTime;
@@ -177,7 +189,6 @@ public class PlayerController : MonoBehaviour
         return runSpeed + addMoveSpeed + equipMoveSpeed;
     }
 
-
     void CameraLook()
     {
         // 좌우(Y) 회전은 transform(Y축)에만 직접 적용
@@ -188,6 +199,20 @@ public class PlayerController : MonoBehaviour
         cameraContainer.localEulerAngles = new Vector3(-camCurXRot, 0, 0);
 
         transform.eulerAngles += new Vector3(0, mouseDelta.x * lookSensitivity, 0);
+    }
+
+    private void SyncPlayerRotationWihtCamera()
+    {
+        Transform cameraTransform = Camera.main.transform;
+
+        Vector3 lookDirection = cameraTransform.forward;
+        lookDirection.y = 0f;
+
+        if (lookDirection.sqrMagnitude > 0.01f)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(lookDirection);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f);
+        }
     }
 
     public bool IsGrounded()

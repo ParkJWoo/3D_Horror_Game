@@ -1,5 +1,10 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/02. Scripts/Map/MapInteract.meta
+guid: aeb7ebb46800e0e44b07d782504fe869
+folderAsset: yes
+========
 guid: 7b8ee2ab8f35ac54cbcf6109b7df992f
+>>>>>>>> develop:Assets/01. Scenes/MainScene.unity.meta
 DefaultImporter:
   externalObjects: {}
   userData: 
