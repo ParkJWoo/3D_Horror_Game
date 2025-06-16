@@ -1,5 +1,7 @@
 using System;
 using System.Linq;
+using System.Timers;
+using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -23,77 +25,87 @@ public class Inventory
         invenItems = new ItemInstance[inventoryMaxSize];
     }
 
+    public ItemInstance GetItem(DropItem dropItem)
+    {
+        ItemInstance getItem = new ItemInstance(dropItem.item, dropItem.quantity, dropItem.durability);
+
+        if (dropItem.item.itemType == ItemType.equip)
+        {
+            player.Equipment.OnEquip(getItem, dropItem.transform);
+            return null;
+        }
+        else
+        {
+            return AddItem(getItem);
+        }
+    }
+
     public ItemInstance AddItem(ItemInstance newItem)
     {
         if (newItem.itemData.canStack)
         {
-            var sameItems = invenItems.Where(i => i != null && i.itemData == newItem.itemData);
-
-            foreach (var invenItem in sameItems)
+            if (TryStackToSameItem(newItem) != null)
             {
-                if (invenItem.quantity == invenItem.itemData.maxQuantity)
+                newItem = TryStackToEmptySlot(newItem);
+            }
+        }
+        else
+        {
+            for (int i = 0; i < invenItems.Length; i++)
+            {
+                if (invenItems[i] == null)
                 {
-                    continue;
-                }
-                else
-                {
-                    int stackAbleQuntity = invenItem.itemData.maxQuantity - invenItem.quantity;
-                    int slotNum = Array.IndexOf(invenItems, invenItem);
-
-                    if (newItem.quantity > stackAbleQuntity)
-                    {
-                        invenItem.ChangeQuantity(stackAbleQuntity);
-                        newItem.ChangeQuantity(-stackAbleQuntity);
-                        OnInventoryUpdate?.Invoke(slotNum, invenItem);
-                    }
-                    else
-                    {
-                        invenItem.ChangeQuantity(newItem.quantity);
-                        OnInventoryUpdate?.Invoke(slotNum, invenItem);
-                        return null;
-                    }
+                    invenItems[i] = newItem;
+                    Debug.Log(newItem.itemData.itemName);
+                    OnInventoryUpdate?.Invoke(i, newItem);
+                    return null;
                 }
             }
         }
+        return newItem;
+    }
 
-        for (int i = 0; i < invenItems.Length; i++)
+    public ItemInstance TryStackToSameItem(ItemInstance newItem)
+    {
+        var sameItems = invenItems.Where(i => i != null && i.itemData == newItem.itemData);
+
+        foreach (var invenItem in sameItems)
         {
-            if (invenItems[i] == null)
-            {
-                invenItems[i] = newItem;
-                Debug.Log(newItem.itemData.itemName);
-                OnInventoryUpdate?.Invoke(i, newItem);
-                return null;
-            }
+            if (invenItem.quantity == invenItem.itemData.maxQuantity) continue;
+
+            int stackAbleQuntity = invenItem.itemData.maxQuantity - invenItem.quantity;
+            int slotNum = Array.IndexOf(invenItems, invenItem);
+
+            int stackAmount = newItem.quantity > stackAbleQuntity ? stackAbleQuntity : newItem.quantity;
+
+            invenItem.ChangeQuantity(stackAmount);
+            newItem.ChangeQuantity(-stackAmount);
+
+            OnInventoryUpdate?.Invoke(slotNum, invenItem);
+            if (newItem.quantity == 0) return null;
         }
 
         return newItem;
     }
 
-    public void UseItem()
+    public ItemInstance TryStackToEmptySlot(ItemInstance newItem)
     {
-        if (selectItem == null) return;
-
-        switch (selectItem.itemData.itemType)
+        for (int i = 0; i < invenItems.Length; i++)
         {
-            case ItemType.consumable:
-                ConsumItemData consumableItem = selectItem.itemData as ConsumItemData;
-                selectItem.ChangeQuantity(-1);
-                foreach (ItemEffect itemEffect in consumableItem.itemEffect)
-                {
-                    //player.stat.ApplayItemEffect(itemEffect);
-                }
-                break;
-            case ItemType.useable:
-                break;
+            if (invenItems[i] == null)
+            {
+                invenItems[i] = new ItemInstance(newItem.itemData, 0, 0);
+                int stackAmount = newItem.quantity > newItem.itemData.maxQuantity ? newItem.itemData.maxQuantity : newItem.quantity;
+
+                invenItems[i].ChangeQuantity(stackAmount);
+                newItem.ChangeQuantity(-stackAmount);
+
+                OnInventoryUpdate?.Invoke(i, invenItems[i]);
+                if(newItem.quantity == 0) return null;
+            }
         }
 
-        if (selectItem.quantity == 0)
-        {
-            RemoveItem(selectSlotNum);
-        }
-
-        OnInventoryUpdate?.Invoke(selectSlotNum, selectItem);
+        return newItem;
     }
 
     public void UseItem(int slotNum)
@@ -107,11 +119,17 @@ public class Inventory
                 invenItems[slotNum].ChangeQuantity(-1);
                 foreach (ItemEffect itemEffect in consumableItem.itemEffect)
                 {
-                    //player.stat.ApplayItemEffect(itemEffect);
+                    player.ApplyUseItem(itemEffect);
                 }
                 break;
             case ItemType.useable:
-
+                break;
+            case ItemType.battery:
+                BatteryItemData batteryItemData = invenItems[slotNum].itemData as BatteryItemData;
+                if (player.Equipment.equipItemHandler?.RecoverDurability(batteryItemData.durabilityData) == true)
+                {
+                    invenItems[slotNum].ChangeQuantity(-1);
+                }
                 break;
         }
 

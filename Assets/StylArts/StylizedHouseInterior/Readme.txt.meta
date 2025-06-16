@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/99. Externals/HorrorPuzzleItems/SampleScene.unity.meta
+guid: b39d4e899287aab42b0739c4e36bbb81
+DefaultImporter:
+========
 guid: 084c50aa142a0494c8ea12b3b0384d98
 TextScriptImporter:
+>>>>>>>> develop:Assets/StylArts/StylizedHouseInterior/Readme.txt.meta
   externalObjects: {}
   userData: 
   assetBundleName: 
