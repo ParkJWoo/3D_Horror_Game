@@ -26,5 +26,5 @@ MonoBehaviour:
     type: 3}
   itemEffect:
   - itemEffectType: 1
-    amount: 10
+    amount: 1
     duration: 10

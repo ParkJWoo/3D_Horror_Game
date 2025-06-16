@@ -17,7 +17,7 @@ MonoBehaviour:
   itemDescription: "\uD65C\uB825 \uD68C\uBCF5\uC5D0 \uB3C4\uC6C0\uC774 \uB418\uB294
     \uBAA9\uAC78\uC774"
   itemDetailDescription: 
-  itemImage: {fileID: 0}
+  itemImage: {fileID: 21300000, guid: a3a4f4e688bf7c24c9d6d1e059bf3b01, type: 3}
   canStack: 0
   maxQuantity: 1
   maxDurability: 0
@@ -25,6 +25,6 @@ MonoBehaviour:
     type: 3}
   equipType: 1
   stamina: 0
-  staminaRegen: 5
+  staminaRegen: 30
   moveSpeed: 0
   equipModelPrefab: {fileID: 0}
