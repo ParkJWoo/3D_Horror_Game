@@ -75,6 +75,23 @@ public class SoundManager : Singleton<SoundManager>
     public void StopLoopSfx()
     {
         sfxSource.loop = false;
+
+        StartCoroutine(FadeOutSfx());
+    }
+
+    private IEnumerator FadeOutSfx()
+    {
+        float startVolume = sfxSource.volume;
+        float fadeTime = 0.7f;
+
+        while (sfxSource.volume > 0)
+        {
+            sfxSource.volume -= startVolume * Time.deltaTime / fadeTime;
+            yield return null;
+        }
+        
+        sfxSource.Stop();
+        sfxSource.volume = startVolume;
     }
     
     // BGM을 바꿔주는 메서드
