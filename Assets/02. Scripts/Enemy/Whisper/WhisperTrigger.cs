@@ -26,18 +26,24 @@ public class WhisperTrigger : MonoBehaviour
     public float minAngle = 60f;
     public float maxAngle = 120f;
 
-    public float whisperRestartDelay = 10f; // 재시작까지 대기 시간
+    [Header("Slenderman Despawn Settings")]
+    public float despawnDistance = 20f;      // 플레이어와 거리
+    public float despawnDelay = 5f;          // 거리 넘긴 후 사라지는 딜레이
+
+    public float whisperRestartDelay = 10f;  // 속삭임 재시작까지 대기 시간
 
     private float originalFov;
     private Coroutine fovCoroutine;
     private Coroutine vignetteCoroutine;
     private Coroutine whisperTimerCoroutine;
     private Coroutine whisperRestartCoroutine;
+    private Coroutine slendermanDespawnCoroutine;
 
     private Vignette vignette;
     private bool isPlayerInside = false;
     private bool whisperSuppressed = false;
     private bool isWhisperPlaying = false;
+    private bool slendermanSpawned = false;
 
     private Transform playerTransform;
 
@@ -55,10 +61,33 @@ public class WhisperTrigger : MonoBehaviour
 
     private void Update()
     {
+        // 속삭임 유지
         if (isPlayerInside && !whisperSuppressed && !isWhisperPlaying)
         {
             SoundManager.Instance.PlayLoopSfx(soundName);
             isWhisperPlaying = true;
+        }
+
+        // 슬렌더맨 거리 감시 및 자동 비활성화
+        if (slendermanSpawned && slenderman != null && playerTransform != null)
+        {
+            float distance = Vector3.Distance(playerTransform.position, slenderman.transform.position);
+
+            if (distance > despawnDistance)
+            {
+                if (slendermanDespawnCoroutine == null)
+                {
+                    slendermanDespawnCoroutine = StartCoroutine(DespawnSlendermanAfterDelay());
+                }
+            }
+            else
+            {
+                if (slendermanDespawnCoroutine != null)
+                {
+                    StopCoroutine(slendermanDespawnCoroutine);
+                    slendermanDespawnCoroutine = null;
+                }
+            }
         }
     }
 
@@ -80,15 +109,9 @@ public class WhisperTrigger : MonoBehaviour
             vignetteCoroutine = StartCoroutine(ChangeVignetteCoroutine(vignette.intensity.value, 0f));
         }
 
-        if (whisperTimerCoroutine != null)
-        {
-            StopCoroutine(whisperTimerCoroutine);
-        }
+        if (whisperTimerCoroutine != null) StopCoroutine(whisperTimerCoroutine);
 
-        if (whisperRestartCoroutine != null)
-        {
-            StopCoroutine(whisperRestartCoroutine);
-        }
+        if (whisperRestartCoroutine != null) StopCoroutine(whisperRestartCoroutine);
         whisperRestartCoroutine = StartCoroutine(RestartWhisperAfterDelay());
     }
 
@@ -124,29 +147,17 @@ public class WhisperTrigger : MonoBehaviour
             if (virtualCam != null)
             {
                 originalFov = virtualCam.m_Lens.FieldOfView;
-                if (fovCoroutine != null)
-                {
-                    StopCoroutine(fovCoroutine);
-                }
-
+                if (fovCoroutine != null) StopCoroutine(fovCoroutine);
                 fovCoroutine = StartCoroutine(ChangeFovCoroutine(virtualCam, fovTarget));
             }
 
             if (vignette != null)
             {
-                if (vignetteCoroutine != null)
-                {
-                    StopCoroutine(vignetteCoroutine);
-                }
-                
+                if (vignetteCoroutine != null) StopCoroutine(vignetteCoroutine);
                 vignetteCoroutine = StartCoroutine(ChangeVignetteCoroutine(vignette.intensity.value, vignetteTargetIntensity));
             }
 
-            if (whisperTimerCoroutine != null)
-            {
-                StopCoroutine(whisperTimerCoroutine);
-            }
-
+            if (whisperTimerCoroutine != null) StopCoroutine(whisperTimerCoroutine);
             whisperTimerCoroutine = StartCoroutine(WhisperTimer());
         }
     }
@@ -161,11 +172,7 @@ public class WhisperTrigger : MonoBehaviour
 
             if (vignette != null)
             {
-                if (vignetteCoroutine != null)
-                {
-                    StopCoroutine(vignetteCoroutine);
-                }
-
+                if (vignetteCoroutine != null) StopCoroutine(vignetteCoroutine);
                 vignetteCoroutine = StartCoroutine(ChangeVignetteCoroutine(vignette.intensity.value, vignetteIntensifyOnFail));
             }
 
@@ -185,6 +192,7 @@ public class WhisperTrigger : MonoBehaviour
                 slenderman.transform.LookAt(lookAtPos);
 
                 slenderman.SetActive(true);
+                slendermanSpawned = true;
 
                 var enemy = slenderman.GetComponent<Enemy>();
                 if (enemy != null && enemy.StateMachine != null)
@@ -193,6 +201,20 @@ public class WhisperTrigger : MonoBehaviour
                 }
             }
         }
+    }
+
+    private IEnumerator DespawnSlendermanAfterDelay()
+    {
+        yield return new WaitForSeconds(despawnDelay);
+
+        if (slenderman != null)
+        {
+            slenderman.SetActive(false);
+            slendermanSpawned = false;
+            Debug.Log("슬렌더맨 거리 초과로 사라짐");
+        }
+
+        slendermanDespawnCoroutine = null;
     }
 
     private IEnumerator ChangeFovCoroutine(CinemachineVirtualCamera cam, float targetFov)
