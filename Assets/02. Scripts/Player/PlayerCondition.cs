@@ -10,11 +10,14 @@ public class PlayerCondition : MonoBehaviour
 
     public bool isExhausted = false;
     private bool isNormalState = true;
+    private float staminaRecoveryDelay = 1.5f;
+    private float lastRunInputTime = 0f;
 
     private Color whiteColor = new Color(180 / 255f, 180 / 255f, 180 / 255f, 255 / 255f);
     private Color redColor = new Color(180 / 255f, 50 / 255f, 50 / 255f, 255 / 255f);
     private Color redColorBlink = new Color(180 / 255f, 50 / 255f, 50 / 255f, 20 / 255f);
     private float lerpT = 0f;
+
 
 
     Condition stamina { get { return uiCondition.stamina; } }
@@ -26,30 +29,42 @@ public class PlayerCondition : MonoBehaviour
 
     private void Start()
     {
-        //stamina.icon.color = whiteColor; // 시작 시 스태미너 아이콘 하얀색
+        stamina.uiBar.transform.parent.gameObject.SetActive(true);
     }
 
     void Update()
     {
-        stamina.uiBar.color = Color.Lerp(whiteColor, redColor, 1-stamina.GetPercentage());
-        if (controller.isRunningInput && controller.isMoving)
+        if (!controller.isDead)
         {
-            if (!UseStamina(Time.deltaTime * 25f))
+            stamina.uiBar.color = Color.Lerp(whiteColor, redColor, 1 - stamina.GetPercentage());
+            if (controller.isRunningInput && controller.isMoving)
             {
-                controller.isRunningInput = false;
+                NotifyStaminaUsed();
+
+                if (!UseStamina(Time.deltaTime * 15f))
+                {
+                    controller.isRunningInput = false;
+                }
             }
+            else
+            {
+                if (!isExhausted && Time.time - lastRunInputTime > staminaRecoveryDelay)
+                    stamina.Add(stamina.passiveValue * Time.deltaTime);
+            }
+
+            if (!isExhausted && stamina.curValue < 0.2f && !isNormalState)
+            {
+                StartCoroutine(Exhaustion());
+            }
+
+            ExhaustionIcon();
         }
         else
         {
             if (!isExhausted) stamina.Add((stamina.GetTotalPassiveValue()) * Time.deltaTime);
+            stamina.uiBar.transform.parent.gameObject.SetActive(false);
         }
-
-        if (!isExhausted && stamina.curValue < 0.2f && !isNormalState)
-        {
-            StartCoroutine(Exhaustion());
-        }
-
-        ExhaustionIcon();
+        
 
     }
 
@@ -100,5 +115,10 @@ public class PlayerCondition : MonoBehaviour
     public void RecoverStamina(float amount, float duration)
     {
         stamina.RecoverItemValue(amount, duration);
+    }
+
+    public void NotifyStaminaUsed()
+    {
+        lastRunInputTime = Time.time;
     }
 }
