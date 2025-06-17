@@ -1,12 +1,26 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : Singleton<GameManager>
+public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance;
+
     public bool isNewGame;
     public PlaySceneManager playSceneManager;
 
     public SceneLoader sceneLoader;
+
+    private void Awake()
+    {
+        if(Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
 
     private void OnEnable()
     {
@@ -29,7 +43,7 @@ public class GameManager : Singleton<GameManager>
         }
         else if(Input.GetKeyDown(KeyCode.Alpha2))
         {
-            sceneLoader.MoveScene("Main_Scene");
+            sceneLoader.MoveScene("MainScene");
         }
     }
 

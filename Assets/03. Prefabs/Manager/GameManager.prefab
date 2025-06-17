@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8155695676568096120}
   - component: {fileID: 341483907074760335}
-  - component: {fileID: 4151477231584707388}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -49,29 +48,6 @@ MonoBehaviour:
   isNewGame: 0
   playSceneManager: {fileID: 0}
   sceneLoader: {fileID: 2964308391516763095}
---- !u!114 &4151477231584707388
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 683406949373469574}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4715884a94259db4d961ad7159d40b70, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  soundName: Whisper
-  virtualCam: {fileID: 0}
-  fovTarget: 40
-  fovTransitionTime: 1
-  postProcessingVolume: {fileID: 0}
-  vignetteTargetIntensity: 0.5
-  vignetteTransitionTime: 1
-  vignetteIntensifyOnFail: 0.7
-  slendermanSpawner: {fileID: 0}
-  whisperTimeBeforeSpawn: 10
-  restartDelay: 10
 --- !u!1 &7371599198058009558
 GameObject:
   m_ObjectHideFlags: 0
@@ -235,6 +211,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Color.a
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8819992991283763820, guid: a6d2275aa9c77ec4b968b4b1a8fb168d,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

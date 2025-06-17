@@ -49,7 +49,7 @@ public class SceneLoader : MonoBehaviour
 
     public bool LoadingScene(string nextSceneName)     //로딩이 필요한 씬 구분
     {
-        if (nextSceneName == "Main_Scene") return true;
+        if (nextSceneName == "MainScene") return true;
         return false;
     }
 
