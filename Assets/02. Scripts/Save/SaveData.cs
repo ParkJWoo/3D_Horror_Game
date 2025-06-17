@@ -12,7 +12,7 @@ public class SaveItemData
 
     public SaveItemData(ItemInstance item)
     {
-        itemCode = item.itemData.itemCode;
+        itemCode = item.itemData == null ? -1 : item.itemData.itemCode;
         quantity = item.quantity;
         durability = item.durability;
     }
