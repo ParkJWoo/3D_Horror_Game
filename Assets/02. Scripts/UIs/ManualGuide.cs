@@ -39,9 +39,8 @@ public class ManualGuide : MonoBehaviour
             yield return new WaitForSeconds(displayDuration);
         }
 
-        controlTextUI.gameObject.SetActive(true);
-
-        //  다음 가이드 진행
-        GuideManager.Instance?.StartGuideSequence();
+        //  마지막 문구가 꺼지기 전에 한 번 더 기다렸다가 꺼지도록 세팅
+        yield return new WaitForSeconds(displayDuration);
+        controlTextUI.gameObject.SetActive(false);      
     }
 }
