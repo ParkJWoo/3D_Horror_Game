@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -69,10 +69,10 @@ public class PlayerController : MonoBehaviour
 
     private void LateUpdate()
     {
-        //if (canLook)
-        //{
-        //    CameraLook();
-        //}
+        if (canLook)
+        {
+            CameraLook();
+        }
 
         if (!isDead)
         {
@@ -82,11 +82,11 @@ public class PlayerController : MonoBehaviour
 
     public void OnLookInputPerformed(InputAction.CallbackContext context)
     {
-        //mouseDelta = context.ReadValue<Vector2>();
+        mouseDelta = context.ReadValue<Vector2>();
     }
     public void OnLookInputCanceled(InputAction.CallbackContext context)
     {
-        //mouseDelta = Vector2.zero;
+        mouseDelta = Vector2.zero;
     }
 
     public void OnMoveInputPerformed(InputAction.CallbackContext context)

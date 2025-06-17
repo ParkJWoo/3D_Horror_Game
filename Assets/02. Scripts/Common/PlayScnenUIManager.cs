@@ -7,7 +7,7 @@ public class PlayScnenUIManager : UIManager
     public InventoryUI inventoryUI;
     public InventoryDetailView inventoryDetailView;
     public EquipmentUI equipUI;
-
+    public SequenceTextManager sequenceTextManager;
     public override void Init()
     {
         Player player = CharacterManager.Instance.Player;
