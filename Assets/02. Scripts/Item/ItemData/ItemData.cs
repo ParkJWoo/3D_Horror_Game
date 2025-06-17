@@ -26,5 +26,6 @@ public enum ItemType
     equip,
     consumable,
     useable,
-    battery
+    battery,
+    key
 }
