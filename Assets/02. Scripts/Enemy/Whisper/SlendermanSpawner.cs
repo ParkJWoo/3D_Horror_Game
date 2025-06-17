@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class SlendermanSpawner : MonoBehaviour
 {
@@ -14,40 +15,46 @@ public class SlendermanSpawner : MonoBehaviour
     public float minAngle = 60f;
     public float maxAngle = 120f;
 
+    [Header("NavMesh Sample")]
+    public float sampleRadius = 3f;
+    public int maxAttempts = 10;
+
     public void Spawn(Transform player)
     {
-        if (slenderman == null || player == null)
-        {
-            return;
-        }
+        if (slenderman == null || player == null) return;
 
         Vector3 playerPos = player.position;
         Vector3 forward = player.forward;
 
-        //  각도 계산
-        float angle = Random.Range(minAngle, maxAngle);
-
-        if (Random.value < 0.5f)
+        for (int i = 0; i < maxAttempts; i++)
         {
-            angle = -angle;
+            float angle = Random.Range(minAngle, maxAngle);
+
+            if (Random.value < 0.5f)
+            {
+                angle = -angle;
+            }
+
+            Vector3 spawnDir = Quaternion.Euler(0, angle, 0) * forward;
+            float spawnDistance = Random.Range(minSpawnDistance, maxSpawnDistance);
+            Vector3 targetPos = playerPos + spawnDir.normalized * spawnDistance;
+
+            if (NavMesh.SamplePosition(targetPos, out NavMeshHit hit, sampleRadius, NavMesh.AllAreas))
+            {
+                float finalDistance = Vector3.Distance(playerPos, hit.position);
+
+                if (finalDistance >= minSpawnDistance)
+                {
+                    slenderman.transform.position = hit.position;
+                    slenderman.transform.LookAt(new Vector3(playerPos.x, hit.position.y, playerPos.z));
+                    slenderman.SetActive(true); // 여기서 OnEnable이 실행됨
+
+                    return;
+                }
+            }
         }
 
-        Vector3 spawnDir = Quaternion.Euler(0, angle, 0) * forward;
-
-        //  랜덤 거리 적용
-        float spawnDistance = Random.Range(minSpawnDistance, maxSpawnDistance);
-        Vector3 spawnPos = playerPos + spawnDir.normalized * spawnDistance;
-
-        slenderman.transform.position = spawnPos;
-        slenderman.transform.LookAt(new Vector3(playerPos.x, slenderman.transform.position.y, playerPos.z));
-        slenderman.SetActive(true);
-
-        var enemy = slenderman.GetComponent<Enemy>();
-
-        if (enemy?.StateMachine != null)
-        {
-            enemy.StateMachine.ChangeState(enemy.StateMachine.ChasingState);
-        }
+        Debug.LogWarning("[SlendermanSpawner] 유효한 NavMesh 위치를 찾지 못해 슬렌더맨 소환 실패");
     }
 
     public void DeactivateSlenderman()

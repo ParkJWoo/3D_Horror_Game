@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using Cinemachine;
+using UnityEngine.Rendering;
 
 public class Enemy : MonoBehaviour
 {
@@ -29,6 +30,22 @@ public class Enemy : MonoBehaviour
         Agent = GetComponent<NavMeshAgent>();
         AudioSource = GetComponent<AudioSource>();
         StateMachine = new EnemyStateMachine(this);
+    }
+
+    private void OnEnable()
+    {
+        //  Player 참조 다시 세팅
+        if (CharacterManager.Instance?.Player?.controller != null)
+        {
+            PlayerController = CharacterManager.Instance.Player.controller;
+            PlayerTransform = PlayerController.transform;
+        }
+
+        //  슬랜더맨이 활성화될 때 추격 상태로 강제 전이
+        if (StateMachine != null && PlayerTransform != null)
+        {
+            StateMachine.ChangeState(StateMachine.ChasingState);
+        }
     }
 
     private void Start()
