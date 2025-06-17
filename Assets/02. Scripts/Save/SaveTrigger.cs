@@ -5,11 +5,20 @@ using UnityEngine;
 
 public class SaveTrigger : MonoBehaviour
 {
+    private SaveManager saveManager;
+
+    private void Start()
+    {
+        saveManager = SaveManager.Instance;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !PlaySceneManager.instance.enemy.gameObject.activeInHierarchy)
         {
-            SaveManager.Instance.SaveGame();
+            saveManager.UpdatePlayerPosition(other.transform);
+            
+            saveManager.SaveGame();
         }
     }
 }

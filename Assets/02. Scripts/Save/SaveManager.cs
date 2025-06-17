@@ -124,11 +124,11 @@ public class SaveManager : Singleton<SaveManager>
         saveData.playerPosition = player.position;
     }
 
-    public void UpdateEnemyPosition(Transform enemy)
+    public void LoadPlayerPosition(Transform player)
     {
-        if (!enemy.gameObject.activeInHierarchy) return;
-        saveData.enemyPosition = enemy.position;
+        player.position = saveData.playerPosition;
     }
+    
 
     private string EncryptAndDecrypt(string data)
     {

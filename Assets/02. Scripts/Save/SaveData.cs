@@ -20,7 +20,6 @@ public class SaveData
 {
     //저쟝할 데이터 추가 예정
     public Vector3 playerPosition;
-    public Vector3 enemyPosition;
     public float flashlightBattery;
     public List<ItemData> items;
     public Checkpoint lastCheckpoint;

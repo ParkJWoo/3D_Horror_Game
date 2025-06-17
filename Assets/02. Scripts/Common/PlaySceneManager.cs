@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlaySceneManager : MonoBehaviour
 {
     public static PlaySceneManager instance;
+    
+    public Enemy enemy;
 
     private void Awake()
     {
@@ -23,6 +25,11 @@ public class PlaySceneManager : MonoBehaviour
         uiManager?.Init();
         itemManager ??= GetComponentInChildren<ItemManager>();
         itemManager?.Init();
+    }
+
+    private void Start()
+    {
+        SaveManager.Instance.LoadPlayerPosition(characterManager.Player.transform);
     }
 
     private void OnDestroy()
