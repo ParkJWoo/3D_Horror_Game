@@ -1,10 +1,47 @@
 {
     "playerPosition": {
-        "x": -25.0,
-        "y": 0.7,
-        "z": 50.7
+        "x": -24.70369529724121,
+        "y": 0.6528818011283875,
+        "z": 44.05865478515625
     },
-    "flashlightBattery": 0.0,
-    "items": [],
+    "equipItemData": [
+        {
+            "itemCode": -1,
+            "quantity": 0,
+            "durability": 0.0
+        },
+        {
+            "itemCode": -1,
+            "quantity": 0,
+            "durability": 0.0
+        }
+    ],
+    "haveItemData": [
+        {
+            "itemCode": -1,
+            "quantity": 0,
+            "durability": 0.0
+        },
+        {
+            "itemCode": -1,
+            "quantity": 0,
+            "durability": 0.0
+        },
+        {
+            "itemCode": -1,
+            "quantity": 0,
+            "durability": 0.0
+        },
+        {
+            "itemCode": -1,
+            "quantity": 0,
+            "durability": 0.0
+        },
+        {
+            "itemCode": -1,
+            "quantity": 0,
+            "durability": 0.0
+        }
+    ],
     "lastCheckpoint": 0
 }

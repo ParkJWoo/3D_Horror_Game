@@ -41,7 +41,7 @@ public class SaveManager : Singleton<SaveManager>
 
     public void LoadGame()
     {
-        if (GameManager.Instance.isNewGame)
+        if (!File.Exists(gameDataPath))
         {
             TextAsset defaulData = Resources.Load<TextAsset>("Default");
 
@@ -161,8 +161,8 @@ public class SaveManager : Singleton<SaveManager>
     {
         optionData.currentBgmVolume = sound.BgmSlider.value;
         optionData.currentSfxVolume = sound.SfxSlider.value;
-        optionData.currentBgmMute = sound.BgmToggle;
-        optionData.currentSfxMute = sound.SfxToggle;
+        optionData.currentBgmMute = sound.BgmToggle.isOn;
+        optionData.currentSfxMute = sound.SfxToggle.isOn;
     }
 
     public void SaveButton()
