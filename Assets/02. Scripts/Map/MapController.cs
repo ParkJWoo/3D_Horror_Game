@@ -6,7 +6,7 @@ public class MapController : MonoBehaviour
 {
     [SerializeField] MapSO[] MapDatas = new MapSO[5];
     MapSO currentMapData;
-    int currentdataindex;
+    public int currentdataindex;
     [SerializeField] private GameObject MapLightContianor;
     List<Light> Lights = new List<Light>();
     List<float> Targetintenses = new List<float>();
