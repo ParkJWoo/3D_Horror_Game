@@ -13,6 +13,9 @@ public class SoundManager : Singleton<SoundManager>
     private Dictionary<string, AudioClip> soundDictionary;
     private Dictionary<string, AudioClip[]> soundsDictionary;
 
+    private string currentBgmName = "";
+
+
 
     public void Awake()
     {
@@ -26,14 +29,19 @@ public class SoundManager : Singleton<SoundManager>
         AudioClip clip = GetSound(soundName);
         sfxSource.PlayOneShot(clip);
     }
-    
+
     public void PlayBgmLoop(string soundName)
     {
+        if (currentBgmName == soundName)
+        {
+            return;     //  현재 브금과 같으면 재생 안함
+        }
+
         AudioClip clip = GetSound(soundName);
-            bgmSource.clip = clip;
-            bgmSource.loop = true;
-            bgmSource.Play();
-        
+        bgmSource.clip = clip;
+        bgmSource.loop = true;
+        bgmSource.Play();
+        currentBgmName = soundName;
     }
 
     public void StopBgmLoop()

@@ -5,10 +5,12 @@ using UnityEngine.InputSystem;
 
 public class Equipment : MonoBehaviour
 {
-    public Player player;
+    [HideInInspector] public Player player;
 
-    public ItemInstance[] equipItems;
+
+
     public ItemManager itemManager;
+    [HideInInspector] public ItemInstance[] equipItems;
 
     public Action<EquipItemData> OnEquipHandler;
     public Action<EquipItemData> OnUnequipHandler;
@@ -23,7 +25,12 @@ public class Equipment : MonoBehaviour
     public void Init(Player player)
     {
         this.player = player;
-        equipItems = new ItemInstance[(int)EquipType.totalData];  
+        equipItems = new ItemInstance[(int)EquipType.totalData];
+        
+        for (int i = 0; i < equipItems.Length; i++)
+        {
+            equipItems[i] = new ItemInstance(null, 0, 0);
+        }
         
         SaveItemData[] save = SaveManager.Instance.saveData.equipItemData;
         for (int i = 0; i < save.Length; i++)
@@ -32,7 +39,6 @@ public class Equipment : MonoBehaviour
         }
         
         player.PlayerInput.playerInput.Player.Flash.started += UseItem;
-        Debug.Log(equipItems[1]);
     }
 
     private void UseItem(InputAction.CallbackContext context)
@@ -75,8 +81,7 @@ public class Equipment : MonoBehaviour
 
     public void UnEquip(int slotNum, Transform dropPos)
     {
-        Debug.Log($"{equipItems[slotNum]} + {slotNum}");
-        if (equipItems[slotNum] == null) return;
+        if (equipItems[slotNum].itemData == null) return;
 
         EquipItemData equipItemData = equipItems[slotNum].itemData as EquipItemData;
 
@@ -90,7 +95,7 @@ public class Equipment : MonoBehaviour
 
         OnUnequipHandler?.Invoke(equipItemData);
         Instantiate(equipItems[slotNum].itemData.dropItemPrefab, dropPos.position,dropPos.rotation);
-        equipItems[slotNum] = null;
+        equipItems[slotNum].itemData = null;
         OnEquipUpdate?.Invoke(slotNum, null);
     }
 

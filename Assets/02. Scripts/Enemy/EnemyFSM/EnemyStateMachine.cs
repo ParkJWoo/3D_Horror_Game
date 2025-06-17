@@ -5,10 +5,12 @@ using UnityEngine;
 public class EnemyStateMachine : StateMachine<Enemy>
 {
     public Enemy Context { get; }
-    public EnemyIdleState IdleState { get; }
-    public EnemyChasingState ChasingState { get; }
-    public EnemyAttackState AttackState { get; }
+    public EnemyIdleState IdleState { get; private set; }
+    public EnemyChasingState ChasingState { get; private set; }
+    public EnemyAttackState AttackState { get; private set; }
     private IState<Enemy> currentState;
+
+    public bool IsForcedChase { get; private set; }
 
     public EnemyStateMachine(Enemy context)
     {
@@ -16,6 +18,16 @@ public class EnemyStateMachine : StateMachine<Enemy>
         IdleState = new EnemyIdleState(this);
         ChasingState = new EnemyChasingState(this);
         AttackState = new EnemyAttackState(this);
+    }
+
+    public void StartForcedChase()
+    {
+        IsForcedChase = true;
+    }
+
+    public void StopForcedChase()
+    {
+        IsForcedChase = false;
     }
 
     public void ChangeState(IState<Enemy> newState)

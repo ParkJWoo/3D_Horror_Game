@@ -15,18 +15,21 @@ public class EnemyChasingState : IState<Enemy>
 
     public void Enter()
     {
+        Debug.Log("슬렌더맨: Chasing 상태 진입");
+
+        //  이동 시작 설정
         stateMachine.Context.Agent.isStopped = false;
         stateMachine.Context.Agent.speed = stateMachine.Context.Data.WalkSpeed;
         stateMachine.Context.Animator.SetBool(stateMachine.Context.AnimationData.WalkParameterHash, true);
 
         //  슬랜더맨 추격 시작 사운드
-        Vector3 pos = stateMachine.Context.transform.position;
         SoundManager.Instance.SwitchBgm("ChaseBGM");
         SoundManager.Instance.PlayLoopEnemySound("Growling");
     }
 
     public void Exit()
     {
+        //  효과음 정지 및 이동 정지
         SoundManager.Instance.StopLoopEnemySound();
         stateMachine.Context.Agent.isStopped = true;
         stateMachine.Context.Animator.SetBool(stateMachine.Context.AnimationData.WalkParameterHash, false);
@@ -49,23 +52,16 @@ public class EnemyChasingState : IState<Enemy>
             return;
         }
 
-        //  거리 계산
+        //  공격 범위 진입
         float distance = Vector3.Distance(stateMachine.Context.PlayerTransform.position, stateMachine.Context.transform.position);
 
-        //  공격 범위 진입 → 공격 상태 전이
         if (distance <= stateMachine.Context.Data.AttackRange)
         {
             stateMachine.ChangeState(stateMachine.AttackState);
             return;
         }
 
-        //  도망 거리를 넘으면 추적 중단
-        if(distance > stateMachine.Context.Data.PlayerChasingRange)
-        {
-            stateMachine.ChangeState(stateMachine.IdleState);
-            return;
-        }
-
+        //  항상 플레이어를 추격
         stateMachine.Context.Agent.SetDestination(stateMachine.Context.PlayerTransform.position);
     }
 }
