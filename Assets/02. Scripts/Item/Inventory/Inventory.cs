@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
@@ -15,6 +16,7 @@ public class Inventory
     public ItemInstance selectItem;
 
     public UnityAction<int, ItemInstance> OnInventoryUpdate;
+
     public Inventory(Player player)
     {
         this.player = player;
@@ -22,9 +24,22 @@ public class Inventory
         inventoryMaxSize = 5;
         invenItems = new ItemInstance[inventoryMaxSize];
 
-        for (int i = 0; i < invenItems.Length; i++)
+        if (GameManager.Instance.isNewGame)
         {
-            invenItems[i] = new ItemInstance(null, 0, 0);
+            for (int i = 0; i < invenItems.Length; i++)
+            {
+                invenItems[i] = new ItemInstance(null, 0, 0);
+            }
+        }
+        else
+        {
+            List<SaveItemData> save = SaveManager.Instance.saveData.haveItemData;
+
+            for (int i = 0; i < save.Count; i++)
+            {
+                invenItems[i] = new ItemInstance(itemManager.FindSOData(save[i].itemCode), save[i].quantity, save[i].durability);
+                OnInventoryUpdate?.Invoke(i, invenItems[i]);
+            }
         }
     }
 
@@ -65,6 +80,7 @@ public class Inventory
                 }
             }
         }
+
         return newItem;
     }
 
@@ -98,13 +114,15 @@ public class Inventory
             if (invenItems[i].itemData == null)
             {
                 invenItems[i] = new ItemInstance(newItem.itemData, 0, 0);
-                int stackAmount = newItem.quantity > newItem.itemData.maxQuantity ? newItem.itemData.maxQuantity : newItem.quantity;
+                int stackAmount = newItem.quantity > newItem.itemData.maxQuantity
+                    ? newItem.itemData.maxQuantity
+                    : newItem.quantity;
 
                 invenItems[i].ChangeQuantity(stackAmount);
                 newItem.ChangeQuantity(-stackAmount);
 
                 OnInventoryUpdate?.Invoke(i, invenItems[i]);
-                if(newItem.quantity == 0) return null;
+                if (newItem.quantity == 0) return null;
             }
         }
 
@@ -124,6 +142,7 @@ public class Inventory
                 {
                     player.ApplyUseItem(itemEffect);
                 }
+
                 break;
             case ItemType.useable:
                 break;
@@ -133,6 +152,7 @@ public class Inventory
                 {
                     invenItems[slotNum].ChangeQuantity(-1);
                 }
+
                 break;
             case ItemType.key:
                 invenItems[slotNum].ChangeQuantity(-1);

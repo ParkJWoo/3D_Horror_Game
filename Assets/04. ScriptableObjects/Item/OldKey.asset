@@ -17,9 +17,10 @@ MonoBehaviour:
   itemDescription: "\uC624\uB798\uB41C \uC5F4\uC1E0\uC774\uB2E4."
   itemDetailDescription: "\uC624\uB798\uB410\uC9C0\uB9CC \uACE0\uD48D\uC2A4\uB7EC\uC6B4
     \uC5F4\uC1E0\uB2E4."
-  itemImage: {fileID: 0}
+  itemImage: {fileID: 21300000, guid: 335eb3d06ba41dd439d715ce4efb43f6, type: 3}
   canStack: 0
   maxQuantity: 1
   maxDurability: 0
-  dropItemPrefab: {fileID: 0}
+  dropItemPrefab: {fileID: 2720109692373208102, guid: 55b24a3c4fc3c8e45bd32ed61ccb8c4e,
+    type: 3}
   keyType: 1

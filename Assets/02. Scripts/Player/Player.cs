@@ -31,6 +31,8 @@ public class Player : MonoBehaviour
 
     public void Init()
     {
+        transform.position = SaveManager.Instance.saveData.playerPosition;
+
         inventory = new Inventory(this);
         equipment = GetComponent<Equipment>();
         equipment.Init(this);
