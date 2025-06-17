@@ -37,7 +37,7 @@ public class WhisperEffectController : MonoBehaviour
 
     private void Start()
     {
-        if(postProcessingVolume != null && postProcessingVolume.profile.TryGet(out Vignette v))
+        if (postProcessingVolume != null && postProcessingVolume.profile.TryGet(out Vignette v))
         {
             vignette = v;
         }
@@ -66,7 +66,7 @@ public class WhisperEffectController : MonoBehaviour
 
         if (vignette != null)
         {
-            if(vignetteCoroutine != null)
+            if (vignetteCoroutine != null)
             {
                 StopCoroutine(vignetteCoroutine);
             }
@@ -132,7 +132,7 @@ public class WhisperEffectController : MonoBehaviour
 
             if (vignette != null)
             {
-                if(vignetteCoroutine != null)
+                if (vignetteCoroutine != null)
                 {
                     StopCoroutine(vignetteCoroutine);
                 }
@@ -184,7 +184,7 @@ public class WhisperEffectController : MonoBehaviour
             yield return null;
         }
 
-        if(vignette != null)
+        if (vignette != null)
         {
             vignette.intensity.value = to;
         }
