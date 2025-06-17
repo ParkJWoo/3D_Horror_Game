@@ -25,20 +25,23 @@ public class WhisperEffectController : MonoBehaviour
 
     [Header("Slenderman")]
     public SlendermanSpawner slendermanSpawner;
-    public float whisperTimeBeforeSpawn = 10f;
-    public float restartDelay = 10f;
+    public float minWhisperTimeBeforeSpawn = 8f;            //  최소 등장 대기 시간
+    public float maxWhisperTimeBeforeSpawn = 15f;           //  최대 등장 대기 시간
+    public float restartDelay = 10f;                        //  속삭임 억제 후 다시 재시작까지의 시간
 
-    //  상태 공개 프로퍼티
+    //  외부 접근을 위한 상태 공개 프로퍼티
     public bool IsSuppressed => suppressed;
     public bool IsPlaying => playing;
 
     private Vignette vignette;
     private Coroutine fovCoroutine, vignetteCoroutine, timerCoroutine, restartCoroutine;
 
-    private bool suppressed = false;
-    private bool playing = false;
+    private bool suppressed = false;                        //  현재 속삭임이 억제된 상태인지
+    private bool playing = false;                           //  현재 속삭임이 재생 중인지
     private Transform player;
 
+
+    //  포스트 프로세싱 프로필에서 비네트 효과를 가져온다
     private void Start()
     {
         if (postProcessingVolume != null && postProcessingVolume.profile.TryGet(out Vignette v))
@@ -47,6 +50,7 @@ public class WhisperEffectController : MonoBehaviour
         }
     }
 
+    //  속삭임 이펙트 시작
     public void BeginWhisperEffect(Transform playerTransform)
     {
         player = playerTransform;
@@ -86,6 +90,7 @@ public class WhisperEffectController : MonoBehaviour
         timerCoroutine = StartCoroutine(StartWhisperTimer());
     }
 
+    //  속삭임 효과 종료 및 슬랜더맨 비활성화 처리
     public void SuppressWhisper()
     {
         suppressed = true;
@@ -132,14 +137,16 @@ public class WhisperEffectController : MonoBehaviour
         restartCoroutine = StartCoroutine(RestartAfterDelay());
     }
 
+    //  일정 시간이 지나면 슬랜더맨 등장
     private IEnumerator StartWhisperTimer()
     {
-        yield return new WaitForSeconds(whisperTimeBeforeSpawn);
+        float waitTime = Random.Range(minWhisperTimeBeforeSpawn, maxWhisperTimeBeforeSpawn);
+
+        yield return new WaitForSeconds(waitTime);
 
         if (!suppressed && player != null)
         {
-            Debug.Log("슬랜더맨 등장 트리거");
-
+            //  비네트 강도 증가
             if (vignette != null)
             {
                 if (vignetteCoroutine != null)
@@ -157,6 +164,7 @@ public class WhisperEffectController : MonoBehaviour
         }
     }
 
+    //  일정 시간이 지나면 속삭임을 다시 활성화 가능 상태로 전환
     private IEnumerator RestartAfterDelay()
     {
         yield return new WaitForSeconds(restartDelay);
@@ -164,6 +172,7 @@ public class WhisperEffectController : MonoBehaviour
         playing = false;
     }
 
+    //  카메라 시야각 변경
     private IEnumerator ChangeFov(CinemachineVirtualCamera cam, float target)
     {
         float start = cam.m_Lens.FieldOfView;
@@ -179,6 +188,7 @@ public class WhisperEffectController : MonoBehaviour
         cam.m_Lens.FieldOfView = target;
     }
 
+    //  비네트 효과 변경
     private IEnumerator ChangeVignette(float from, float to)
     {
         float t = 0f;

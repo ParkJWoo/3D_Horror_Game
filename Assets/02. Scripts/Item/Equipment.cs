@@ -7,6 +7,9 @@ public class Equipment : MonoBehaviour
 {
     [HideInInspector] public Player player;
 
+
+
+    public ItemManager itemManager;
     [HideInInspector] public ItemInstance[] equipItems;
 
     public Action<EquipItemData> OnEquipHandler;
@@ -23,10 +26,18 @@ public class Equipment : MonoBehaviour
     {
         this.player = player;
         equipItems = new ItemInstance[(int)EquipType.totalData];
+        
         for (int i = 0; i < equipItems.Length; i++)
         {
             equipItems[i] = new ItemInstance(null, 0, 0);
         }
+        
+        SaveItemData[] save = SaveManager.Instance.saveData.equipItemData;
+        for (int i = 0; i < save.Length; i++)
+        {
+            equipItems[i] = new ItemInstance(itemManager.itemDataBase[save[i].itemCode], save[i].quantity, save[i].durability);
+        }
+        
         player.PlayerInput.playerInput.Player.Flash.started += UseItem;
     }
 

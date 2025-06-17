@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using System.Linq;
 
 public class SaveManager : Singleton<SaveManager>
 {
@@ -71,6 +73,7 @@ public class SaveManager : Singleton<SaveManager>
                 string loadOption = currentOptionData.text;
                 optionData = JsonUtility.FromJson<OptionData>(loadOption);
                 Debug.Log($"옵션 데이터 로드 : {optionData}");
+                Debug.Log($"옵션 데이터 로드 : {optionData.currentBgmVolume}");
             }
             else
             {
@@ -81,7 +84,6 @@ public class SaveManager : Singleton<SaveManager>
         {
             string data = File.ReadAllText(optionDataPath);
             optionData = JsonUtility.FromJson<OptionData>(data);
-
             Debug.Log($"로드된 BGM 볼륨: {optionData.currentBgmVolume}, 뮤트: {optionData.currentBgmMute}");
         }
     }
@@ -97,37 +99,50 @@ public class SaveManager : Singleton<SaveManager>
         return optionData;
     }
 
-
-    public void Respawn()
+    public void UpdateLastCheckpoint(int stageIndex)
     {
+        saveData.lastCheckpoint = stageIndex;
+    }
+    
+
+    public void UpdateEquipItems(Player player)
+    {
+        ItemInstance[] playerEquipItems = player.Equipment.equipItems;
+        SaveItemData[] currentEquipItemData = new SaveItemData[playerEquipItems.Length];
+        
+        for (int i = 0; i < playerEquipItems.Length; i++)
+        {
+            currentEquipItemData[i] = new SaveItemData(playerEquipItems[i]);
+        }
+
+        saveData.equipItemData = currentEquipItemData;
+    }
+    
+
+    public void UpdateItemList(Player player)
+    {
+        ItemInstance[] playerItems = player.Inventory.invenItems;
+        List<SaveItemData> currentItemData = new List<SaveItemData>();
+
+        for (int i = 0; i < playerItems.Length; i++)
+        {
+            currentItemData.Add(new SaveItemData(playerItems[i]));
+        }
+        
+        saveData.haveItemData = currentItemData;
     }
 
-    public void UpdateCheckpoint(Checkpoint checkpoint)
+    public void UpdatePlayerPosition(Player player)
     {
+        saveData.playerPosition = player.transform.position;;
     }
+    
 
-    public void UpdateSoundSetting(float bgmVolume, bool bgmMute, float sfxVolume, bool sfxMute)
+    public void UpdatePlayerData(Player player)
     {
-        optionData.currentBgmVolume = bgmVolume;
-        optionData.currentSfxVolume = sfxVolume;
-        optionData.currentBgmMute = bgmMute;
-        optionData.currentSfxMute = sfxMute;
-    }
-
-    public void SaveButton()
-    {
-        SaveOption();
-    }
-
-    public void UpdatePlayerPosition(Transform player)
-    {
-        saveData.playerPosition = player.position;
-    }
-
-    public void UpdateEnemyPosition(Transform enemy)
-    {
-        if (!enemy.gameObject.activeInHierarchy) return;
-        saveData.enemyPosition = enemy.position;
+        UpdatePlayerPosition(player);
+        UpdateItemList(player);
+        UpdateEquipItems(player);
     }
 
     private string EncryptAndDecrypt(string data)
@@ -140,5 +155,18 @@ public class SaveManager : Singleton<SaveManager>
         }
 
         return result;
+    }
+    
+    public void UpdateSoundSetting(SoundUI sound)
+    {
+        optionData.currentBgmVolume = sound.BgmSlider.value;
+        optionData.currentSfxVolume = sound.SfxSlider.value;
+        optionData.currentBgmMute = sound.BgmToggle;
+        optionData.currentSfxMute = sound.SfxToggle;
+    }
+
+    public void SaveButton()
+    {
+        SaveOption();
     }
 }
