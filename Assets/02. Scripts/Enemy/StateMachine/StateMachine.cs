@@ -16,6 +16,9 @@ public abstract class StateMachine<T> : MonoBehaviour where T : MonoBehaviour
     public IState<T> CurrentState { get; private set; }
     public T Context { get; private set; }
 
+    //  강제 추격 여부 추가 
+    public bool IsForcedChase { get; protected set; }
+
     protected virtual void Awake()
     {
         Context = GetComponent<T>();
@@ -27,6 +30,16 @@ public abstract class StateMachine<T> : MonoBehaviour where T : MonoBehaviour
         CurrentState?.Exit();
         CurrentState = newState;
         CurrentState?.Enter();
+    }
+
+    public void StartForcedChase()
+    {
+        IsForcedChase = true;
+    }
+
+    public void StopForcedChase()
+    {
+        IsForcedChase = false;
     }
 
     public void HandleInput() => CurrentState?.HandleInput();

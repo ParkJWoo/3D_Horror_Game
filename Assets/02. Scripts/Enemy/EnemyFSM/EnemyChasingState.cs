@@ -15,6 +15,7 @@ public class EnemyChasingState : IState<Enemy>
 
     public void Enter()
     {
+        //  이동 시작 설정
         stateMachine.Context.Agent.isStopped = false;
         stateMachine.Context.Agent.speed = stateMachine.Context.Data.WalkSpeed;
         stateMachine.Context.Animator.SetBool(stateMachine.Context.AnimationData.WalkParameterHash, true);
@@ -27,6 +28,7 @@ public class EnemyChasingState : IState<Enemy>
 
     public void Exit()
     {
+        //  효과음 정지 및 이동 정지
         SoundManager.Instance.StopLoopEnemySound();
         stateMachine.Context.Agent.isStopped = true;
         stateMachine.Context.Animator.SetBool(stateMachine.Context.AnimationData.WalkParameterHash, false);
@@ -60,7 +62,7 @@ public class EnemyChasingState : IState<Enemy>
         }
 
         //  도망 거리를 넘으면 추적 중단
-        if(distance > stateMachine.Context.Data.PlayerChasingRange)
+        if (distance > stateMachine.Context.Data.PlayerChasingRange && !stateMachine.IsForcedChase)
         {
             stateMachine.ChangeState(stateMachine.IdleState);
             return;

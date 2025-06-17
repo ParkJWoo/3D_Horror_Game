@@ -5,7 +5,12 @@ using UnityEngine;
 public class SlendermanSpawner : MonoBehaviour
 {
     public GameObject slenderman;
-    public float spawnDistance = 5f;
+
+    [Header("Spawn Distance")]
+    public float minSpawnDistance = 7f;
+    public float maxSpawnDistance = 12f;
+
+    [Header("Spawn Angle")]
     public float minAngle = 60f;
     public float maxAngle = 120f;
 
@@ -18,14 +23,19 @@ public class SlendermanSpawner : MonoBehaviour
 
         Vector3 playerPos = player.position;
         Vector3 forward = player.forward;
+
+        //  각도 계산
         float angle = Random.Range(minAngle, maxAngle);
 
-        if(Random.value < 0.5f)
+        if (Random.value < 0.5f)
         {
             angle = -angle;
         }
 
         Vector3 spawnDir = Quaternion.Euler(0, angle, 0) * forward;
+
+        //  랜덤 거리 적용
+        float spawnDistance = Random.Range(minSpawnDistance, maxSpawnDistance);
         Vector3 spawnPos = playerPos + spawnDir.normalized * spawnDistance;
 
         slenderman.transform.position = spawnPos;
