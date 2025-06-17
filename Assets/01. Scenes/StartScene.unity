@@ -205,7 +205,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 61762122}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1299969730}
+        m_TargetAssemblyTypeName: StartSceneButtonEvents, Assembly-CSharp
+        m_MethodName: OnExitButtonClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &61762122
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -394,7 +406,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 353719246}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1299969730}
+        m_TargetAssemblyTypeName: StartSceneButtonEvents, Assembly-CSharp
+        m_MethodName: OnStartButtonClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &353719246
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -484,7 +508,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -559,7 +583,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -652,6 +676,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e04033ca009fd8a40ac367a8abd12634, type: 3}
+--- !u!114 &773180516 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2964308391516763095, guid: e04033ca009fd8a40ac367a8abd12634,
+    type: 3}
+  m_PrefabInstance: {fileID: 773180515}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6011412ecfd340c4eb7cccc7c4c6a8c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &897399718
 GameObject:
   m_ObjectHideFlags: 0
@@ -888,8 +924,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6204679554f3ef24590d91e68d1d998f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneLoader: {fileID: 0}
+  sceneLoader: {fileID: 773180516}
   mainSceneName: MainScene
+  LoadButton: {fileID: 1627231781}
 --- !u!1 &1312710480
 GameObject:
   m_ObjectHideFlags: 0
@@ -941,7 +978,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1043,11 +1080,23 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1627231782}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1299969730}
+        m_TargetAssemblyTypeName: StartSceneButtonEvents, Assembly-CSharp
+        m_MethodName: OnLoadButtonClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1627231782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1178,7 +1227,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1870204404
+--- !u!1001 &1991208552
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -1186,71 +1235,66 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1098832091543582346, guid: f07d14227c10edd4e85e9794c77834a7,
-        type: 3}
-      propertyPath: m_Name
-      value: PlaySceneManager
-      objectReference: {fileID: 0}
-    - target: {fileID: 3337229041687598428, guid: f07d14227c10edd4e85e9794c77834a7,
+    - target: {fileID: 6694602287664693685, guid: df9ac2be06fbac84c8e1ea7af100f2b3,
         type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3337229041687598428, guid: f07d14227c10edd4e85e9794c77834a7,
+    - target: {fileID: 6694602287664693685, guid: df9ac2be06fbac84c8e1ea7af100f2b3,
         type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3337229041687598428, guid: f07d14227c10edd4e85e9794c77834a7,
+    - target: {fileID: 6694602287664693685, guid: df9ac2be06fbac84c8e1ea7af100f2b3,
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3337229041687598428, guid: f07d14227c10edd4e85e9794c77834a7,
+    - target: {fileID: 6694602287664693685, guid: df9ac2be06fbac84c8e1ea7af100f2b3,
         type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 3337229041687598428, guid: f07d14227c10edd4e85e9794c77834a7,
+    - target: {fileID: 6694602287664693685, guid: df9ac2be06fbac84c8e1ea7af100f2b3,
         type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3337229041687598428, guid: f07d14227c10edd4e85e9794c77834a7,
+    - target: {fileID: 6694602287664693685, guid: df9ac2be06fbac84c8e1ea7af100f2b3,
         type: 3}
       propertyPath: m_LocalRotation.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3337229041687598428, guid: f07d14227c10edd4e85e9794c77834a7,
+    - target: {fileID: 6694602287664693685, guid: df9ac2be06fbac84c8e1ea7af100f2b3,
         type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3337229041687598428, guid: f07d14227c10edd4e85e9794c77834a7,
+    - target: {fileID: 6694602287664693685, guid: df9ac2be06fbac84c8e1ea7af100f2b3,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3337229041687598428, guid: f07d14227c10edd4e85e9794c77834a7,
+    - target: {fileID: 6694602287664693685, guid: df9ac2be06fbac84c8e1ea7af100f2b3,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3337229041687598428, guid: f07d14227c10edd4e85e9794c77834a7,
+    - target: {fileID: 6694602287664693685, guid: df9ac2be06fbac84c8e1ea7af100f2b3,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4182139516998481174, guid: f07d14227c10edd4e85e9794c77834a7,
+    - target: {fileID: 8064592236993920019, guid: df9ac2be06fbac84c8e1ea7af100f2b3,
         type: 3}
-      propertyPath: uiManager
-      value: 
+      propertyPath: m_Name
+      value: SaveManager
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: f07d14227c10edd4e85e9794c77834a7, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: df9ac2be06fbac84c8e1ea7af100f2b3, type: 3}
 --- !u!1 &2022075019
 GameObject:
   m_ObjectHideFlags: 0
@@ -1302,7 +1346,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1335,4 +1379,4 @@ SceneRoots:
   - {fileID: 1299969729}
   - {fileID: 66139704}
   - {fileID: 773180515}
-  - {fileID: 1870204404}
+  - {fileID: 1991208552}
