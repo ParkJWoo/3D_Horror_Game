@@ -73,6 +73,7 @@ public class SaveManager : Singleton<SaveManager>
                 string loadOption = currentOptionData.text;
                 optionData = JsonUtility.FromJson<OptionData>(loadOption);
                 Debug.Log($"옵션 데이터 로드 : {optionData}");
+                Debug.Log($"옵션 데이터 로드 : {optionData.currentBgmVolume}");
             }
             else
             {
@@ -83,7 +84,6 @@ public class SaveManager : Singleton<SaveManager>
         {
             string data = File.ReadAllText(optionDataPath);
             optionData = JsonUtility.FromJson<OptionData>(data);
-
             Debug.Log($"로드된 BGM 볼륨: {optionData.currentBgmVolume}, 뮤트: {optionData.currentBgmMute}");
         }
     }
