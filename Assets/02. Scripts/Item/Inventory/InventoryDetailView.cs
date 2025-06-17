@@ -109,8 +109,6 @@ public class InventoryDetailView : MonoBehaviour
 
     public void UseButton()
     {
-        Debug.Log(currentSlot.slotItem.itemData.itemName);
-        Debug.Log(inventory);
         inventory.UseItem(currentSlot.slotNum);
         if (currentSlot == null || currentSlot.slotItem == null)
         {

@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b111741d6ee290246b743c74d038d1e2, type: 3}
-  m_Name: OldKey
+  m_Name: BlackKey
   m_EditorClassIdentifier: 
-  itemCode: 10
-  itemName: "\uB0A1\uC740 \uC5F4\uC1E0"
-  itemDescription: "\uC624\uB798\uB41C \uC5F4\uC1E0\uC774\uB2E4."
-  itemDetailDescription: "\uC624\uB798\uB410\uC9C0\uB9CC \uACE0\uD48D\uC2A4\uB7EC\uC6B4
-    \uC5F4\uC1E0\uB2E4."
-  itemImage: {fileID: 21300000, guid: 335eb3d06ba41dd439d715ce4efb43f6, type: 3}
+  itemCode: 11
+  itemName: "\uAC80\uC740 \uD0A4"
+  itemDescription: "\uCE60\uD751\uAC19\uC774 \uC0C8\uAE4C\uB9CC \uD0A4\uB2E4"
+  itemDetailDescription: "\uBD88\uAE38\uD568\uC774 \uB290\uAEF4\uC9C0\uB294 \uAC80\uC740
+    \uD0A4\uB2E4."
+  itemImage: {fileID: 0}
   canStack: 0
   maxQuantity: 1
   maxDurability: 0
-  dropItemPrefab: {fileID: 2720109692373208102, guid: 55b24a3c4fc3c8e45bd32ed61ccb8c4e,
+  dropItemPrefab: {fileID: 216180080575996397, guid: ed2627d838aeffb498b9251569921e26,
     type: 3}
-  keyType: 1
+  keyType: 2

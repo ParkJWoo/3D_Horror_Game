@@ -83,6 +83,7 @@ public class FlashLight : EquipItemHandler
         {
             batteryConsumption = StartCoroutine(BatteryConsumptionHandler());
         }
+        SoundManager.Instance.PlaySound("LightToggle");
         flashLight.enabled = true;
     }
 
@@ -119,6 +120,7 @@ public class FlashLight : EquipItemHandler
             StopCoroutine(batteryConsumption);
             batteryConsumption = null;
         }
+        SoundManager.Instance.PlaySound("LightToggle");
         flashLight.enabled = false;
     }
 

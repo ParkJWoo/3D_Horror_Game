@@ -20,6 +20,18 @@ public class ItemManager : MonoBehaviour
         }
     }
 
+    public ItemData FindSOData(int ItemNum)
+    {
+        if(itemDataBase.TryGetValue(ItemNum, out ItemData value))
+        {
+            return value;
+        }
+        else
+        {
+            return null;
+        }
+    }
+
     public void DropItem(ItemInstance item, Vector3 position)
     {
         GameObject drop = Instantiate(item.itemData.dropItemPrefab, position, Quaternion.identity);

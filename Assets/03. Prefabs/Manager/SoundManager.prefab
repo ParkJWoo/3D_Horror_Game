@@ -304,6 +304,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bgmSource: {fileID: 3423067134568534087}
   sfxSource: {fileID: 5635472361147593769}
+  enemyAudioSource: {fileID: 0}
   sound:
   - {fileID: 11400000, guid: 33b09a9e50738154a95f07e6d1264bca, type: 2}
   - {fileID: 11400000, guid: e5da2e3ffe623144a89a02dfeafad697, type: 2}
@@ -312,3 +313,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3b133d1fc14b8b140812aa8f92660743, type: 2}
   - {fileID: 11400000, guid: 5b4fe95f9bc1a6d46a7f8d839ba56b24, type: 2}
   - {fileID: 11400000, guid: c50e705d39129754eacbdbc80f25e577, type: 2}
+  - {fileID: 11400000, guid: 1443b1765178a044490df568a3eda7c4, type: 2}
+  - {fileID: 11400000, guid: a3c6d1d0742259d449c75c050991c4e3, type: 2}
