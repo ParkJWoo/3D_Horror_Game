@@ -182,14 +182,5 @@ public class SoundManager : Singleton<SoundManager>
         enemyAudioSource.volume = volume;
         Debug.Log($"효과음볼륨인풋값{volume}");
     }
-
-    public bool IsBgmMute()
-    {
-        return bgmSource.mute;
-    }
-
-    public bool IsSfxMute()
-    {
-        return sfxSource.mute && enemyAudioSource.mute;
-    }
+    
 }

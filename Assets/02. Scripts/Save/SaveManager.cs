@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using System.Linq;
 
 public class SaveManager : Singleton<SaveManager>
 {
@@ -97,38 +99,51 @@ public class SaveManager : Singleton<SaveManager>
         return optionData;
     }
 
-
-    public void Respawn()
+    public void UpdateLastCheckpoint(int stageIndex)
     {
-    }
-
-    public void UpdateCheckpoint(Checkpoint checkpoint)
-    {
-    }
-
-    public void UpdateSoundSetting(float bgmVolume, bool bgmMute, float sfxVolume, bool sfxMute)
-    {
-        optionData.currentBgmVolume = bgmVolume;
-        optionData.currentSfxVolume = sfxVolume;
-        optionData.currentBgmMute = bgmMute;
-        optionData.currentSfxMute = sfxMute;
-    }
-
-    public void SaveButton()
-    {
-        SaveOption();
-    }
-
-    public void UpdatePlayerPosition(Transform player)
-    {
-        saveData.playerPosition = player.position;
-    }
-
-    public void LoadPlayerPosition(Transform player)
-    {
-        player.position = saveData.playerPosition;
+        saveData.lastCheckpoint = stageIndex;
     }
     
+
+    public void UpdateEquipItems(Player player)
+    {
+        ItemInstance[] playerEquipItems = player.Equipment.equipItems;
+        SaveItemData[] currentEquipItemData = new SaveItemData[playerEquipItems.Length];
+        
+        for (int i = 0; i < playerEquipItems.Length; i++)
+        {
+            currentEquipItemData[i] = new SaveItemData(playerEquipItems[i]);
+        }
+
+        saveData.equipItemData = currentEquipItemData;
+    }
+    
+
+    public void UpdateItemList(Player player)
+    {
+        ItemInstance[] playerItems = player.Inventory.invenItems;
+        List<SaveItemData> currentItemData = new List<SaveItemData>();
+
+        for (int i = 0; i < playerItems.Length; i++)
+        {
+            currentItemData.Add(new SaveItemData(playerItems[i]));
+        }
+        
+        saveData.haveItemData = currentItemData;
+    }
+
+    public void UpdatePlayerPosition(Player player)
+    {
+        saveData.playerPosition = player.transform.position;;
+    }
+    
+
+    public void UpdatePlayerData(Player player)
+    {
+        UpdatePlayerPosition(player);
+        UpdateItemList(player);
+        UpdateEquipItems(player);
+    }
 
     private string EncryptAndDecrypt(string data)
     {
@@ -140,5 +155,18 @@ public class SaveManager : Singleton<SaveManager>
         }
 
         return result;
+    }
+    
+    public void UpdateSoundSetting(SoundUI sound)
+    {
+        optionData.currentBgmVolume = sound.BgmSlider.value;
+        optionData.currentSfxVolume = sound.SfxSlider.value;
+        optionData.currentBgmMute = sound.BgmToggle;
+        optionData.currentSfxMute = sound.SfxToggle;
+    }
+
+    public void SaveButton()
+    {
+        SaveOption();
     }
 }

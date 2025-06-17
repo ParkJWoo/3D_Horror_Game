@@ -3,26 +3,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Checkpoint
+[Serializable]
+public class SaveItemData
 {
-    None,
-    FoundFlashlight,
-    GetLetter,
-    GetKey,
-    OpenLockedDoor,
-    
-    
-}
+    public int itemCode;
+    public int quantity;
+    public float durability;
 
+    public SaveItemData(ItemInstance item)
+    {
+        itemCode = item.itemData.itemCode;
+        quantity = item.quantity;
+        durability = item.durability;
+    }
+}
 
 [Serializable]
 public class SaveData
 {
     //저쟝할 데이터 추가 예정
     public Vector3 playerPosition;
-    public float flashlightBattery;
-    public List<ItemData> items;
-    public Checkpoint lastCheckpoint;
+    public SaveItemData[] equipItemData = new SaveItemData[2];
+    public List<SaveItemData> haveItemData;
+    public int lastCheckpoint;
 }
 
 [Serializable]

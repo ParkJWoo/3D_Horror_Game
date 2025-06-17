@@ -16,9 +16,11 @@ public class SaveTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player") && !PlaySceneManager.instance.enemy.gameObject.activeInHierarchy)
         {
-            saveManager.UpdatePlayerPosition(other.transform);
+            Player player = other.GetComponent<Player>();
             
+            saveManager.UpdatePlayerData(player);
             saveManager.SaveGame();
         }
+        
     }
 }

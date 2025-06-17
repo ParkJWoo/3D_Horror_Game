@@ -10,6 +10,12 @@ public class SoundUI : MonoBehaviour
     [SerializeField] private Slider sfxSlider;
     [SerializeField] private Toggle bgmToggle;
     [SerializeField] private Toggle sfxToggle;
+    
+    public Slider BgmSlider => bgmSlider;
+    public Slider SfxSlider => sfxSlider;
+    public Toggle BgmToggle => bgmToggle;
+    public Toggle SfxToggle => sfxToggle;
+    
     private bool isUIOpen = false;
     
     SaveManager saveManager;
@@ -50,10 +56,7 @@ public class SoundUI : MonoBehaviour
 
     private void SaveSoundSetting()
     {
-        saveManager.UpdateSoundSetting(bgmSlider.value, 
-            soundManager.IsBgmMute(), 
-            sfxSlider.value, 
-            soundManager.IsSfxMute());
+        saveManager.UpdateSoundSetting(this);
         
         saveManager.SaveOption();
     }

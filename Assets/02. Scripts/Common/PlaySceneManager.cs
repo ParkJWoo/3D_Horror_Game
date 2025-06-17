@@ -26,11 +26,7 @@ public class PlaySceneManager : MonoBehaviour
         itemManager ??= GetComponentInChildren<ItemManager>();
         itemManager?.Init();
     }
-
-    private void Start()
-    {
-        SaveManager.Instance.LoadPlayerPosition(characterManager.Player.transform);
-    }
+    
 
     private void OnDestroy()
     {
