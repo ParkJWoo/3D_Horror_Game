@@ -40,19 +40,7 @@ public class Equipment : MonoBehaviour
             for (int i = 0; i < save.Length; i++)
             {
                 equipItems[i] = new ItemInstance(itemManager.FindSOData(save[i].itemCode), save[i].quantity, save[i].durability);
-                EquipItemData equipItemData = equipItems[i].itemData as EquipItemData;
-
-                if (i == (int)EquipType.visibleEquip)
-                {
-                    GameObject equipModel = Instantiate(equipItemData.equipModelPrefab, player.equipPos);
-                    if (equipModel.TryGetComponent<EquipItemHandler>(out EquipItemHandler equipItem))
-                    {
-                        equipItemHandler = equipItem;
-                        equipItemHandler.Init(player, equipItems[i]);
-                    }
-                }
-                OnEquipHandler?.Invoke(equipItemData);
-                OnEquipUpdate?.Invoke(i, equipItems[i]);
+                OnEquip(equipItems[i], null);
             }
         }
 

@@ -199,8 +199,6 @@ public class PlayerController : MonoBehaviour
 
         cameraContainer.localEulerAngles = new Vector3(-camCurXRot, 0, 0);
 
-        CharacterManager.Instance.Player.equipPos.localRotation = Quaternion.Euler(-camCurXRot, 0, 0);
-
         transform.eulerAngles += new Vector3(0, mouseDelta.x * lookSensitivity, 0);
     }
 

@@ -21,17 +21,19 @@ public class Player : MonoBehaviour
 
     private Dictionary<ItemEffectType, ApplyItemEffect> applyItemeffectDictionary = new Dictionary<ItemEffectType, ApplyItemEffect>();
 
-    void Awake()
-    {
-        CharacterManager.Instance.Player = this;
-        playerInput = GetComponent<Inputs>();
-        controller = GetComponent<PlayerController>();
-        condition = GetComponent<PlayerCondition>();
-    }
+    //void Awake()
+    //{
+        
+    //}
 
     public void Init()
     {
         transform.position = SaveManager.Instance.saveData.playerPosition;
+
+        CharacterManager.Instance.Player = this;
+        playerInput = GetComponent<Inputs>();
+        controller = GetComponent<PlayerController>();
+        condition = GetComponent<PlayerCondition>();
 
         inventory = new Inventory(this);
         equipment = GetComponent<Equipment>();

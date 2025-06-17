@@ -38,7 +38,7 @@ public class Inventory
             for (int i = 0; i < save.Count; i++)
             {
                 invenItems[i] = new ItemInstance(itemManager.FindSOData(save[i].itemCode), save[i].quantity, save[i].durability);
-                OnInventoryUpdate?.Invoke(i, invenItems[i]);
+                AddItem(invenItems[i]);
             }
         }
     }
