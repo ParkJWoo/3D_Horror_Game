@@ -1,0 +1,15 @@
+{
+    "playerPosition": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "enemyPosition": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+    },
+    "flashlightBattery": 0.0,
+    "items": [],
+    "lastCheckpoint": 0
+}

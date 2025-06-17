@@ -6,14 +6,13 @@ public class MapController : MonoBehaviour
 {
     [SerializeField] MapSO[] MapDatas = new MapSO[5];
     MapSO currentMapData;
-    int currentdataindex;
+    public int currentdataindex;
     [SerializeField] private GameObject MapLightContianor;
     List<Light> Lights = new List<Light>();
     List<float> Targetintenses = new List<float>();
     List<float> LerpSpeeds = new List<float>();
     float minLerpSpeed = 2f;
     float maxLerpSpeed = 7f;
-    bool ismonsterspawn = false;
     void Start()
     {
         Init();
@@ -34,7 +33,6 @@ public class MapController : MonoBehaviour
         {
             currentMapData = MapDatas[0];
             currentdataindex = 0;
-            ismonsterspawn = currentMapData.Monsterinfo.Ismonster;
             return;
         }
     }
@@ -60,11 +58,6 @@ public class MapController : MonoBehaviour
             return;
         }
         currentMapData = MapDatas[currentdataindex];
-        if (!ismonsterspawn && currentMapData.Monsterinfo.Ismonster)
-        {
-            ismonsterspawn = true;
-            // 몬스터 소환
-        }
 
         StopAllCoroutines();
         ResetLight();
