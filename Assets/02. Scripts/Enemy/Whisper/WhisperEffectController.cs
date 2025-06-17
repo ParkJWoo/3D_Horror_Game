@@ -118,6 +118,8 @@ public class WhisperEffectController : MonoBehaviour
             StopCoroutine(timerCoroutine);
         }
 
+        slendermanSpawner?.DeactivateSlenderman();
+
         if (restartCoroutine != null)
         {
             StopCoroutine(restartCoroutine);

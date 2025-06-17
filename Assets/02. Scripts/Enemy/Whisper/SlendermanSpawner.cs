@@ -39,4 +39,12 @@ public class SlendermanSpawner : MonoBehaviour
             enemy.StateMachine.ChangeState(enemy.StateMachine.ChasingState);
         }
     }
+
+    public void DeactivateSlenderman()
+    {
+        if (slenderman != null && slenderman.activeSelf)
+        {
+            slenderman.SetActive(false);
+        }
+    }
 }
