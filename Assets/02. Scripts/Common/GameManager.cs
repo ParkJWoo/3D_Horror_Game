@@ -30,10 +30,10 @@ public class GameManager : MonoBehaviour
         SceneManager.sceneUnloaded += UnLoad;
     }
 
-    private void Update()
-    {
-        SceneMoveTestCode();
-    }
+    //private void Update()
+    //{
+    //    //SceneMoveTestCode();
+    //}
 
     public void SceneMoveTestCode()
     {
