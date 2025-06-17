@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MapController : MonoBehaviour
 {
-    [SerializeField] MapSO[] MapDatas = new MapSO[5];
+    [SerializeField] MapSO[] MapDatas = new MapSO[4];
     MapSO currentMapData;
     public int currentdataindex;
     [SerializeField] private GameObject MapLightContianor;
