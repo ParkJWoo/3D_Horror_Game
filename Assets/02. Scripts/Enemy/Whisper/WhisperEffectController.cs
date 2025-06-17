@@ -28,6 +28,10 @@ public class WhisperEffectController : MonoBehaviour
     public float whisperTimeBeforeSpawn = 10f;
     public float restartDelay = 10f;
 
+    //  상태 공개 프로퍼티
+    public bool IsSuppressed => suppressed;
+    public bool IsPlaying => playing;
+
     private Vignette vignette;
     private Coroutine fovCoroutine, vignetteCoroutine, timerCoroutine, restartCoroutine;
 
