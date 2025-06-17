@@ -91,7 +91,11 @@ public class WhisperEffectController : MonoBehaviour
         suppressed = true;
         playing = false;
 
+        //  속삭임 사운드 정지
         SoundManager.Instance.StopLoopSfx();
+
+        //  원래 BGM 재생
+        SoundManager.Instance.PlayBgmLoop("DefaultBGM");
 
         if (virtualCam != null)
         {
