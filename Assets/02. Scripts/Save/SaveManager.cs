@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System.Linq;
@@ -9,7 +9,7 @@ public class SaveManager : Singleton<SaveManager>
     public OptionData optionData = new OptionData();
 
     private string gameDataPath;
-    private string optionDataPath;
+    public string optionDataPath;
     private string gameDataFileName = "/save.json";
     private string optionDataFileName = "/option.json";
     private string keyWord = "dlka3o33kl12daah*%(* UHOi==";
