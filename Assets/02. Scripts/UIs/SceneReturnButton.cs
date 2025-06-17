@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class SceneReturnButton : MonoBehaviour
 {
     public SceneLoader sceneLoader;
-    public string targetSceneName = "LoadingScene";
+    public string targetSceneName = "StartScene";
 
     public void ReturnToScene()
     {
