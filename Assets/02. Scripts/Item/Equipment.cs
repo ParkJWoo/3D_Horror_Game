@@ -26,18 +26,36 @@ public class Equipment : MonoBehaviour
     {
         this.player = player;
         equipItems = new ItemInstance[(int)EquipType.totalData];
-        
-        for (int i = 0; i < equipItems.Length; i++)
+
+        if (GameManager.Instance.isNewGame)
         {
-            equipItems[i] = new ItemInstance(null, 0, 0);
+            for (int i = 0; i < equipItems.Length; i++)
+            {
+                equipItems[i] = new ItemInstance(null, 0, 0);
+            }
         }
-        
-        SaveItemData[] save = SaveManager.Instance.saveData.equipItemData;
-        for (int i = 0; i < save.Length; i++)
+        else
         {
-            equipItems[i] = new ItemInstance(itemManager.itemDataBase[save[i].itemCode], save[i].quantity, save[i].durability);
+            SaveItemData[] save = SaveManager.Instance.saveData.equipItemData;
+            for (int i = 0; i < save.Length; i++)
+            {
+                equipItems[i] = new ItemInstance(itemManager.FindSOData(save[i].itemCode), save[i].quantity, save[i].durability);
+                EquipItemData equipItemData = equipItems[i].itemData as EquipItemData;
+
+                if (i == (int)EquipType.visibleEquip)
+                {
+                    GameObject equipModel = Instantiate(equipItemData.equipModelPrefab, player.equipPos);
+                    if (equipModel.TryGetComponent<EquipItemHandler>(out EquipItemHandler equipItem))
+                    {
+                        equipItemHandler = equipItem;
+                        equipItemHandler.Init(player, equipItems[i]);
+                    }
+                }
+                OnEquipHandler?.Invoke(equipItemData);
+                OnEquipUpdate?.Invoke(i, equipItems[i]);
+            }
         }
-        
+
         player.PlayerInput.playerInput.Player.Flash.started += UseItem;
     }
 

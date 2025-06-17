@@ -24,20 +24,23 @@ public class Inventory
         inventoryMaxSize = 5;
         invenItems = new ItemInstance[inventoryMaxSize];
 
-        for (int i = 0; i < invenItems.Length; i++)
+        if (GameManager.Instance.isNewGame)
         {
-            invenItems[i] = new ItemInstance(null, 0, 0);
+            for (int i = 0; i < invenItems.Length; i++)
+            {
+                invenItems[i] = new ItemInstance(null, 0, 0);
+            }
         }
-
-        List<SaveItemData> save = SaveManager.Instance.saveData.haveItemData;
-        
-        for (int i = 0; i < save.Count; i++)
+        else
         {
-            invenItems[i] = new ItemInstance(itemManager.itemDataBase[save[i].itemCode], save[i].quantity, save[i].durability);
+            List<SaveItemData> save = SaveManager.Instance.saveData.haveItemData;
+
+            for (int i = 0; i < save.Count; i++)
+            {
+                invenItems[i] = new ItemInstance(itemManager.FindSOData(save[i].itemCode), save[i].quantity, save[i].durability);
+                OnInventoryUpdate?.Invoke(i, invenItems[i]);
+            }
         }
-        
-
-
     }
 
     public ItemInstance GetItem(DropItem dropItem)
