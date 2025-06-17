@@ -7,27 +7,32 @@ using UnityEngine.UI;
 
 public class DeathEffectManager : MonoBehaviour
 {
-    public CanvasGroup deathPanelGroup;         //  DeadScreenPanel에 CanvasGroup 추가
+    public CanvasGroup deathPanelGroup;         // DeadScreenPanel에 CanvasGroup 추가
     public Image deadImage;
-    //public AudioSource audioSource;
-    //public AudioClip deathSFX;
+
+    public Button returnButton;                 // 죽은 후 뜨는 버튼 연결
     public float fadeSpeed = 2f;
 
     private void Awake()
     {
-        //  패널은 항상 Active 상태로
-        //  시작 시, 완전히 투명, 이미지는 표시할 것
+        // 패널은 항상 Active 상태로
         deathPanelGroup.alpha = 0;
+        deathPanelGroup.blocksRaycasts = false; // 클릭 막기
 
-        if(deadImage != null)
+        if (deadImage != null)
         {
             deadImage.enabled = true;
+        }
+
+        if (returnButton != null)
+        {
+            returnButton.interactable = false;
+            returnButton.gameObject.SetActive(false);
         }
     }
 
     public void PlayDeathSequence()
     {
-        //  활성화 상태일 때만 코루틴 실행할 것!
         if (gameObject.activeInHierarchy)
         {
             StartCoroutine(DeathRoutine());
@@ -37,6 +42,7 @@ public class DeathEffectManager : MonoBehaviour
     private IEnumerator DeathRoutine()
     {
         deathPanelGroup.alpha = 0f;
+        deathPanelGroup.blocksRaycasts = false;
 
         float timer = 0f;
 
@@ -45,12 +51,10 @@ public class DeathEffectManager : MonoBehaviour
             timer += Time.unscaledDeltaTime * fadeSpeed;
             float time = Mathf.Clamp01(timer / 1f);
 
-            //  더 부드러운 곡선형태로 띄움 (SineInOut)
             float eased = 0.5f - 0.5f * Mathf.Cos(Mathf.PI * time);
             deathPanelGroup.alpha = eased;
 
-            //  옵션 (안 넣어도 됨) 붉은 빛 강조
-            if(deadImage != null)
+            if (deadImage != null)
             {
                 deadImage.color = Color.Lerp(Color.clear, new Color(0.8f, 0, 0, 1), eased);
             }
@@ -59,10 +63,17 @@ public class DeathEffectManager : MonoBehaviour
         }
 
         deathPanelGroup.alpha = 1f;
+        deathPanelGroup.blocksRaycasts = true; // 마지막에 클릭 가능해짐
 
-        if(deadImage != null)
+        if (deadImage != null)
         {
             deadImage.color = new Color(0.8f, 0, 0, 1);
+        }
+
+        if (returnButton != null)
+        {
+            returnButton.gameObject.SetActive(true);
+            returnButton.interactable = true;
         }
 
         Time.timeScale = 0f;

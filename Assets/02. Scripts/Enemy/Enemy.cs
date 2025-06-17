@@ -34,17 +34,23 @@ public class Enemy : MonoBehaviour
 
     private void OnEnable()
     {
-        //  Player 참조 다시 세팅
         if (CharacterManager.Instance?.Player?.controller != null)
         {
             PlayerController = CharacterManager.Instance.Player.controller;
             PlayerTransform = PlayerController.transform;
         }
 
-        //  슬랜더맨이 활성화될 때 추격 상태로 강제 전이
         if (StateMachine != null && PlayerTransform != null)
         {
-            StateMachine.ChangeState(StateMachine.ChasingState);
+            if (StateMachine.IsForcedChase)
+            {
+                Debug.Log("슬렌더맨: 강제 추격 상태 진입");
+                StateMachine.ChangeState(StateMachine.ChasingState);
+            }
+            else
+            {
+                StateMachine.ChangeState(StateMachine.IdleState);
+            }
         }
     }
 
@@ -52,8 +58,6 @@ public class Enemy : MonoBehaviour
     {
         PlayerController = CharacterManager.Instance.Player.controller;
         PlayerTransform = PlayerController.transform;
-
-        StateMachine.ChangeState(StateMachine.IdleState);
     }
 
     private void Update()

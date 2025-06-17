@@ -21,7 +21,11 @@ public class SlendermanSpawner : MonoBehaviour
 
     public void Spawn(Transform player)
     {
-        if (slenderman == null || player == null) return;
+        if (slenderman == null || player == null)
+        {
+            Debug.LogWarning("[SlendermanSpawner] 슬렌더맨 또는 플레이어가 null입니다.");
+            return;
+        }
 
         Vector3 playerPos = player.position;
         Vector3 forward = player.forward;
@@ -30,7 +34,7 @@ public class SlendermanSpawner : MonoBehaviour
         {
             float angle = Random.Range(minAngle, maxAngle);
 
-            if (Random.value < 0.5f)
+            if (Random.value < 0.5f) 
             {
                 angle = -angle;
             }
@@ -42,13 +46,29 @@ public class SlendermanSpawner : MonoBehaviour
             if (NavMesh.SamplePosition(targetPos, out NavMeshHit hit, sampleRadius, NavMesh.AllAreas))
             {
                 float finalDistance = Vector3.Distance(playerPos, hit.position);
-
                 if (finalDistance >= minSpawnDistance)
                 {
+                    // 위치 세팅
                     slenderman.transform.position = hit.position;
                     slenderman.transform.LookAt(new Vector3(playerPos.x, hit.position.y, playerPos.z));
-                    slenderman.SetActive(true); // 여기서 OnEnable이 실행됨
 
+                    // 슬렌더맨 상태 세팅
+                    var enemy = slenderman.GetComponent<Enemy>();
+                    if (enemy?.StateMachine != null)
+                    {
+                        // 강제 추격 설정
+                        enemy.StateMachine.StartForcedChase();
+                    }
+
+                    slenderman.SetActive(true);
+
+                    // 강제 상태 전이 보장 (OnEnable 보장 못할 시 대비)
+                    if (enemy?.StateMachine?.CurrentState != enemy.StateMachine.ChasingState)
+                    {
+                        enemy.StateMachine.ChangeState(enemy.StateMachine.ChasingState);
+                    }
+
+                    Debug.Log("[SlendermanSpawner] 슬렌더맨 소환 및 추격 시작");
                     return;
                 }
             }
@@ -61,7 +81,16 @@ public class SlendermanSpawner : MonoBehaviour
     {
         if (slenderman != null && slenderman.activeSelf)
         {
+            var enemy = slenderman.GetComponent<Enemy>();
+
+            if (enemy?.StateMachine != null)
+            {
+                enemy.StateMachine.StopForcedChase();
+                enemy.StateMachine.ChangeState(enemy.StateMachine.IdleState);
+            }
+
             slenderman.SetActive(false);
+            Debug.Log("[SlendermanSpawner] 슬렌더맨 비활성화 완료");
         }
     }
 }

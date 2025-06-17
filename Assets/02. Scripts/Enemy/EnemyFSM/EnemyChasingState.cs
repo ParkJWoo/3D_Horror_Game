@@ -15,6 +15,8 @@ public class EnemyChasingState : IState<Enemy>
 
     public void Enter()
     {
+        Debug.Log("슬렌더맨: Chasing 상태 진입");
+
         //  이동 시작 설정
         stateMachine.Context.Agent.isStopped = false;
         stateMachine.Context.Agent.speed = stateMachine.Context.Data.WalkSpeed;
