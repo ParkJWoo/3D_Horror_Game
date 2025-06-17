@@ -30,6 +30,7 @@ public class WhisperPuzzlePhoto : MonoBehaviour, IInteractable
         if(iskeyphoto)
         {
             mapcontroller.GoNextStage();
+            iskeyphoto = false;
         }
         OnInteracted?.Invoke(this);
     }
