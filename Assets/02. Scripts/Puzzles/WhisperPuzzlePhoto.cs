@@ -7,6 +7,7 @@ public class WhisperPuzzlePhoto : MonoBehaviour, IInteractable
 {
     public bool isCorrectPhoto = false;             //  이 사진이 정답인지 아닌지 
     public WhisperEffectController linkedWhisperTrigger;
+    public MapController mapcontroller;
 
     public event Action<IInteractable> OnInteracted;
 
@@ -25,7 +26,7 @@ public class WhisperPuzzlePhoto : MonoBehaviour, IInteractable
         {
             Debug.Log("틀린 사진입니다.");
         }
-
+        mapcontroller.GoNextStage();
         OnInteracted?.Invoke(this);
     }
 
