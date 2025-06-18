@@ -15,11 +15,11 @@ public class StartSceneButtonEvents : MonoBehaviour
         //  SceneLoader 연결이 안 됐을 때 자동 연결 시도
         if (sceneLoader == null)
         {
-            sceneLoader = FindAnyObjectByType<SceneLoader>();
+            sceneLoader = FindObjectOfType<SceneLoader>();
 
             if (sceneLoader == null)
             {
-                sceneLoader = GetComponentInChildren<SceneLoader>();
+                Debug.LogWarning("[StartSceneButtonEvents] 자동으로 SceneLoader를 찾지 못했습니다!");
             }
         }
     }
