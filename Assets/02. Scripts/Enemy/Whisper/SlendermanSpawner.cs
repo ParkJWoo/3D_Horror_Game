@@ -68,7 +68,6 @@ public class SlendermanSpawner : MonoBehaviour
                         enemy.StateMachine.ChangeState(enemy.StateMachine.ChasingState);
                     }
 
-                    Debug.Log("[SlendermanSpawner] 슬렌더맨 소환 및 추격 시작");
                     return;
                 }
             }

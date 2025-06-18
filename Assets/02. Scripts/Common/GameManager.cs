@@ -50,9 +50,10 @@ public class GameManager : MonoBehaviour
     public void Init(Scene scene, LoadSceneMode mode)
     {
         playSceneManager = FindObjectOfType<PlaySceneManager>();
+
         if (playSceneManager == null)
         {
-            Debug.Log("playSceneManager를 찾지 못했습니다");
+
         }
         else
         { 
@@ -78,7 +79,6 @@ public class GameManager : MonoBehaviour
         if (player != null)
         {
             Destroy(player.gameObject);
-            Debug.Log("[GameManager] Player 오브젝트 파괴");
         }
     }
 }
