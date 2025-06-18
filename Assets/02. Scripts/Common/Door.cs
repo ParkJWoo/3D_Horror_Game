@@ -40,14 +40,11 @@ public class Door : MonoBehaviour, IInteractable
 
         if (slotItem == null)
         {
-            int randomNum = UnityEngine.Random.Range(0, closeDoorText.Count);
-            
-            playScnenUIManager.sequenceTextManager.SetSequenceText(closeDoorText[randomNum]);
+            playScnenUIManager.sequenceTextManager.SetSequenceText(closeDoorText);
         }
         else
         {
-            int randomNum = UnityEngine.Random.Range(0, openDoorText.Count);
-            playScnenUIManager.sequenceTextManager.SetSequenceText(openDoorText[randomNum]);
+            playScnenUIManager.sequenceTextManager.SetSequenceText(openDoorText);
             OpenDoor();
             player.Inventory.UseItem(slotNum);
             this.enabled = false;
