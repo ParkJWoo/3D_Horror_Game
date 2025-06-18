@@ -15,8 +15,6 @@ public class EnemyChasingState : IState<Enemy>
 
     public void Enter()
     {
-        Debug.Log("슬렌더맨: Chasing 상태 진입");
-
         // 이동 시작 설정, 속도는 이미 MapController에서 세팅
         stateMachine.Context.Agent.isStopped = false;
         // stateMachine.Context.Agent.speed = ... (여기서는 X)

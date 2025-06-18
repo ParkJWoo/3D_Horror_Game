@@ -82,7 +82,15 @@ public class MapController : MonoBehaviour
             // 엔딩
             return;
         }
+
         currentMapData = MapDatas[currentdataindex];
+
+        // 슬랜더맨 속도 갱신
+        if (slendermanEnemy != null && slendermanEnemy.Agent != null)
+        {
+            float speed = baseSlendermanSpeed + currentdataindex * speedPerStage;
+            slendermanEnemy.Agent.speed = speed;
+        }
 
         StopAllCoroutines();
         ResetLight();

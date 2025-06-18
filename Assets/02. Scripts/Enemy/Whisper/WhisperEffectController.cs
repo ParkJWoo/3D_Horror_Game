@@ -157,8 +157,6 @@ public class WhisperEffectController : MonoBehaviour
 
         float waitTime = Random.Range(minTime, maxTime);
 
-        Debug.Log($"[WhisperEffect] Stage {stage}, wait {waitTime} sec");
-
         yield return new WaitForSeconds(waitTime);
 
         if (!suppressed && player != null)

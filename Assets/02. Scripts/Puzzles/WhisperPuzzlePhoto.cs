@@ -14,24 +14,17 @@ public class WhisperPuzzlePhoto : MonoBehaviour, IInteractable
 
     public void OnInteraction()
     {
-        Debug.Log("사진과 상호작용함");
-        
-
         if (isCorrectPhoto && linkedWhisperTrigger != null)
         {
-            Debug.Log("정답 사진입니다. 속삭임을 끕니다.");
             linkedWhisperTrigger.SuppressWhisper();
         }
 
-        else
-        {
-            Debug.Log("틀린 사진입니다.");
-        }
         if(iskeyphoto)
         {
             mapcontroller.GoNextStage();
             iskeyphoto = false;
         }
+
         OnInteracted?.Invoke(this);
     }
 
