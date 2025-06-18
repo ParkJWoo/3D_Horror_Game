@@ -53,5 +53,5 @@ E : 상호작용<br><br>
 ![image](https://github.com/user-attachments/assets/7b38a6d4-e07c-43c2-91f6-cb90267bcf60)
 
 # 🎥시연 영상<br>
-https://www.youtube.com/watch?v=ufxCjNZIOT4
+[https://www.youtube.com/watch?v=ufxCjNZIOT4](https://youtu.be/R_3nG4lRbPc)
 ![image](https://github.com/user-attachments/assets/9dd7e6bc-4c88-4b72-8989-c4a2de6072df)
