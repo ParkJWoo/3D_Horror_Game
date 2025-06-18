@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Stage1
   m_EditorClassIdentifier: 
   <Lightinfo>k__BackingField:
-    <MinInterval>k__BackingField: 0.5
-    <MaxInterval>k__BackingField: 1
-    <MinIntense>k__BackingField: 0
+    <MinInterval>k__BackingField: 5
+    <MaxInterval>k__BackingField: 6
+    <MinIntense>k__BackingField: 5.6
     <MaxIntense>k__BackingField: 6
-    <Lightcolor>k__BackingField: {r: 0.7283019, g: 0.14703451, b: 0.14703451, a: 0}
+    <Lightcolor>k__BackingField: {r: 0.8792453, g: 0.8792453, b: 0.8792453, a: 0}
   <Monsterinfo>k__BackingField:
     <Ismonster>k__BackingField: 0

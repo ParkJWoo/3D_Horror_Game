@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
+using static UnityEditor.Searcher.SearcherWindow.Alignment;
+using static UnityEngine.UI.Image;
 
 public class FlashLight : EquipItemHandler
 {
@@ -16,6 +19,13 @@ public class FlashLight : EquipItemHandler
     private Coroutine batteryConsumption;
     [SerializeField] private Light flashLight;
 
+    float range;
+    float spotAngle;
+    int rayCount = 10;
+    float angleStep;
+    float startAngle;
+    private LayerMask targetMask;
+
     public override void Init(Player player, ItemInstance item)
     {
         base.Init(player, item);
@@ -23,7 +33,14 @@ public class FlashLight : EquipItemHandler
         flashOnConsumption = -5f;
         consumptionPerTick = -0.1f;
         durabilityType = DurabilityType.flashlight;
-        FlashOff();
+
+        range = flashLight.range;
+        spotAngle = flashLight.innerSpotAngle;
+        angleStep = spotAngle / rayCount;
+        startAngle = -spotAngle / 2f;
+
+        isOnFlash = false;
+        flashLight.enabled = false;
     }
 
     public override bool RecoverDurability(DurabilityData durabilityData)
@@ -67,6 +84,7 @@ public class FlashLight : EquipItemHandler
         {
             batteryConsumption = StartCoroutine(BatteryConsumptionHandler());
         }
+        SoundManager.Instance.PlaySound("LightToggle");
         flashLight.enabled = true;
     }
 
@@ -91,6 +109,7 @@ public class FlashLight : EquipItemHandler
                 FlashOff();
                 yield break;
             }
+            FindEnemy();
         }
     }
 
@@ -102,11 +121,29 @@ public class FlashLight : EquipItemHandler
             StopCoroutine(batteryConsumption);
             batteryConsumption = null;
         }
+        SoundManager.Instance.PlaySound("LightToggle");
         flashLight.enabled = false;
     }
 
     private bool CheckDurability()
     {
         return item.GetDurability();
+    }
+
+    private void FindEnemy()
+    {
+        for (int i = 0; i <= rayCount; i++)
+        {
+            float angle = startAngle + (angleStep * i);
+            Vector3 rayDir = Quaternion.Euler(0, angle, 0) * flashLight.transform.forward;
+
+            if(Physics.Raycast(flashLight.transform.position, rayDir, out RaycastHit hit, range, targetMask))
+            {
+                if(hit.transform.TryGetComponent<Enemy>(out Enemy enemy))
+                {
+                    Debug.Log("에너미 찾음");
+                }
+            }
+        }
     }
 }

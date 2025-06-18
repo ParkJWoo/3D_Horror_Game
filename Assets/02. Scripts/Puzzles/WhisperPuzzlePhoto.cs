@@ -6,7 +6,9 @@ using UnityEngine;
 public class WhisperPuzzlePhoto : MonoBehaviour, IInteractable
 {
     public bool isCorrectPhoto = false;             //  이 사진이 정답인지 아닌지 
-    public WhisperTrigger linkedWhisperTrigger;
+    public WhisperEffectController linkedWhisperTrigger;
+    public MapController mapcontroller;
+    public bool iskeyphoto = false;
 
     public event Action<IInteractable> OnInteracted;
 
@@ -18,14 +20,18 @@ public class WhisperPuzzlePhoto : MonoBehaviour, IInteractable
         if (isCorrectPhoto && linkedWhisperTrigger != null)
         {
             Debug.Log("정답 사진입니다. 속삭임을 끕니다.");
-            linkedWhisperTrigger.SuppressWhisperSound();
+            linkedWhisperTrigger.SuppressWhisper();
         }
 
         else
         {
             Debug.Log("틀린 사진입니다.");
         }
-
+        if(iskeyphoto)
+        {
+            mapcontroller.GoNextStage();
+            iskeyphoto = false;
+        }
         OnInteracted?.Invoke(this);
     }
 

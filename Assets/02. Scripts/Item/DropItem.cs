@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Net.NetworkInformation;
 using UnityEngine;
 
@@ -36,6 +37,13 @@ public class DropItem : MonoBehaviour, IInteractable
 
     public void SetInterface(bool active)
     {
+        string itemDescription = "";
 
+        if (active)
+        {
+            itemDescription = $"{item.itemName} \n {item.itemDescription}";
+        }
+
+        UIManager.Instance.SetInteractionText(active, itemDescription);
     }
 }

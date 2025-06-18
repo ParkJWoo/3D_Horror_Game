@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,14 +10,24 @@ public class SoundUI : MonoBehaviour
     [SerializeField] private Slider sfxSlider;
     [SerializeField] private Toggle bgmToggle;
     [SerializeField] private Toggle sfxToggle;
+    
+    public Slider BgmSlider => bgmSlider;
+    public Slider SfxSlider => sfxSlider;
+    public Toggle BgmToggle => bgmToggle;
+    public Toggle SfxToggle => sfxToggle;
+    
     private bool isUIOpen = false;
-
+    
+    SaveManager saveManager;
+    SoundManager soundManager;
    
     private void Start()
     {
+        saveManager = SaveManager.Instance;
+        soundManager = SoundManager.Instance;
         LoadSoundSetting();
         SetUI(false);
-        SoundManager.Instance.PlayBgmLoop("DefaultBGM");
+        soundManager.PlayBgmLoop("DefaultBGM");
     }
     
     private void Update()
@@ -35,6 +45,7 @@ public class SoundUI : MonoBehaviour
         if (!isUIOpen)
         {
             SaveSoundSetting();
+            
         }
         soundUI.SetActive(isUIOpen);
 
@@ -45,15 +56,14 @@ public class SoundUI : MonoBehaviour
 
     private void SaveSoundSetting()
     {
-        SaveManager.Instance.UpdateSoundSetting(bgmSlider.value, 
-            SoundManager.Instance.IsBgmMute(), 
-            sfxSlider.value, 
-            SoundManager.Instance.IsSfxMute());
+        saveManager.UpdateSoundSetting(this);
+        
+        saveManager.SaveOption();
     }
 
     private void LoadSoundSetting()
     {
-        var data = SaveManager.Instance.GetCurrentSaveData();
+        var data = saveManager.GetSoundOptionData();
         bgmSlider.value = data.currentBgmVolume;
         sfxSlider.value = data.currentSfxVolume;
         bgmToggle.isOn = data.currentBgmMute;
@@ -69,21 +79,21 @@ public class SoundUI : MonoBehaviour
 
     public void ToggleBgm()
     {
-        SoundManager.Instance.ToggleBgmMute();
+        soundManager.ToggleBgmMute();
     }
 
     public void ToggleSfx()
     {
-        SoundManager.Instance.ToggleSfxMute();
+        soundManager.ToggleSfxMute();
     }
 
     public void SetBgmVolume()
     {
-        SoundManager.Instance.SetBgmVolume(bgmSlider.value);
+        soundManager.SetBgmVolume(bgmSlider.value);
     }
 
     public void SetSfxVolume()
     {
-        SoundManager.Instance.SetSfxVolume(sfxSlider.value);
+        soundManager.SetSfxVolume(sfxSlider.value);
     }
 }

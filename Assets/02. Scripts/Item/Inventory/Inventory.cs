@@ -1,7 +1,6 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
-using System.Timers;
-using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -17,12 +16,29 @@ public class Inventory
     public ItemInstance selectItem;
 
     public UnityAction<int, ItemInstance> OnInventoryUpdate;
+
     public Inventory(Player player)
     {
         this.player = player;
         itemManager = PlaySceneManager.instance.itemManager;
         inventoryMaxSize = 5;
         invenItems = new ItemInstance[inventoryMaxSize];
+
+        for (int i = 0; i < invenItems.Length; i++)
+        {
+            invenItems[i] = new ItemInstance(null, 0, 0);
+        }
+
+        if (!GameManager.Instance.isNewGame)
+        {
+            List<SaveItemData> save = SaveManager.Instance.saveData.haveItemData;
+
+            for (int i = 0; i < save.Count; i++)
+            {
+                ItemInstance loadItem = new ItemInstance(itemManager.FindSOData(save[i].itemCode), save[i].quantity, save[i].durability);
+                if(loadItem.itemData != null) AddItem(loadItem);
+            }
+        }
     }
 
     public ItemInstance GetItem(DropItem dropItem)
@@ -53,7 +69,7 @@ public class Inventory
         {
             for (int i = 0; i < invenItems.Length; i++)
             {
-                if (invenItems[i] == null)
+                if (invenItems[i].itemData == null)
                 {
                     invenItems[i] = newItem;
                     Debug.Log(newItem.itemData.itemName);
@@ -62,6 +78,7 @@ public class Inventory
                 }
             }
         }
+
         return newItem;
     }
 
@@ -92,16 +109,18 @@ public class Inventory
     {
         for (int i = 0; i < invenItems.Length; i++)
         {
-            if (invenItems[i] == null)
+            if (invenItems[i].itemData == null)
             {
                 invenItems[i] = new ItemInstance(newItem.itemData, 0, 0);
-                int stackAmount = newItem.quantity > newItem.itemData.maxQuantity ? newItem.itemData.maxQuantity : newItem.quantity;
+                int stackAmount = newItem.quantity > newItem.itemData.maxQuantity
+                    ? newItem.itemData.maxQuantity
+                    : newItem.quantity;
 
                 invenItems[i].ChangeQuantity(stackAmount);
                 newItem.ChangeQuantity(-stackAmount);
 
                 OnInventoryUpdate?.Invoke(i, invenItems[i]);
-                if(newItem.quantity == 0) return null;
+                if (newItem.quantity == 0) return null;
             }
         }
 
@@ -110,7 +129,7 @@ public class Inventory
 
     public void UseItem(int slotNum)
     {
-        if (invenItems[slotNum] == null) return;
+        if (invenItems[slotNum].itemData == null) return;
 
         switch (invenItems[slotNum].itemData.itemType)
         {
@@ -121,6 +140,7 @@ public class Inventory
                 {
                     player.ApplyUseItem(itemEffect);
                 }
+
                 break;
             case ItemType.useable:
                 break;
@@ -130,6 +150,10 @@ public class Inventory
                 {
                     invenItems[slotNum].ChangeQuantity(-1);
                 }
+
+                break;
+            case ItemType.key:
+                invenItems[slotNum].ChangeQuantity(-1);
                 break;
         }
 
@@ -143,7 +167,9 @@ public class Inventory
 
     public void RemoveItem(int SlotNum)
     {
-        invenItems[SlotNum] = null;
+        invenItems[SlotNum].itemData = null;
+        invenItems[SlotNum].quantity = 0;
+        invenItems[SlotNum].durability = 0;
     }
 
     public void SelectItem(InvenSlot slotData)
@@ -165,17 +191,18 @@ public class Inventory
         OnInventoryUpdate?.Invoke(slotNum, invenItems[slotNum]);
     }
 
-    public ItemInstance FindItem(ItemData itemData)
+    public (int, ItemInstance) FindItem(ItemData itemData)
     {
-        ItemInstance findItem = invenItems.FirstOrDefault(i => i.itemData == itemData);
+        ItemInstance findItem = invenItems.FirstOrDefault(i => i?.itemData == itemData);
         if (findItem != null)
         {
             if (findItem.itemData == itemData)
             {
-                return findItem;
+                int slotNum = Array.IndexOf(invenItems, findItem);
+                return (slotNum, findItem);
             }
         }
 
-        return null;
+        return (-1,null);
     }
 }

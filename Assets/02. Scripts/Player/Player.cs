@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -24,13 +24,16 @@ public class Player : MonoBehaviour
     void Awake()
     {
         CharacterManager.Instance.Player = this;
-        playerInput = GetComponent<Inputs>();
-        controller = GetComponent<PlayerController>();
-        condition = GetComponent<PlayerCondition>();
     }
 
     public void Init()
     {
+        transform.position = SaveManager.Instance.saveData.playerPosition;
+
+        playerInput = GetComponent<Inputs>();
+        controller = GetComponent<PlayerController>();
+        condition = GetComponent<PlayerCondition>();
+
         inventory = new Inventory(this);
         equipment = GetComponent<Equipment>();
         equipment.Init(this);

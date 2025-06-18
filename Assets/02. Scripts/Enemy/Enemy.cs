@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using Cinemachine;
+using UnityEngine.Rendering;
 
 public class Enemy : MonoBehaviour
 {
@@ -31,12 +32,32 @@ public class Enemy : MonoBehaviour
         StateMachine = new EnemyStateMachine(this);
     }
 
+    private void OnEnable()
+    {
+        if (CharacterManager.Instance?.Player?.controller != null)
+        {
+            PlayerController = CharacterManager.Instance.Player.controller;
+            PlayerTransform = PlayerController.transform;
+        }
+
+        if (StateMachine != null && PlayerTransform != null)
+        {
+            if (StateMachine.IsForcedChase)
+            {
+                Debug.Log("슬렌더맨: 강제 추격 상태 진입");
+                StateMachine.ChangeState(StateMachine.ChasingState);
+            }
+            else
+            {
+                StateMachine.ChangeState(StateMachine.IdleState);
+            }
+        }
+    }
+
     private void Start()
     {
         PlayerController = CharacterManager.Instance.Player.controller;
         PlayerTransform = PlayerController.transform;
-
-        StateMachine.ChangeState(StateMachine.IdleState);
     }
 
     private void Update()
