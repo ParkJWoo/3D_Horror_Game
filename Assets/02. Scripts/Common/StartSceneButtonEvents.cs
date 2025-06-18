@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,9 +22,9 @@ public class StartSceneButtonEvents : MonoBehaviour
 
         if (sceneLoader != null)
         {
+            GameManager.Instance.isNewGame = true;
             GameManager.Instance.sceneLoader.MoveScene(mainSceneName);
         }
-
         else
         {
             Debug.LogWarning("[StartSceneButtonEvents] SceneLoader가 할당되지 않음!");
@@ -43,7 +43,15 @@ public class StartSceneButtonEvents : MonoBehaviour
     //  불러오기 버튼에 연결
     public void OnLoadButtonClicked()
     {
-        GameManager.Instance.sceneLoader.MoveScene(mainSceneName);
+        if (sceneLoader != null)
+        {
+            GameManager.Instance.isNewGame = false;
+            GameManager.Instance.sceneLoader.MoveScene(mainSceneName);
+        }
+        else
+        {
+            Debug.LogWarning("[StartSceneButtonEvents] SceneLoader가 할당되지 않음!");
+        }
     }
 
     public void LoadButtonState()

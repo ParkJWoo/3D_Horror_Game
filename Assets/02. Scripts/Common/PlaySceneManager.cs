@@ -19,12 +19,12 @@ public class PlaySceneManager : MonoBehaviour
 
     public void Init() 
     {
+        itemManager ??= GetComponentInChildren<ItemManager>();
+        itemManager?.Init();
         characterManager = CharacterManager.Instance;
         characterManager.Player.Init();
         uiManager ??= FindObjectOfType<PlayScnenUIManager>();
         uiManager?.Init();
-        itemManager ??= GetComponentInChildren<ItemManager>();
-        itemManager?.Init();
     }
     
 

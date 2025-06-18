@@ -26,21 +26,20 @@ public class Equipment : MonoBehaviour
     {
         this.player = player;
         equipItems = new ItemInstance[(int)EquipType.totalData];
+        itemManager = PlaySceneManager.instance.itemManager;
 
-        if (GameManager.Instance.isNewGame)
+        for (int i = 0; i < equipItems.Length; i++)
         {
-            for (int i = 0; i < equipItems.Length; i++)
-            {
-                equipItems[i] = new ItemInstance(null, 0, 0);
-            }
+            equipItems[i] = new ItemInstance(null, 0, 0);
         }
-        else
+
+        if (!GameManager.Instance.isNewGame)
         {
             SaveItemData[] save = SaveManager.Instance.saveData.equipItemData;
             for (int i = 0; i < save.Length; i++)
             {
-                equipItems[i] = new ItemInstance(itemManager.FindSOData(save[i].itemCode), save[i].quantity, save[i].durability);
-                OnEquip(equipItems[i], null);
+                ItemInstance loadItem = new ItemInstance(itemManager.FindSOData(save[i].itemCode), save[i].quantity, save[i].durability);
+                if(loadItem.itemData != null) OnEquip(loadItem, null);
             }
         }
 

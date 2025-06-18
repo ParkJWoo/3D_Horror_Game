@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c609702d33d44beeb3eae1fcf4dfc152, type: 3}
   m_Name: Sound_Item_LightToggle
   m_EditorClassIdentifier: 
-  <SoundName>k__BackingField: LightOff
+  <SoundName>k__BackingField: LightToggle
   <Clip>k__BackingField: {fileID: 8300000, guid: f2fcd68b589569b439018bdc427c21b8,
     type: 3}
   <Clips>k__BackingField: []

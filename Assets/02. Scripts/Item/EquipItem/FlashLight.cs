@@ -39,7 +39,8 @@ public class FlashLight : EquipItemHandler
         angleStep = spotAngle / rayCount;
         startAngle = -spotAngle / 2f;
 
-        FlashOff();
+        isOnFlash = false;
+        flashLight.enabled = false;
     }
 
     public override bool RecoverDurability(DurabilityData durabilityData)
@@ -85,6 +86,7 @@ public class FlashLight : EquipItemHandler
         }
         SoundManager.Instance.PlaySound("LightToggle");
         flashLight.enabled = true;
+        flashLight.enabled = false;
     }
 
     private IEnumerator BatteryConsumptionHandler()
