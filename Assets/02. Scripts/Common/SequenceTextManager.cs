@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -45,7 +45,7 @@ public class SequenceTextManager : MonoBehaviour
         for (int i = 0; i < scenario.Length; i++)
         {
             SetSequenceText(scenario[i]);
-            yield return new WaitForSecondsRealtime(3f);
+            yield return new WaitForSecondsRealtime(5f);
         }
     }
 }
