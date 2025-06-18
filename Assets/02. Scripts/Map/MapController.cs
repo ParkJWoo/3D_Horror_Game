@@ -13,6 +13,12 @@ public class MapController : MonoBehaviour
     List<float> LerpSpeeds = new List<float>();
     float minLerpSpeed = 2f;
     float maxLerpSpeed = 7f;
+
+
+    public Enemy slendermanEnemy;
+    public float baseSlendermanSpeed = 3.5f;
+    public float speedPerStage = 1.0f;
+
     void Start()
     {
         Init();
@@ -29,11 +35,25 @@ public class MapController : MonoBehaviour
 
     private void Init() // 요기 이제 저장된 맵정보를 불러오거나 없으면 처음맵정보 적용
     {
-        if(true) // 만약 저장된 정보가 없다면... 수정해야함 나중에
+        if (true) // 만약 저장된 정보가 없다면... 수정해야함 나중에
         {
             currentMapData = MapDatas[0];
             currentdataindex = 0;
-            return;
+
+            //  최초 시작 시 슬랜더맨 속도 세팅
+            if (slendermanEnemy == null)
+            {
+                Debug.LogWarning("[MapController] slendermanEnemy가 에디터에 할당되어 있지 않습니다!");
+                return;
+            }
+            if (slendermanEnemy.Agent == null)
+            {
+                Debug.LogWarning("[MapController] slendermanEnemy의 NavMeshAgent 컴포넌트가 없습니다!");
+                return;
+            }
+
+            float speed = baseSlendermanSpeed + currentdataindex * speedPerStage;
+            slendermanEnemy.Agent.speed = speed;
         }
     }
 

@@ -25,32 +25,40 @@ public class WhisperEffectController : MonoBehaviour
 
     [Header("Slenderman")]
     public SlendermanSpawner slendermanSpawner;
-    public float minWhisperTimeBeforeSpawn = 8f;            //  최소 등장 대기 시간
-    public float maxWhisperTimeBeforeSpawn = 15f;           //  최대 등장 대기 시간
-    public float restartDelay = 10f;                        //  속삭임 억제 후 다시 재시작까지의 시간
 
-    //  외부 접근을 위한 상태 공개 프로퍼티
+    // 쿨타임 조절용 필드
+    public float baseMinWhisperTime = 8f;                // 최소 대기시간(초)
+    public float baseMaxWhisperTime = 15f;               // 최대 대기시간(초)
+    public float whisperTimeDecreasePerStage = 1.5f;     // 스테이지별 감소량(초)
+    public float whisperMinLimit = 2f;                   // 최소 대기 하한
+
+    public float restartDelay = 10f;                     // suppress 후 재시작 대기시간
+
+    [Header("Map Control")]
+    public MapController mapController;                  // ★ 인스펙터에서 직접 할당
+
+    // 상태 공개
     public bool IsSuppressed => suppressed;
     public bool IsPlaying => playing;
 
     private Vignette vignette;
     private Coroutine fovCoroutine, vignetteCoroutine, timerCoroutine, restartCoroutine;
 
-    private bool suppressed = false;                        //  현재 속삭임이 억제된 상태인지
-    private bool playing = false;                           //  현재 속삭임이 재생 중인지
+    private bool suppressed = false;
+    private bool playing = false;
     private Transform player;
 
-
-    //  포스트 프로세싱 프로필에서 비네트 효과를 가져온다
     private void Start()
     {
         if (postProcessingVolume != null && postProcessingVolume.profile.TryGet(out Vignette v))
-        {
             vignette = v;
-        }
+
+        // 인스펙터에서 안 넣었으면 찾아서 할당(최초 1회만)
+        if (mapController == null)
+            mapController = FindObjectOfType<MapController>();
     }
 
-    //  속삭임 이펙트 시작
+    // 속삭임 효과 시작
     public void BeginWhisperEffect(Transform playerTransform)
     {
         player = playerTransform;
@@ -90,16 +98,13 @@ public class WhisperEffectController : MonoBehaviour
         timerCoroutine = StartCoroutine(StartWhisperTimer());
     }
 
-    //  속삭임 효과 종료 및 슬랜더맨 비활성화 처리
+    // 속삭임 억제 (슬랜더맨 비활성화)
     public void SuppressWhisper()
     {
         suppressed = true;
         playing = false;
 
-        //  속삭임 사운드 정지
         SoundManager.Instance.StopLoopSfx();
-
-        //  원래 BGM 재생
         SoundManager.Instance.PlayBgmLoop("DefaultBGM");
 
         if (virtualCam != null)
@@ -137,21 +142,33 @@ public class WhisperEffectController : MonoBehaviour
         restartCoroutine = StartCoroutine(RestartAfterDelay());
     }
 
-    //  일정 시간이 지나면 슬랜더맨 등장
+    // Whisper Timer (스테이지별로 쿨타임 계산)
     private IEnumerator StartWhisperTimer()
     {
-        float waitTime = Random.Range(minWhisperTimeBeforeSpawn, maxWhisperTimeBeforeSpawn);
+        // mapController에서 currentdataindex 안전하게 가져오기
+        int stage = 0;
+        if (mapController != null)
+        {
+            stage = mapController.currentdataindex;
+        }
+
+        float minTime = Mathf.Max(baseMinWhisperTime - whisperTimeDecreasePerStage * stage, whisperMinLimit);
+        float maxTime = Mathf.Max(baseMaxWhisperTime - whisperTimeDecreasePerStage * stage, whisperMinLimit + 1f);
+
+        float waitTime = Random.Range(minTime, maxTime);
+
+        Debug.Log($"[WhisperEffect] Stage {stage}, wait {waitTime} sec");
 
         yield return new WaitForSeconds(waitTime);
 
         if (!suppressed && player != null)
         {
-            //  비네트 강도 증가
             if (vignette != null)
             {
                 if (vignetteCoroutine != null)
                 {
                     StopCoroutine(vignetteCoroutine);
+
                 }
 
                 vignetteCoroutine = StartCoroutine(ChangeVignette(vignette.intensity.value, vignetteIntensifyOnFail));
@@ -164,7 +181,7 @@ public class WhisperEffectController : MonoBehaviour
         }
     }
 
-    //  일정 시간이 지나면 속삭임을 다시 활성화 가능 상태로 전환
+    // 억제 이후 효과 재시작
     private IEnumerator RestartAfterDelay()
     {
         yield return new WaitForSeconds(restartDelay);
@@ -172,7 +189,7 @@ public class WhisperEffectController : MonoBehaviour
         playing = false;
     }
 
-    //  카메라 시야각 변경
+    // 카메라 FOV 보간
     private IEnumerator ChangeFov(CinemachineVirtualCamera cam, float target)
     {
         float start = cam.m_Lens.FieldOfView;
@@ -188,7 +205,7 @@ public class WhisperEffectController : MonoBehaviour
         cam.m_Lens.FieldOfView = target;
     }
 
-    //  비네트 효과 변경
+    // Vignette 보간
     private IEnumerator ChangeVignette(float from, float to)
     {
         float t = 0f;
@@ -201,6 +218,7 @@ public class WhisperEffectController : MonoBehaviour
             }
 
             t += Time.deltaTime;
+
             yield return null;
         }
 
@@ -209,5 +227,4 @@ public class WhisperEffectController : MonoBehaviour
             vignette.intensity.value = to;
         }
     }
-
 }
