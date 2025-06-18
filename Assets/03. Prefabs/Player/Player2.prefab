@@ -28,8 +28,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4784858813217111394}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.00000001560446, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.45000005}
+  m_LocalRotation: {x: -0, y: -0.99232453, z: -0, w: -0.12366103}
+  m_LocalPosition: {x: 0.0000006426126, y: 0, z: 0.06719896}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -44,8 +44,8 @@ Camera:
   m_GameObject: {fileID: 4784858813217111394}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -322,12 +322,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 1.8
   runSpeed: 2.1
+  exhaustionSpeed: 1
   isRunningInput: 0
   curMovementInput: {x: 0, y: 0}
   jumpPower: 3
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 64
+  isMoving: 0
   cameraContainer: {fileID: 7887840721368473037}
   minXLook: -90
   maxXLook: 90
@@ -336,6 +338,10 @@ MonoBehaviour:
   canLook: 1
   isDead: 0
   isActuallyRunning: 0
+  interactionMask:
+    serializedVersion: 2
+    m_Bits: 0
+  maxInteractionDistance: 5
 --- !u!114 &2425727279146240633
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -361,6 +367,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiCondition: {fileID: 0}
+  isExhausted: 0
 --- !u!114 &-5698357972883690288
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -374,5 +381,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  itemManager: {fileID: 0}
   equipItems: []
-  equipWeaponObj: {fileID: 0}
+  equipItemHandler: {fileID: 0}

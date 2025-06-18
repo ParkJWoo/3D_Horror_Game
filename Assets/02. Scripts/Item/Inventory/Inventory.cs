@@ -8,6 +8,8 @@ public class Inventory
 {
     public Player player;
     public ItemManager itemManager;
+    private SequenceTextManager sequenceTextManager;
+    private List<string> invenFullText = new List<string>();
 
     public int inventoryMaxSize;
     public ItemInstance[] invenItems;
@@ -21,8 +23,14 @@ public class Inventory
     {
         this.player = player;
         itemManager = PlaySceneManager.instance.itemManager;
+        sequenceTextManager = (UIManager.Instance as PlayScnenUIManager).sequenceTextManager;
+
         inventoryMaxSize = 5;
         invenItems = new ItemInstance[inventoryMaxSize];
+
+        invenFullText.Add("더 이상 가져갈 수 없어");
+        invenFullText.Add("가방이 가득 찼어");
+        invenFullText.Add("가방을 비워야해");
 
         for (int i = 0; i < invenItems.Length; i++)
         {
@@ -79,6 +87,7 @@ public class Inventory
             }
         }
 
+        sequenceTextManager.SetSequenceText(invenFullText);
         return newItem;
     }
 

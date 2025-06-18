@@ -67,4 +67,18 @@ public class GameManager : MonoBehaviour
             playSceneManager = null;
         }
     }
+
+    public void ClearAllReferences()
+    {
+        playSceneManager = null;
+
+        //  Player 오브젝트 정리
+        var player = FindObjectOfType<Player>();
+
+        if (player != null)
+        {
+            Destroy(player.gameObject);
+            Debug.Log("[GameManager] Player 오브젝트 파괴");
+        }
+    }
 }

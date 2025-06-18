@@ -1,9 +1,9 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class GuideManager : Singleton<GuideManager>
+public class GuideManager : MonoBehaviour
 {
     [Header("UI")]
     public TextMeshProUGUI guideTextUI;

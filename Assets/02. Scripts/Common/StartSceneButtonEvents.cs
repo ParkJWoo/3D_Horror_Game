@@ -10,8 +10,23 @@ public class StartSceneButtonEvents : MonoBehaviour
     public string mainSceneName = "MainScene";
     public Button LoadButton;
 
+    private void Awake()
+    {
+        //  SceneLoader 연결이 안 됐을 때 자동 연결 시도
+        //if (sceneLoader == null)
+        //{
+        //    sceneLoader = FindObjectOfType<SceneLoader>();
+
+        //    if (sceneLoader == null)
+        //    {
+        //        Debug.LogWarning("[StartSceneButtonEvents] 자동으로 SceneLoader를 찾지 못했습니다!");
+        //    }
+        //}
+    }
+
     private void Start()
     {
+        sceneLoader = GameManager.Instance.sceneLoader;
         LoadButtonState();
     }
 
@@ -20,11 +35,18 @@ public class StartSceneButtonEvents : MonoBehaviour
     {
         Debug.Log("시작 버튼 클릭");
 
+        //  씬 이동 전에 오브젝트 / 참조 정리
+        if (GameManager.Instance != null)
+        {
+           //GameManager.Instance.ClearAllReferences();
+        }
+
         if (sceneLoader != null)
         {
             GameManager.Instance.isNewGame = true;
-            GameManager.Instance.sceneLoader.MoveScene(mainSceneName);
+            sceneLoader.MoveScene(mainSceneName);
         }
+
         else
         {
             Debug.LogWarning("[StartSceneButtonEvents] SceneLoader가 할당되지 않음!");
@@ -43,11 +65,21 @@ public class StartSceneButtonEvents : MonoBehaviour
     //  불러오기 버튼에 연결
     public void OnLoadButtonClicked()
     {
+        Debug.Log("[StartSceneButtonEvents] 불러오기 버튼 클릭");
+        
+
+        //  씬 이동 전에 오브젝트 / 참조 정리
+        if (GameManager.Instance != null)
+        {
+            //GameManager.Instance.ClearAllReferences();
+        }
+
         if (sceneLoader != null)
         {
             GameManager.Instance.isNewGame = false;
-            GameManager.Instance.sceneLoader.MoveScene(mainSceneName);
+            sceneLoader.MoveScene(mainSceneName);
         }
+
         else
         {
             Debug.LogWarning("[StartSceneButtonEvents] SceneLoader가 할당되지 않음!");
@@ -56,6 +88,12 @@ public class StartSceneButtonEvents : MonoBehaviour
 
     public void LoadButtonState()
     {
+        if (LoadButton == null)
+        {
+            Debug.LogWarning("[StartSceneButtonEvents] LoadButton 연결 안 됨!");
+            return;
+        }
+
         if (!File.Exists(SaveManager.Instance.optionDataPath))
         {
             LoadButton.interactable = false;
