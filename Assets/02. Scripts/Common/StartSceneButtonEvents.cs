@@ -12,16 +12,6 @@ public class StartSceneButtonEvents : MonoBehaviour
 
     private void Awake()
     {
-        //  SceneLoader 연결이 안 됐을 때 자동 연결 시도
-        //if (sceneLoader == null)
-        //{
-        //    sceneLoader = FindObjectOfType<SceneLoader>();
-
-        //    if (sceneLoader == null)
-        //    {
-        //        Debug.LogWarning("[StartSceneButtonEvents] 자동으로 SceneLoader를 찾지 못했습니다!");
-        //    }
-        //}
     }
 
     private void Start()
@@ -36,7 +26,6 @@ public class StartSceneButtonEvents : MonoBehaviour
         //  씬 이동 전에 오브젝트 / 참조 정리
         if (GameManager.Instance != null)
         {
-           //GameManager.Instance.ClearAllReferences();
         }
 
         if (sceneLoader != null)
@@ -63,9 +52,6 @@ public class StartSceneButtonEvents : MonoBehaviour
     //  불러오기 버튼에 연결
     public void OnLoadButtonClicked()
     {
-        Debug.Log("[StartSceneButtonEvents] 불러오기 버튼 클릭");
-        
-
         //  씬 이동 전에 오브젝트 / 참조 정리
         if (GameManager.Instance != null)
         {

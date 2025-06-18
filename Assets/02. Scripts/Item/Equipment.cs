@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -50,7 +50,6 @@ public class Equipment : MonoBehaviour
     {
         if(equipItemHandler == null)
         {
-            Debug.Log("장착한 아이템이 없습니다.");
             return;
         }
 

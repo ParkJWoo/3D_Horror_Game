@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
 public class FlashLight : EquipItemHandler
@@ -142,7 +142,7 @@ public class FlashLight : EquipItemHandler
             {
                 if(hit.transform.TryGetComponent<Enemy>(out Enemy enemy))
                 {
-                    Debug.Log("에너미 찾음");
+                    //Debug.Log("에너미 찾음");
                 }
             }
         }

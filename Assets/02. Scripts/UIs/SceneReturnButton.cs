@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -28,7 +28,7 @@ public class SceneReturnButton : MonoBehaviour
 
     public void ReturnToScene()
     {
-        Debug.Log("[SceneReturnButton] ReturnToScene() 호출됨");
+        //Debug.Log("[SceneReturnButton] ReturnToScene() 호출됨");
 
         //  모든 참조 / 오브젝트 해제
         if (GameManager.Instance != null)

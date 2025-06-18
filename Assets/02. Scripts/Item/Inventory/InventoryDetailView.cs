@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -109,7 +109,7 @@ public class InventoryDetailView : MonoBehaviour
 
     public void UseButton()
     {
-        Debug.Log("상세보기 아이템 사용");
+        //Debug.Log("상세보기 아이템 사용");
         inventory.UseItem(currentSlot.slotNum);
         if (currentSlot == null || currentSlot.slotItem == null)
         {
