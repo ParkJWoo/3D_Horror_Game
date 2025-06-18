@@ -181,14 +181,14 @@ public class SoundManager : Singleton<SoundManager>
     public void SetBgmVolume(float volume)
     {
         bgmSource.volume = volume;
-        Debug.Log($"브금볼륨인풋값{volume}");
+        //Debug.Log($"브금볼륨인풋값{volume}");
     }
 
     public void SetSfxVolume(float volume)
     {
         sfxSource.volume = volume;
         enemyAudioSource.volume = volume;
-        Debug.Log($"효과음볼륨인풋값{volume}");
+        //Debug.Log($"효과음볼륨인풋값{volume}");
     }
     
 }

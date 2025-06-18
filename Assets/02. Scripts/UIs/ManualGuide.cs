@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -13,9 +13,12 @@ public class ManualGuide : MonoBehaviour
 
     private void Start()
     {
-        if (controlTextUI != null && controlMessage.Count > 0)
+        if (GameManager.Instance.isNewGame)
         {
-            StartCoroutine(GuideStart());
+            if (controlTextUI != null && controlMessage.Count > 0)
+            {
+                StartCoroutine(GuideStart());
+            }
         }
     }
 

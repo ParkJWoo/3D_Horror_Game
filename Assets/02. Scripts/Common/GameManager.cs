@@ -51,6 +51,15 @@ public class GameManager : MonoBehaviour
     {
         playSceneManager = FindObjectOfType<PlaySceneManager>();
 
+        //  WhisperTrigger 강제 트리거
+        var whisperTrigger = FindObjectOfType<WhisperTrigger>();
+        var player = FindObjectOfType<Player>();
+
+        if (whisperTrigger != null && player != null)
+        {
+            whisperTrigger.ForceTrigger(player.transform);
+        }
+
         if (playSceneManager == null)
         {
 
