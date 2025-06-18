@@ -28,13 +28,16 @@ public class ItemManager : MonoBehaviour
 
             filedItem.Clear();
 
-            for (int i = 0; i < SaveManager.Instance.saveData.filedItemData.Count; i++)
+            List<SaveFieldItemData> loadItemData = SaveManager.Instance.saveData.filedItemData;
+            for (int i = 0; i < loadItemData.Count; i++)
             {
-
+                ItemInstance loadItem = new ItemInstance(FindSOData(loadItemData[i].itemCode), loadItemData[i].quantity, loadItemData[i].durability);
+                DropItem(loadItem, loadItemData[i].itemPos);
             }
         }
     }
 
+    
     public ItemData FindSOData(int ItemNum)
     {
         if(itemDataBase.TryGetValue(ItemNum, out ItemData value))
@@ -49,7 +52,7 @@ public class ItemManager : MonoBehaviour
 
     public void DropItem(ItemInstance item, Vector3 position)
     {
-        GameObject drop = Instantiate(item.itemData.dropItemPrefab, position, Quaternion.identity, transform);
+        GameObject drop = Instantiate(item.itemData.dropItemPrefab, position, item.itemData.dropItemPrefab.transform.rotation, transform);
         DropItem dropItem = drop.GetComponent<DropItem>();
         dropItem.Init(item);
         dropItem.OnDestoryItem += RemoveDropItem;
