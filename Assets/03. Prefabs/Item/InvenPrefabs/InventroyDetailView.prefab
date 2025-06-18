@@ -96,6 +96,7 @@ MonoBehaviour:
   detailDescription: {fileID: 2031464329468504465}
   useButton: {fileID: 3237410187301168908}
   emptyImage: {fileID: 21300000, guid: dc66c0243b5c8cd46aa43d978ee580ea, type: 3}
+  text: 
 --- !u!1 &847236758349599564
 GameObject:
   m_ObjectHideFlags: 0

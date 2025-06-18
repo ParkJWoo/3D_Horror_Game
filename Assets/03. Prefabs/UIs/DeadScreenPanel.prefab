@@ -64,6 +64,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deathPanelGroup: {fileID: 8351317213875515698}
   deadImage: {fileID: 5917203632528430042}
+  returnButton: {fileID: 0}
   fadeSpeed: 2
 --- !u!1 &9029001825195222504
 GameObject:
