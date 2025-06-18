@@ -63,7 +63,9 @@ MonoBehaviour:
   startValue: 100
   maxValue: 100
   passiveValue: 5
+  addPassiveValue: 0
   uiBar: {fileID: 8194182278335305651}
+  icon: {fileID: 0}
 --- !u!1 &4056658802777235732
 GameObject:
   m_ObjectHideFlags: 0
