@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -33,8 +33,6 @@ public class StartSceneButtonEvents : MonoBehaviour
     //  시작 버튼에 연결
     public void OnStartButtonClicked()
     {
-        Debug.Log("시작 버튼 클릭");
-
         //  씬 이동 전에 오브젝트 / 참조 정리
         if (GameManager.Instance != null)
         {
