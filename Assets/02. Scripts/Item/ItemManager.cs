@@ -19,7 +19,14 @@ public class ItemManager : MonoBehaviour
             }
         }
 
-        if (!GameManager.Instance.isNewGame)
+        if (GameManager.Instance.isNewGame)
+        {
+            foreach (var item in filedItem)
+            {
+                item.OnDestoryItem += RemoveDropItem;
+            }
+        }
+        else
         {
             foreach (var item in filedItem)
             {
@@ -54,8 +61,8 @@ public class ItemManager : MonoBehaviour
     {
         GameObject drop = Instantiate(item.itemData.dropItemPrefab, position, item.itemData.dropItemPrefab.transform.rotation, transform);
         DropItem dropItem = drop.GetComponent<DropItem>();
-        dropItem.Init(item);
         dropItem.OnDestoryItem += RemoveDropItem;
+        dropItem.Init(item);
         filedItem.Add(dropItem);
     }
 

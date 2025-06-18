@@ -25,8 +25,8 @@ public class DropItem : MonoBehaviour, IInteractable
 
         if (returnItem == null)
         {
-            Destroy(gameObject);
             OnDestoryItem?.Invoke(this);
+            Destroy(gameObject);
         }
         else
         {
