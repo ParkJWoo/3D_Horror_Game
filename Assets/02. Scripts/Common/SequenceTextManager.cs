@@ -21,14 +21,14 @@ public class SequenceTextManager : MonoBehaviour
         Destroy(sequnceText.gameObject, textLifeTime);
     }
 
-    public void SetSequenceText(List<string> sequenceText)
+    public void SetSequenceText(string[] sequenceText)
     {
         if (sequencetextPos.childCount >= 3)
         {
             Destroy(sequencetextPos.GetChild(0).gameObject);
         }
 
-        int randomNum = Random.Range(0, sequencetextPos.childCount);
+        int randomNum = Random.Range(0, sequenceText.Length);
 
         var sequnceText = Instantiate(sequencetextPrefab, sequencetextPos);
         sequnceText.SetText(sequenceText[randomNum]);

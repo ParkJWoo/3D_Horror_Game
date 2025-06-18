@@ -17,7 +17,7 @@ MonoBehaviour:
   itemDescription: "\uCE60\uD751\uAC19\uC774 \uC0C8\uAE4C\uB9CC \uD0A4\uB2E4"
   itemDetailDescription: "\uBD88\uAE38\uD568\uC774 \uB290\uAEF4\uC9C0\uB294 \uAC80\uC740
     \uD0A4\uB2E4."
-  itemImage: {fileID: 0}
+  itemImage: {fileID: 21300000, guid: c82156f1887a6f4438d114d8da777333, type: 3}
   canStack: 0
   maxQuantity: 1
   maxDurability: 0

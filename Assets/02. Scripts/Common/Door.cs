@@ -13,9 +13,6 @@ public class Door : MonoBehaviour, IInteractable
     [SerializeField] private bool isOpen;
     private Rigidbody rb;
 
-    public List<string> closeDoorText;
-    public List<string> openDoorText;
-
     private void Start()
     {
         Init();
@@ -40,11 +37,11 @@ public class Door : MonoBehaviour, IInteractable
 
         if (slotItem == null)
         {
-            playScnenUIManager.sequenceTextManager.SetSequenceText(closeDoorText);
+            playScnenUIManager.sequenceTextManager.SetSequenceText(Constants.CloseDoorText);
         }
         else
         {
-            playScnenUIManager.sequenceTextManager.SetSequenceText(openDoorText);
+            playScnenUIManager.sequenceTextManager.SetSequenceText(Constants.OpenDoorText);
             OpenDoor();
             player.Inventory.UseItem(slotNum);
             this.enabled = false;

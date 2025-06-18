@@ -23,7 +23,8 @@ MonoBehaviour:
   canStack: 0
   maxQuantity: 1
   maxDurability: 0
-  dropItemPrefab: {fileID: 0}
+  dropItemPrefab: {fileID: 2945244741694113255, guid: df203cc945d9fac41a8e9dfb025c4cc8,
+    type: 3}
   itemEffect:
   - itemEffectType: 2
     amount: 30

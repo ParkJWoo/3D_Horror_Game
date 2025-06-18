@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -28,7 +28,10 @@ public class Player : MonoBehaviour
 
     public void Init()
     {
-        transform.position = SaveManager.Instance.saveData.playerPosition;
+        if (!GameManager.Instance.isNewGame)
+        {
+            transform.position = SaveManager.Instance.saveData.playerPosition;
+        }
 
         playerInput = GetComponent<Inputs>();
         controller = GetComponent<PlayerController>();

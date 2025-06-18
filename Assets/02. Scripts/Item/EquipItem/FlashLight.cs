@@ -1,9 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Experimental.GlobalIllumination;
-using static UnityEditor.Searcher.SearcherWindow.Alignment;
-using static UnityEngine.UI.Image;
 
 public class FlashLight : EquipItemHandler
 {
@@ -38,6 +34,11 @@ public class FlashLight : EquipItemHandler
         spotAngle = flashLight.innerSpotAngle;
         angleStep = spotAngle / rayCount;
         startAngle = -spotAngle / 2f;
+
+        if (GameManager.Instance.isNewGame)
+        {
+            PlaySceneManager.instance.uiManager.sequenceTextManager.SetSequenceText(Constants.getFlashlight);
+        }
 
         isOnFlash = false;
         flashLight.enabled = false;

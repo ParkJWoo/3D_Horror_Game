@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public static class Constants
@@ -15,6 +16,7 @@ public static class Constants
     //씬이 시작되면 나오는 텍스트. 게임의 인트로
     public static readonly string[] introText =
     {
+
         "여기는 어디지...",
         "익숙한 천장, 익숙한 소파, 익숙한...",
         "...젠장...또 그 꿈인가. 내일은 하루종일 피곤하겠군.",
@@ -24,11 +26,13 @@ public static class Constants
         "지금 보니 방의 풍경도 조금 다르다. 항상 닫혀있던 방의 문이... 열려있다. 누군가가 있는 것 같은 느낌이 든다.",
         "이게 무슨...? 지금까지 이런 적은 한 번도 없었는데...",
         "일단 주위를 둘러보자.",
+
         "방이 너무 어둡다. 빛을 밝힐만한 게 있는지 찾아봐야겠다."
     };
 
     // 손전등을 얻으면 사용법을 알려주는 가이드
-    public const string getFlashlight = "손전등을 얻었다. F를 눌러 켜보자.";
+
+    public const string getFlashlight = "손전등을 얻었다. 버튼이... F군.";
 
     // 속삭임 트리거가 작동되면 출력할 텍스트
     public const string whisperGuiedText = "소리가 들려올 때 마다 머리가 깨질 듯이 아파온다... 빨리... 그 사진을 찾아야 해... 그렇지 않으면...";
@@ -36,11 +40,19 @@ public static class Constants
     //사진과 상호작용을 하면 출력할 텍스트
     public static readonly string[] picture =
     {
-        "이 사진을 볼 때면 항상 애틋한 마음이 든다.", "동생이 보고싶다."
+        "이 사진을 볼 때면 항상 애틋한 마음이 든다.", 
+        "동생이 보고싶다."
     };
 
     //소비 아이템을 얻으면 출력할 텍스트
     public const string getItem = "사용할 수 있을 것 같다. Tab을 눌러 확인해보자.";
+
+    public static readonly string[] invenFullText =
+    {
+        "더 이상 가져갈 수 없어",
+        "가방이 가득 찼어",
+        "가방을 비워야해"
+    };
 
     //스테이지 2로 넘어갈 때 출력되는 텍스트
     public static readonly string[] stageTwoText =
@@ -79,4 +91,18 @@ public static class Constants
         "나는......"
     };
 
+    public static readonly string[] CloseDoorText =
+    {
+        "이 문은 잠겨있어",
+        "열쇠가 필요해",
+        "열쇠를 찾아야 해",
+        "들어갈 수 없어"
+    };
+
+    public static readonly string[] OpenDoorText =
+   {
+        "이 열쇠는 더 못쓰겠군",
+        "문이 열렸어",
+        "이제 들어갈 수 있겠군",
+    };
 }
