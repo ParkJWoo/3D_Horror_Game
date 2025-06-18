@@ -6,10 +6,12 @@ using UnityEngine;
 public class SaveTrigger : MonoBehaviour
 {
     private SaveManager saveManager;
+    private ItemManager itemManager;
 
     private void Start()
     {
         saveManager = SaveManager.Instance;
+        itemManager = PlaySceneManager.instance.itemManager;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -19,6 +21,7 @@ public class SaveTrigger : MonoBehaviour
             Player player = other.GetComponent<Player>();
             
             saveManager.UpdatePlayerData(player);
+            itemManager.Save();
             saveManager.SaveGame();
         }
         

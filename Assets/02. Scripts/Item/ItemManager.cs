@@ -18,6 +18,21 @@ public class ItemManager : MonoBehaviour
                 itemDataBase[item.itemCode] = item;
             }
         }
+
+        if (!GameManager.Instance.isNewGame)
+        {
+            foreach (var item in filedItem)
+            {
+                Destroy(item.gameObject);
+            }
+
+            filedItem.Clear();
+
+            for (int i = 0; i < SaveManager.Instance.saveData.filedItemData.Count; i++)
+            {
+
+            }
+        }
     }
 
     public ItemData FindSOData(int ItemNum)
@@ -34,7 +49,7 @@ public class ItemManager : MonoBehaviour
 
     public void DropItem(ItemInstance item, Vector3 position)
     {
-        GameObject drop = Instantiate(item.itemData.dropItemPrefab, position, Quaternion.identity);
+        GameObject drop = Instantiate(item.itemData.dropItemPrefab, position, Quaternion.identity, transform);
         DropItem dropItem = drop.GetComponent<DropItem>();
         dropItem.Init(item);
         dropItem.OnDestoryItem += RemoveDropItem;
@@ -44,5 +59,17 @@ public class ItemManager : MonoBehaviour
     public void RemoveDropItem(DropItem removeItem)
     {
         filedItem.Remove(removeItem);
+    }
+
+    public void Save()
+    {
+        List<SaveFieldItemData> currentItemData = new List<SaveFieldItemData>();
+
+        for (int i = 0; i < filedItem.Count; i++)
+        {
+            currentItemData.Add(new SaveFieldItemData(filedItem[i]));
+        }
+
+        SaveManager.Instance.saveData.filedItemData = currentItemData;
     }
 }
