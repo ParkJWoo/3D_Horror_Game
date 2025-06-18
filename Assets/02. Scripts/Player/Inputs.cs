@@ -1,14 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.InputSystem;
+﻿using UnityEngine;
 
 public class Inputs : MonoBehaviour
 {
     public PlayerInput playerInput {  get; private set; }
     public PlayerInput.PlayerActions playerActions { get; private set; }
-
     public PlayerController controller { get; private set; }
+
     private void Awake()
     {
         playerInput = new PlayerInput();

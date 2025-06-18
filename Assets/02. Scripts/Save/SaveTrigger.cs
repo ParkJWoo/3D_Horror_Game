@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,16 +14,12 @@ public class SaveTrigger : MonoBehaviour
         itemManager = PlaySceneManager.instance.itemManager;
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void SaveData()
     {
-        if (other.CompareTag("Player") && !PlaySceneManager.instance.enemy.gameObject.activeInHierarchy)
-        {
-            Player player = other.GetComponent<Player>();
-            
-            saveManager.UpdatePlayerData(player);
-            itemManager.Save();
-            saveManager.SaveGame();
-        }
-        
+        Player player = FindObjectOfType<Player>();
+
+        saveManager.UpdatePlayerData(player);
+        itemManager.Save();
+        saveManager.SaveGame();
     }
 }
