@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8677661453657290650}
   - component: {fileID: -7718869953547315602}
   - component: {fileID: 1103281070225575502}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: wall_default 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,5 +126,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.4282103, y: 2.8546772, z: 0.21751958}
-  m_Center: {x: -1.1894464, y: 1.4098446, z: 0.18383035}
+  m_Size: {x: 2.4388056, y: 2.8546772, z: 0.42788634}
+  m_Center: {x: -1.1841488, y: 1.4098446, z: 0.17853452}
