@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -21,6 +21,7 @@ public class SceneLoader : MonoBehaviour
     public void MoveScene(string nextSceneName)
     {
         this.nextSceneName = nextSceneName;
+        Debug.Log("씬 이름");
         sceneFader.FadeIn(onFadeInComplete);
     }
 
