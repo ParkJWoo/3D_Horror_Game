@@ -41,7 +41,7 @@ public class DropItem : MonoBehaviour, IInteractable
 
         if (active)
         {
-            itemDescription = $"{item.itemName} \n {item.itemDescription}";
+            itemDescription = $"[E] {item.itemName} \n {item.itemDescription}";
         }
 
         UIManager.Instance.SetInteractionText(active, itemDescription);
