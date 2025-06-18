@@ -29,7 +29,7 @@ public class SaveManager : Singleton<SaveManager>
     {
         string data = JsonUtility.ToJson(saveData, true);
         File.WriteAllText(gameDataPath, data);
-        Debug.Log("저장완료");
+        //Debug.Log("저장완료");
     }
 
     public void SaveOption()

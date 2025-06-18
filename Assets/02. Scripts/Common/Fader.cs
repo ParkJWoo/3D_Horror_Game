@@ -18,8 +18,6 @@ public class Fader : MonoBehaviour
 
     public void FadeIn(Action onComplete = null)                            //액션 함수가 없으면 입력하지 않아도 작동하도록 처리
     {
-        Debug.Log("페이드인");
-        //Debug.Log("Fade In");
         StartCoroutine(FadeInHandler(onComplete));
     }
 

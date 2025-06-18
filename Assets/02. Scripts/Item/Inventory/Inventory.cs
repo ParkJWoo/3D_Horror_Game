@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -75,7 +75,7 @@ public class Inventory
                 if (invenItems[i].itemData == null)
                 {
                     invenItems[i] = newItem;
-                    Debug.Log(newItem.itemData.itemName);
+                    //Debug.Log(newItem.itemData.itemName);
                     OnInventoryUpdate?.Invoke(i, newItem);
                     return null;
                 }

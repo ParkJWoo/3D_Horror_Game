@@ -68,7 +68,6 @@ public class SoundUI : MonoBehaviour
         sfxSlider.value = data.currentSfxVolume;
         bgmToggle.isOn = data.currentBgmMute;
         sfxToggle.isOn = data.currentSfxMute;
-        Debug.Log($"데이터 {data} 현재 볼륨{data.currentBgmVolume}");
     }
 
 

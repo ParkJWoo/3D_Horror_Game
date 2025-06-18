@@ -89,7 +89,6 @@ public class SlendermanSpawner : MonoBehaviour
             }
 
             slenderman.SetActive(false);
-            Debug.Log("[SlendermanSpawner] 슬렌더맨 비활성화 완료");
         }
     }
 }
