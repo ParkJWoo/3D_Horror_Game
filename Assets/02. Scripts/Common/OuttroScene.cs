@@ -1,0 +1,83 @@
+using System.Collections;
+using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
+
+public class OuttroScene : MonoBehaviour
+{
+    private WaitForSeconds nextScenarioDelay;
+
+    private WaitForSeconds typingDelay;
+
+    public TextMeshProUGUI typingTextUI;
+
+    private bool isTag;
+
+    private Coroutine outtroScenario;
+
+    void Start()
+    {
+        nextScenarioDelay = new WaitForSeconds(1f);
+        typingDelay = new WaitForSeconds(0.07f);
+        typingTextUI.text = "";
+        IntroScenario();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            StopCoroutine(outtroScenario);
+            GameManager.Instance.sceneLoader.MoveScene("StartScene");
+        }
+    }
+
+    public void IntroScenario()
+    {
+        outtroScenario = StartCoroutine(ScenarioExcute(Constants.endingText));
+    }
+
+    private IEnumerator ScenarioExcute(string[] scenario)
+    {
+        for (int i = 0; i < scenario.Length; i++)
+        {
+
+            yield return StartCoroutine(TypingScenario(scenario[i]));
+        }
+
+        yield return new WaitForSeconds(1f);
+
+        GameManager.Instance.sceneLoader.MoveScene("StartScene");
+    }
+
+    private IEnumerator TypingScenario(string scenarioLine)
+    {
+        typingTextUI.text = "";
+        string tempTag = "";
+        foreach (char c in scenarioLine)
+        {
+            if (c == '<')
+            {
+                isTag = true;
+                tempTag += c;
+                continue;
+            }
+
+            if (isTag)
+            {
+                tempTag += c;
+                if (c == '>')
+                {
+                    isTag = false;
+                }
+                typingTextUI.text = tempTag;
+                continue;
+            }
+
+            typingTextUI.text += c;
+            yield return typingDelay;
+        }
+
+        yield return nextScenarioDelay;
+    }
+}

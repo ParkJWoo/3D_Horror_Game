@@ -14,6 +14,8 @@ public class Door : MonoBehaviour, IInteractable
     [SerializeField] private bool isOpen;
     private Rigidbody rb;
 
+    public bool clearDoor;
+
     private void Start()
     {
         Init();
@@ -46,6 +48,10 @@ public class Door : MonoBehaviour, IInteractable
             OpenDoor();
             player.Inventory.UseItem(slotNum);
             this.enabled = false;
+            if (clearDoor)
+            {
+                GameManager.Instance.sceneLoader.MoveScene("OuttroScene");
+            }
         }
     }
 

@@ -13,13 +13,13 @@ public class ManualGuide : MonoBehaviour
 
     private void Start()
     {
-        if (GameManager.Instance.isNewGame)
-        {
-            if (controlTextUI != null && controlMessage.Count > 0)
-            {
-                StartCoroutine(GuideStart());
-            }
-        }
+        //if (GameManager.Instance.isNewGame)
+        //{
+        //    if (controlTextUI != null && controlMessage.Count > 0)
+        //    {
+        //        StartCoroutine(GuideStart());
+        //    }
+        //}
     }
 
     private IEnumerator GuideStart()

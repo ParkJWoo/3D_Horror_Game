@@ -10,8 +10,25 @@ public class WhisperPuzzlePhoto : MonoBehaviour, IInteractable
     public MapController mapcontroller;
     public bool iskeyphoto = false;
     public int photoNum;
+    private string[] senarioText;
 
     public event Action<IInteractable> OnInteracted;
+
+    private void Start()
+    {
+        switch (photoNum)
+        {
+            case 0:
+                senarioText = Constants.stageTwoText;
+                break;
+            case 1:
+                senarioText = Constants.stageThreeText;
+                break;
+            case 2:
+                senarioText = Constants.stageFourText;
+                break;
+        }
+    }
 
     public void OnInteraction()
     {
@@ -22,6 +39,7 @@ public class WhisperPuzzlePhoto : MonoBehaviour, IInteractable
 
         if(iskeyphoto)
         {
+            (UIManager.Instance as PlayScnenUIManager).sequenceTextManager.SetScenarioText(senarioText);
             mapcontroller.UpdateLastCheckpoint(photoNum);
             mapcontroller.GoNextStage();
             iskeyphoto = false;

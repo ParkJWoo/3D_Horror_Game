@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,6 +8,7 @@ public class StartSceneButtonEvents : MonoBehaviour
 {
     public SceneLoader sceneLoader;
     public string mainSceneName = "MainScene";
+    public string introSceneName = "IntroScene";
     public Button LoadButton;
 
     private void Awake()
@@ -23,15 +24,11 @@ public class StartSceneButtonEvents : MonoBehaviour
     //  시작 버튼에 연결
     public void OnStartButtonClicked()
     {
-        //  씬 이동 전에 오브젝트 / 참조 정리
-        if (GameManager.Instance != null)
-        {
-        }
-
+        
         if (sceneLoader != null)
         {
             GameManager.Instance.isNewGame = true;
-            sceneLoader.MoveScene(mainSceneName);
+            sceneLoader.MoveScene(introSceneName);
         }
 
         else

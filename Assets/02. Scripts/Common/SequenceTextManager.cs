@@ -34,4 +34,18 @@ public class SequenceTextManager : MonoBehaviour
         sequnceText.SetText(sequenceText[randomNum]);
         Destroy(sequnceText.gameObject, textLifeTime);
     }
+
+    public void SetScenarioText(string[] sequenceText)
+    {
+        StartCoroutine(SenarioSequenceText(sequenceText));
+    }
+
+    private IEnumerator SenarioSequenceText(string[] scenario)
+    {
+        for (int i = 0; i < scenario.Length; i++)
+        {
+            SetSequenceText(scenario[i]);
+            yield return new WaitForSecondsRealtime(3f);
+        }
+    }
 }
