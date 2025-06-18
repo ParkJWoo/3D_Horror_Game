@@ -19,8 +19,15 @@ public class MapController : MonoBehaviour
     public float baseSlendermanSpeed = 3.5f;
     public float speedPerStage = 1.0f;
 
+    public List<WhisperPuzzlePhoto> whisperPuzzlePhotos = new List<WhisperPuzzlePhoto>();
+
+    public List<Door> doors = new List<Door>();
+
+    private SaveManager saveManager;
+
     void Start()
     {
+        saveManager = SaveManager.Instance;
         Init();
         GetAllLights();
     }
@@ -35,15 +42,33 @@ public class MapController : MonoBehaviour
 
     private void Init() // 요기 이제 저장된 맵정보를 불러오거나 없으면 처음맵정보 적용
     {
-        if (GameManager.Instance.isNewGame) // 만약 저장된 정보가 없다면... 수정해야함 나중에
+        if (GameManager.Instance.isNewGame) 
         {
             currentMapData = MapDatas[0];
             currentdataindex = 0;
         }
         else
         {
-            currentdataindex = SaveManager.Instance.saveData.lastCheckpoint;
+            SaveData saveData = saveManager.saveData;
+            currentdataindex = saveData.lastCheckpoint;
             currentMapData = MapDatas[currentdataindex];
+
+            for (int i = 0; i < whisperPuzzlePhotos.Count; i++)
+            {
+                whisperPuzzlePhotos[i].iskeyphoto = saveData.clearPhoto[i];
+            }
+
+            for (int i = 0; i < doors.Count; i++)
+            {
+                if (saveManager.saveData.openDoor[i]) 
+                {
+                    doors[i].OpenDoor();
+                }
+                else
+                {
+                    doors[i].CloseDoor();
+                }
+            }
         }
 
         //  최초 시작 시 슬랜더맨 속도 세팅
@@ -113,5 +138,28 @@ public class MapController : MonoBehaviour
             float waittime = Random.Range(currentMapData.Lightinfo.MinInterval, currentMapData.Lightinfo.MaxInterval);
             yield return new WaitForSeconds(waittime);
         }
+    }
+
+    public void UpdateLastCheckpoint(int photoNum)
+    {
+        saveManager.UpdatePlayerData(CharacterManager.Instance.Player);
+        PlaySceneManager.instance.itemManager.Save();
+        saveManager.saveData.lastCheckpoint = currentdataindex;
+
+        List<bool> photoSave = new List<bool>();
+        for (int i = 0; i < whisperPuzzlePhotos.Count; i++)
+        {
+            photoSave.Add(whisperPuzzlePhotos[i].iskeyphoto);
+        }
+        saveManager.saveData.clearPhoto = photoSave;
+
+        List<bool> doorSave = new List<bool>();
+        for (int i = 0; i < doors.Count; i++)
+        {
+            doorSave.Add(doors[i].IsOpen);
+        }
+        saveManager.saveData.openDoor = doorSave;
+
+        saveManager.SaveGame();
     }
 }

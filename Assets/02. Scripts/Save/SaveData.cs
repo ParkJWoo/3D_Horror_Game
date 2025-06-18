@@ -44,6 +44,8 @@ public class SaveData
     public List<SaveItemData> haveItemData;
     public List<SaveFieldItemData> filedItemData;
     public int lastCheckpoint;
+    public List<bool> clearPhoto= new List<bool>();
+    public List<bool> openDoor = new List<bool>();
 }
 
 [Serializable]

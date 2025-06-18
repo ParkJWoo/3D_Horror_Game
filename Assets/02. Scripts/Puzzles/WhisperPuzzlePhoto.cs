@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +9,7 @@ public class WhisperPuzzlePhoto : MonoBehaviour, IInteractable
     public WhisperEffectController linkedWhisperTrigger;
     public MapController mapcontroller;
     public bool iskeyphoto = false;
+    public int photoNum;
 
     public event Action<IInteractable> OnInteracted;
 
@@ -21,6 +22,7 @@ public class WhisperPuzzlePhoto : MonoBehaviour, IInteractable
 
         if(iskeyphoto)
         {
+            mapcontroller.UpdateLastCheckpoint(photoNum);
             mapcontroller.GoNextStage();
             iskeyphoto = false;
         }

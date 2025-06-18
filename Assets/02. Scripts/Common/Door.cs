@@ -10,6 +10,7 @@ public class Door : MonoBehaviour, IInteractable
 
     public ItemData keyData;
 
+    public bool IsOpen => isOpen;
     [SerializeField] private bool isOpen;
     private Rigidbody rb;
 
