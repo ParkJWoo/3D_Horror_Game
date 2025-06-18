@@ -9,7 +9,7 @@ public class Inventory
     public Player player;
     public ItemManager itemManager;
     private SequenceTextManager sequenceTextManager;
-    private List<string> invenFullText;
+    private List<string> invenFullText = new List<string>();
 
     public int inventoryMaxSize;
     public ItemInstance[] invenItems;
