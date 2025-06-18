@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,6 +16,7 @@ public class PlaySceneManager : MonoBehaviour
     public PlayScnenUIManager uiManager;
     public ItemManager itemManager;
     public CharacterManager characterManager;
+    public GuideManager guideManager;
 
     public void Init() 
     {
@@ -24,13 +25,13 @@ public class PlaySceneManager : MonoBehaviour
 
         characterManager = CharacterManager.Instance;
 
-        characterManager.Player = FindObjectOfType<Player>();
+        //characterManager.Player = FindObjectOfType<Player>();
 
-        if (characterManager.Player == null)
-        {
-            Debug.LogError("[PlaySceneManager] Player를 찾을 수 없습니다!");
-            return;
-        }
+        //if (characterManager.Player == null)
+        //{
+        //    Debug.LogError("[PlaySceneManager] Player를 찾을 수 없습니다!");
+        //    return;
+        //}
 
         characterManager.Player.Init();
 

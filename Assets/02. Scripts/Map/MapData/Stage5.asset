@@ -16,7 +16,5 @@ MonoBehaviour:
     <MinInterval>k__BackingField: 0.1
     <MaxInterval>k__BackingField: 0.5
     <MinIntense>k__BackingField: 0
-    <MaxIntense>k__BackingField: 1
+    <MaxIntense>k__BackingField: 2
     <Lightcolor>k__BackingField: {r: 0.5773585, g: 0, b: 0, a: 0}
-  <Monsterinfo>k__BackingField:
-    <Ismonster>k__BackingField: 0
