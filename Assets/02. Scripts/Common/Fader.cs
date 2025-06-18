@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -54,8 +54,6 @@ public class Fader : MonoBehaviour
 
     public void FadeOut(Action onComplete = null)
     {
-        Debug.Log("페이드 아웃");
-        //Debug.Log("Fade Out");
         StartCoroutine(FadeOutHandler(onComplete));
     }
 
