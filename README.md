@@ -34,8 +34,24 @@ E : 상호작용<br><br>
 * C#<br>
 * GitHub<br>
 # 🗓️프로젝트 수행 절차<br>
+![image](https://github.com/user-attachments/assets/4dc20b3e-5b84-404c-8864-d1a94db77420)
+
 # 🧩주요 기능<br>
+![horror1](https://github.com/user-attachments/assets/d9d1bdb7-3046-4847-a255-51347bfc08d6)
+
 # 📐와이어프레임<br>
+![image](https://github.com/user-attachments/assets/1732fb8f-3989-4a33-ac02-3dd6812d9087)
+
 # 🧠클래스 다이어그램 초기 구조<br>
+![image](https://github.com/user-attachments/assets/82d6ae6f-a279-4390-a7f6-5846b35ff6e8)
+
 # 🐞트러블 슈팅<br>
+![image](https://github.com/user-attachments/assets/15d5d3f8-ec2e-4da5-a37c-bb9e7a59e492)
+![image](https://github.com/user-attachments/assets/9e093ecc-fd4e-49d7-87ce-60ffffea4d84)
+![image](https://github.com/user-attachments/assets/a7db28ef-ed85-4e12-a405-8679b0d8a3e0)
+![image](https://github.com/user-attachments/assets/5fa75de4-3fdb-48ff-b7df-bc41d9969656)
+![image](https://github.com/user-attachments/assets/7b38a6d4-e07c-43c2-91f6-cb90267bcf60)
+
 # 🎥시연 영상<br>
+https://www.youtube.com/watch?v=ufxCjNZIOT4
+![image](https://github.com/user-attachments/assets/9dd7e6bc-4c88-4b72-8989-c4a2de6072df)
