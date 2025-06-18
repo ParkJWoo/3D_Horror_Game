@@ -86,7 +86,6 @@ public class FlashLight : EquipItemHandler
         }
         SoundManager.Instance.PlaySound("LightToggle");
         flashLight.enabled = true;
-        flashLight.enabled = false;
     }
 
     private IEnumerator BatteryConsumptionHandler()
