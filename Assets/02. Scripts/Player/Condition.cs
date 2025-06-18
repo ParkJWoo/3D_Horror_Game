@@ -1,6 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,7 +9,6 @@ public class Condition : MonoBehaviour
     public float maxValue;
     public float passiveValue;
     public float addPassiveValue;
-    private float useValue = 3f;
     public Image uiBar;
     public Image icon;
 

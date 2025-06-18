@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -33,7 +32,6 @@ public class PlayerController : MonoBehaviour
     [HideInInspector]
     public bool canLook = true;
     public bool isDead = false;                                               //  죽었는지 확인하기 위한 bool값 변수
-
 
     private Rigidbody rigidbody;
 
@@ -69,11 +67,6 @@ public class PlayerController : MonoBehaviour
 
     private void LateUpdate()
     {
-        //if (canLook)
-        //{
-        //    CameraLook();
-        //}
-
         if (!isDead)
         {
             SyncPlayerRotationWihtCamera();
@@ -82,11 +75,11 @@ public class PlayerController : MonoBehaviour
 
     public void OnLookInputPerformed(InputAction.CallbackContext context)
     {
-        //mouseDelta = context.ReadValue<Vector2>();
+        
     }
     public void OnLookInputCanceled(InputAction.CallbackContext context)
     {
-        //mouseDelta = Vector2.zero;
+        
     }
 
     public void OnMoveInputPerformed(InputAction.CallbackContext context)
@@ -145,7 +138,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnMenu(InputAction.CallbackContext context)
     {
-        // ESC 눌렀을때
+        
     }
 
     public void Move()
@@ -191,9 +184,6 @@ public class PlayerController : MonoBehaviour
 
     void CameraLook()
     {
-        // 좌우(Y) 회전은 transform(Y축)에만 직접 적용
-        //transform.Rotate(Vector3.up * mouseDelta.x * lookSensitivity * Time.deltaTime);
-
         camCurXRot += mouseDelta.y * lookSensitivity;
         camCurXRot = Mathf.Clamp(camCurXRot, minXLook, maxXLook);
         cameraContainer.localEulerAngles = new Vector3(-camCurXRot, 0, 0);
@@ -233,7 +223,6 @@ public class PlayerController : MonoBehaviour
                 return true;
             }
         }
-
         return false;
     }
 
