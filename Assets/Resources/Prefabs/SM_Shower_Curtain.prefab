@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1030996381}
   - component: {fileID: 1030996382}
-  - component: {fileID: 1030996383}
+  - component: {fileID: 4417416453987032419}
   m_Layer: 0
   m_Name: SM_Shower_Curtain
   m_TagString: Untagged
@@ -69,8 +69,8 @@ LODGroup:
     - renderer: {fileID: 1030996398}
     - renderer: {fileID: 0}
   m_Enabled: 1
---- !u!64 &1030996383
-MeshCollider:
+--- !u!65 &4417416453987032419
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -87,10 +87,9 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300008, guid: abc00000000011285663823813256915, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 0.1248188, y: 2.616113, z: 0.63329595}
+  m_Center: {x: -0.0027525295, y: 1.2425755, z: -0.028943509}
 --- !u!1 &1030996384
 GameObject:
   m_ObjectHideFlags: 0
