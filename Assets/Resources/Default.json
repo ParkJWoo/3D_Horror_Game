@@ -1,0 +1,209 @@
+{
+  "playerPosition": {
+    "x": -25.5,
+    "y": 0.72,
+    "z": 50.3
+  },
+  "equipItemData": [
+    {
+      "itemCode": -1,
+      "quantity": 0,
+      "durability": 0.0
+    },
+    {
+      "itemCode": -1,
+      "quantity": 0,
+      "durability": 0.0
+    }
+  ],
+  "haveItemData": [
+    {
+      "itemCode": -1,
+      "quantity": 0,
+      "durability": 0.0
+    },
+    {
+      "itemCode": -1,
+      "quantity": 0,
+      "durability": 0.0
+    },
+    {
+      "itemCode": -1,
+      "quantity": 0,
+      "durability": 0.0
+    },
+    {
+      "itemCode": -1,
+      "quantity": 0,
+      "durability": 0.0
+    },
+    {
+      "itemCode": -1,
+      "quantity": 0,
+      "durability": 0.0
+    }
+  ],
+  "filedItemData": [
+    {
+      "itemCode": 2,
+      "quantity": 1,
+      "durability": 0.0,
+      "itemPos": {
+        "x": -50.0,
+        "y": 0.04044628143310547,
+        "z": 8.975000381469727
+      }
+    },
+    {
+      "itemCode": 4,
+      "quantity": 1,
+      "durability": 0.0,
+      "itemPos": {
+        "x": -50.0,
+        "y": 0.0949999988079071,
+        "z": 8.5
+      }
+    },
+    {
+      "itemCode": 8,
+      "quantity": 1,
+      "durability": 0.0,
+      "itemPos": {
+        "x": -42.02899932861328,
+        "y": 0.03099999949336052,
+        "z": -7.229000091552734
+      }
+    },
+    {
+      "itemCode": 5,
+      "quantity": 1,
+      "durability": 0.0,
+      "itemPos": {
+        "x": -46.84600067138672,
+        "y": 0.07699999958276749,
+        "z": 18.5
+      }
+    },
+    {
+      "itemCode": 6,
+      "quantity": 1,
+      "durability": 0.0,
+      "itemPos": {
+        "x": -27.020000457763673,
+        "y": 0.04044628143310547,
+        "z": 45.87273025512695
+      }
+    },
+    {
+      "itemCode": 0,
+      "quantity": 1,
+      "durability": 100.0,
+      "itemPos": {
+        "x": -27.01799964904785,
+        "y": 0.5175999999046326,
+        "z": 49.30799865722656
+      }
+    },
+    {
+      "itemCode": 7,
+      "quantity": 1,
+      "durability": 0.0,
+      "itemPos": {
+        "x": -30.013999938964845,
+        "y": 0.8830000162124634,
+        "z": 47.5620002746582
+      }
+    },
+    {
+      "itemCode": 1,
+      "quantity": 1,
+      "durability": 0.0,
+      "itemPos": {
+        "x": -29.891000747680665,
+        "y": 0.9769999980926514,
+        "z": 46.356998443603519
+      }
+    },
+    {
+      "itemCode": 1,
+      "quantity": 1,
+      "durability": 0.0,
+      "itemPos": {
+        "x": -10.0,
+        "y": 0.10700000077486038,
+        "z": 27.538000106811525
+      }
+    },
+    {
+      "itemCode": 1,
+      "quantity": 1,
+      "durability": 0.0,
+      "itemPos": {
+        "x": -35.779998779296878,
+        "y": 0.9929999709129334,
+        "z": 3.992000102996826
+      }
+    },
+    {
+      "itemCode": 1,
+      "quantity": 1,
+      "durability": 0.0,
+      "itemPos": {
+        "x": -29.5,
+        "y": 0.13199999928474427,
+        "z": -61.0
+      }
+    },
+    {
+      "itemCode": 1,
+      "quantity": 1,
+      "durability": 0.0,
+      "itemPos": {
+        "x": -15.0,
+        "y": 0.11800000071525574,
+        "z": -36.5
+      }
+    },
+    {
+      "itemCode": 3,
+      "quantity": 1,
+      "durability": 0.0,
+      "itemPos": {
+        "x": -15.0,
+        "y": 0.04044628143310547,
+        "z": -28.530000686645509
+      }
+    },
+    {
+      "itemCode": 9,
+      "quantity": 1,
+      "durability": 0.0,
+      "itemPos": {
+        "x": -43.0,
+        "y": 0.7139999866485596,
+        "z": 14.600000381469727
+      }
+    },
+    {
+      "itemCode": 11,
+      "quantity": 1,
+      "durability": 0.0,
+      "itemPos": {
+        "x": -22.966999053955079,
+        "y": 0.06599999964237213,
+        "z": -42.31399917602539
+      }
+    },
+    {
+      "itemCode": 10,
+      "quantity": 1,
+      "durability": 0.0,
+      "itemPos": {
+        "x": -10.0,
+        "y": 0.09000000357627869,
+        "z": 34.43000030517578
+      }
+    }
+  ],
+  "lastCheckpoint": 0
+}
